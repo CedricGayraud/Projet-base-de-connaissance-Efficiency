@@ -165,7 +165,7 @@ echo '<script>var currentPage = "' . $currentPage . '";</script>';
                             <ul role="list" class="-mx-2 space-y-1">
                                 <li>
                                     <a href="../../../index.php" x-bind:class="{ 'bg-gray-50 text-indigo-600': currentPage === 'index.php', 'text-gray-400 hover:text-[#31ABFF] hover:bg-gray-50': currentPage !== 'index.php' }" class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
-                                        <svg class="h-8 w-8 shrink-0" x-bind:class="{ 'text-[#364BFF]': currentPage === 'index' }" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                        <svg class="h-8 w-8 shrink-0" x-bind:class="{ 'text-[#364BFF]': currentPage === 'index' || currentPage === '' }" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                                         </svg>
                                     </a>
@@ -200,7 +200,7 @@ echo '<script>var currentPage = "' . $currentPage . '";</script>';
                                 </li>
                                 <li>
                                     <div class="text-xs font-semibold leading-6 text-gray-400 text-center">Admin</div>
-                                    <a href="/ressources/views/dashboard.php" x-bind:class="{ 'bg-gray-50 text-indigo-600': currentPage === 'dashboard', 'text-gray-400 hover:text-[#31ABFF] hover:bg-gray-50': currentPage !== 'dashboard' }" class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
+                                    <a href="/ressources/views/dashboard.php" x-bind:class="{ 'bg-gray-50 text-indigo-600 ': currentPage === 'dashboard', 'text-gray-400 hover:text-[#31ABFF] hover:bg-gray-50': currentPage !== 'dashboard' }" class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
                                         <span class="h-8 w-8 shrink-0 material-symbols-outlined" style="font-size: 36px;" x-bind:class="{ 'text-[#364BFF]': currentPage === 'dashboard' }" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                             dashboard
                                         </span>
@@ -214,8 +214,8 @@ echo '<script>var currentPage = "' . $currentPage . '";</script>';
                                     arrow_forward
                                 </span>
                             </a>
-                            <a href=" #" class="flex items-center gap-x-4 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50">
-                                <img class="h-8 w-8 rounded-full bg-gray-50" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                            <a href="/ressources/views/profil.php" class="flex items-center gap-x-4 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50">
+                                <img class="h-8 w-8 rounded-full bg-gray-50" src="https://image.noelshack.com/fichiers/2023/39/2/1695750704-avatar-h-1.png" alt="">
                             </a>
                         </li>
                     </ul>
@@ -236,68 +236,66 @@ echo '<script>var currentPage = "' . $currentPage . '";</script>';
                         <li>
                             <ul role="list" class="-mx-2 space-y-1">
                                 <li>
-                                    <a href="../../../index.php" class="bg-gray-50 text-[#364BFF] group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
-                                        <svg class="h-6 w-6 shrink-0 text-[#364BFF]" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <a href="../../../index.php" x-bind:class="{ 'text-[#364BFF] hover:text-[#364BFF] bg-gray-50': currentPage === 'index' || currentPage === '', 'text-gray-400': currentPage !== 'index' && currentPage !== '' }" class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold hover:text-[#31ABFF] hover:bg-gray-50">
+                                        <svg class="h-6 w-6 shrink-0" :class="{ 'text-[#364BFF]': currentPage === 'index' || currentPage === '' }" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                                         </svg>
                                         Accueil
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="text-gray-700 hover:text-[#31ABFF] hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
-                                        <svg class="h-6 w-6 shrink-0 text-gray-400 group-hover:text-[#31ABFF]" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <a href="/ressources/views/decouvrir.php" x-bind:class="{ 'text-[#364BFF] hover:text-[#364BFF] bg-gray-50': currentPage === 'decouvrir' || currentPage === '', 'text-gray-400 hover:text-[#31ABFF] hover:bg-gray-50': currentPage !== 'decouvrir' && currentPage !== '' }" class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold hover:text-[#31ABFF] hover:bg-gray-50">
+                                        <svg class="h-6 w-6 shrink-0" :class="{ 'text-[#364BFF]': currentPage === 'decouvrir' || currentPage === '' }" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" />
                                         </svg>
                                         Découvrir
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="text-gray-700 hover:text-[#31ABFF] hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
-                                        <span class="h-8 w-8 shrink-0 material-symbols-outlined" style="font-size: 24px;" x-bind:class="{ 'text-[#364BFF]': currentPage === 'favoris' }" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <a href="/ressources/views/favoris.php" x-bind:class="{ 'text-[#364BFF] hover:text-[#364BFF] bg-gray-50': currentPage === 'favoris', 'text-gray-400 hover:text-[#31ABFF] hover:bg-gray-50': currentPage !== 'favoris' }" class="group flex gap-x-1 rounded-md p-2 text-sm leading-6 font-semibold">
+                                        <span class="h-8 w-8 shrink-0 material-symbols-outlined" style="font-size: 24px;" :class="{ 'text-[#364BFF]': currentPage === 'favoris' }" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                             star
                                         </span>
                                         Favoris
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="text-gray-700 hover:text-[#31ABFF] hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
-                                        <svg class="h-6 w-6 shrink-0 text-gray-400 group-hover:text-[#31ABFF]" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <a href="/ressources/views/forum.php" x-bind:class="{ 'text-[#364BFF] hover:text-[#364BFF] bg-gray-50': currentPage === 'forum', 'text-gray-400 hover:text-[#31ABFF] hover:bg-gray-50': currentPage !== 'forum' }" class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
+                                        <svg class="h-6 w-6 shrink-0" :class="{ 'text-[#364BFF]': currentPage === 'forum' }" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
                                         </svg>
                                         Forum
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="text-gray-700 hover:text-[#31ABFF] hover:bg-gray-50 group flex gap-x-1 rounded-md text-sm leading-6 font-semibold p-2">
-                                        <span class="h-8 w-8 shrink-0 text-gray-400 group-hover:text-[#31ABFF] material-symbols-outlined">
+                                    <a href="/ressources/views/fiche.php" x-bind:class="{ 'text-[#364BFF] hover:text-[#364BFF] bg-gray-50': currentPage === 'fiche', 'text-gray-400 hover:text-[#31ABFF] hover:bg-gray-50': currentPage !== 'fiche' }" class="group flex gap-x-1 rounded-md text-sm leading-6 font-semibold p-2">
+                                        <span class="h-8 w-8 shrink-0  material-symbols-outlined" :class="{ 'text-[#364BFF]': currentPage === 'fiche' }" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                             add
                                         </span>
                                         Fiche
                                     </a>
                                 </li>
-                                <li>
-                                    <div class="text-xs font-semibold leading-6 text-gray-400">Admin</div>
-                                    <a href="/ressources/views/dashboard.php" x-bind:class="{ 'bg-gray-50 text-indigo-600': currentPage === 'dashboard', 'text-gray-400 hover:text-[#31ABFF] hover:bg-gray-50': currentPage !== 'dashboard' }" class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
-                                        <span class="h-8 w-8 shrink-0 text-gray-400 material-symbols-outlined" style="font-size: 24px;" x-bind:class="{ 'text-[#364BFF]': currentPage === 'dashboard' }" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                            dashboard
-                                        </span>
-                                        Dashboard
-                                    </a>
-                                </li>
-                            </ul>
+                                <a href="/ressources/views/dashboard.php" x-bind:class="{ 'text-[#364BFF] hover:text-[#364BFF] bg-gray-50': currentPage === 'dashboard', 'text-gray-400 hover:text-[#31ABFF] hover:bg-gray-50': currentPage !== 'dashboard' }" class="group flex gap-x-1 rounded-md text-sm leading-6 font-semibold p-2">
+                                    <span class="h-8 w-8 shrink-0 material-symbols-outlined" :class="{ 'text-[#364BFF]': currentPage === 'dashboard' }" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                        dashboard
+                                    </span>
+                                    Dashboard
+                                </a>
                         </li>
-                        <li class="mt-auto">
-                            <a href="#" x-on:click="isSmall = true" class="text-gray-700 hover:text-[#31ABFF] hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-center">
-                                <span class="h-8 w-8 shrink-0 text-gray-400 group-hover:text-[#31ABFF] material-symbols-outlined">
-                                    arrow_back
-                                </span>
-                            </a>
-                            <a href="#" class="flex items-center gap-x-4 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50">
-                                <img class="h-8 w-8 rounded-full bg-gray-50" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-                                <span class="sr-only">Your profile</span>
-                                <span aria-hidden="true">Tom Cook</span>
-                            </a>
-                        </li>
+                    </ul>
+                    </li>
+                    <li class="mt-auto">
+                        <a href="#" x-on:click="isSmall = true" class="text-gray-700 hover:text-[#31ABFF] hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-center">
+                            <span class="h-8 w-8 shrink-0 text-gray-400 group-hover:text-[#31ABFF] material-symbols-outlined">
+                                arrow_back
+                            </span>
+                        </a>
+                        <a href="/ressources/views/profil.php" class="flex items-center gap-x-4 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50">
+                            <img class="h-8 w-8 rounded-full bg-gray-50" src="https://image.noelshack.com/fichiers/2023/39/2/1695750704-avatar-h-1.png" alt="">
+                            <span class="sr-only">Your profile</span>
+                            <span aria-hidden="true">Effiiciency</span>
+                        </a>
+                    </li>
                     </ul>
                 </nav>
             </div>
