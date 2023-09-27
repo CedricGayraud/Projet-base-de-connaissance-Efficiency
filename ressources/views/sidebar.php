@@ -23,7 +23,7 @@ echo '<script>var currentPage = "' . $currentPage . '";</script>';
                 </svg>
             </button>
             <div class="flex-1 text-sm font-semibold leading-6 text-gray-900">Dashboard</div>
-            <a href="#">
+            <a href="/ressources/views/profil.php">
                 <span class="sr-only">Your profile</span>
                 <img class="h-8 w-8 rounded-full bg-gray-50" src="https://image.noelshack.com/fichiers/2023/39/2/1695750704-avatar-h-1.png" alt="">
             </a>
