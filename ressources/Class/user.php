@@ -1,6 +1,7 @@
 <?php
 class User {
     private $id;
+    private $nickname;
     private $lastName;
     private $firstName;
     private $email;
@@ -8,8 +9,9 @@ class User {
     private $rank;
     private $isBanned;
 
-    public function __construct($id, $lastName, $firstName, $email, $role, $rank, $isBanned) {
+    public function __construct($id, $nickname, $lastName, $firstName, $email, $role, $rank, $isBanned) {
         $this -> id = $id;
+        $this -> nickname = $nickname;
         $this->lastName = $lastName;
         $this->firstName = $firstName;
         $this->email = $email;
@@ -21,6 +23,11 @@ class User {
     public function getLastName() {
         return $this->lastName;
     }
+
+    public function getNickName() {
+        return $this->nickname;
+    }
+
 
     public function getFirstName() {
         return $this->firstName;
