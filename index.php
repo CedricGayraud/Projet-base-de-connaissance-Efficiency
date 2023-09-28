@@ -1,8 +1,5 @@
-<?php
-require('./layout.php');
-//Le fichier layout contient la connexion à la base de données ainsi qu'au cdn de tailwind
+<?php include 'ressources/views/session_config.php' ?>
 
-?>
 <!DOCTYPE html>
 <html lang="en">
 
