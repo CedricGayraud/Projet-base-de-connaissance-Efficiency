@@ -45,12 +45,14 @@ $user = new user (
     </div>
         
   </div>
-        
+       
         <p class="mt-1 sm:text-center leading-8 text-gray-500"><?php echo $user->getNickName()?></p>
-        <p class="mt-1 sm:text-center leading-8 text-gray-500"><?php echo $user->getRank()?></p>
+        <div class= "mt-2 flex justify-center">
+        <span class="flex justify-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10"><?php echo $user->getRank()?></span>
+        </div>
+    <div class="flex justify-center mt-6 border-t border-gray-100  ">
         
-    <div class="flex justify-center mt-6 border-t border-gray-100">
-        <dl class="divide-y divide-gray-100">
+        <dl class="divide-y divide-gray-100 ">
             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-2 sm:px-0">
                 <dt class="font-medium leading-6 text-gray-900">Nom</dt>
                 <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><?php echo $user->getLastName()?></dd>
