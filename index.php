@@ -11,10 +11,10 @@
 </head>
 
 <body>
-    <?php include 'ressources/views/sidebar.php' ?>
-    <h1 class="bg-green-700">CECI EST LA PAGE INDEX <?php var_dump($currentPage); ?></h1>
-
-
+<?php 
+  include 'ressources/views/sidebar.php' 
+  include('./ressources/views/accueil.php');
+?>
 </body>
 
 </html>
