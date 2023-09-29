@@ -21,8 +21,9 @@ function getSessionUser() {
 
 
 
-function modifyUserDetails($bdd, $id, $newData) {
+function modifyUserDetails() {
     try {
+        global $bdd;
         // Définir la requête SQL pour mettre à jour les détails de l'utilisateur
         $query = "UPDATE users 
                    SET 
@@ -33,7 +34,7 @@ function modifyUserDetails($bdd, $id, $newData) {
                       role = :role, 
                       rank = :rank, 
                       isBanned = :isBanned 
-                  WHERE id = :id";
+                  WHERE id = ?";
         
         // Préparer la requête SQL
         $stmt = $bdd->prepare($query);
