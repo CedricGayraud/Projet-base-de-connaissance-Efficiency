@@ -1,14 +1,14 @@
 <?php
 class User {
-    private $id;
-    private $nickname;
-    private $lastName;
-    private $firstName;
-    private $email;
-    private $role;
-    private $rank;
-    private $profilPicture;
-    private $isBanned;
+    private int $id;
+    private string $nickname;
+    private string $lastName;
+    private string $firstName;
+    private string $email;
+    private bool $role;
+    private string $rank;
+    private string $profilPicture;
+    private bool $isBanned;
     private $createdDate;
 
     public function __construct($id, $nickname, $lastName, $firstName, $email, $role, $rank, $profilPicture, $isBanned, $createdDate) {
@@ -21,7 +21,7 @@ class User {
         $this->rank = $rank;
         $this->profilPicture = $profilPicture;
         $this->isBanned = $isBanned;
-        $this->createDate = $createdDate;
+        $this->createdDate = $createdDate;
     }
 
     public function getLastName() {
@@ -58,8 +58,8 @@ class User {
         return $this->isBanned;
     }
 
-    public function getCreateDate() {
-        return $this->createDate;
+    public function getCreatedDate() {
+        return $this->createdDate;
     }
 
 }
