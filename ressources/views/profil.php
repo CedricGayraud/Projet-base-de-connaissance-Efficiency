@@ -1,6 +1,6 @@
 <?php
 require($_SERVER['DOCUMENT_ROOT'] . '/layout.php');
-require '../Class/user.php';
+require '../Class/User.php';
 require '../Controller/userController.php';
 
 
