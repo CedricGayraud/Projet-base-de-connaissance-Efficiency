@@ -10,7 +10,7 @@ class User
     private string $rank;
     private string $profilPicture;
     private bool $isBanned;
-    private DateTime $createdDate;
+    private string $createdDate;
 
     public function __construct($id, $nickname, $lastName, $firstName, $email, $role, $rank, $profilPicture, $isBanned, $createdDate)
     {
