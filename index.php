@@ -10,12 +10,14 @@ require('./layout.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
 </head>
 
 <body>
 
-    <h1 class="bg-green-700">CECI EST LA PAGE INDEX</h1>
-
+    <?php
+    include('./ressources/views/accueil.php');
+    ?>
 
 </body>
 
