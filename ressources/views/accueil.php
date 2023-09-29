@@ -82,9 +82,11 @@ require('./layout.php');
                 Découvrir les plateformes
             </a>
             <div class="flex ml-auto mr-12">
-                <button class="fixed rounded-full border-2 border-white w-20 h-20 bg-[#2CE6C1] text-white hover:text-[#2CE6C1] border-[3px] border-[#2CE6C1] hover:bg-white duration-500">
-                    <span class="material-symbols-outlined" style="font-size: 48px;">add</span>
-                </button>
+                <a href="/ressources/views/creation_fiche.php">
+                    <button class="fixed rounded-full border-2 border-white w-20 h-20 bg-[#2CE6C1] text-white hover:text-[#2CE6C1] border-[3px] border-[#2CE6C1] hover:bg-white duration-500">
+                        <span class="material-symbols-outlined" style="font-size: 48px;">add</span>
+                    </button>
+                </a>
             </div>
 
         </div>
