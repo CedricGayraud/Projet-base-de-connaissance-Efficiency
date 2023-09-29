@@ -7,17 +7,21 @@ class user {
     private string $email;
     private bool $role;
     private string $rank;
+    private string $profilPicture;
     private bool $isBanned;
+    private datime $createdDate;
 
-    public function __construct($id, $nickname, $lastName, $firstName, $email, $role, $rank, $isBanned) {
+    public function __construct($id, $nickname, $lastName, $firstName, $email, $role, $rank, $profilPicture, $isBanned, $createdDate) {
         $this -> id = $id;
         $this -> nickname = $nickname;
         $this->lastName = $lastName;
         $this->firstName = $firstName;
         $this->email = $email;
-        $this->role = 1;
+        $this->role = $role;
         $this->rank = $rank;
-        $this->isBanned = 0;
+        $this->profilPicture = $profilPicture;
+        $this->isBanned = $isBanned;
+        $this->createDate = $createdDate;
     }
 
     // GETTERS
@@ -50,9 +54,18 @@ class user {
         return $this->rank;
     }
 
+    public function getProfilPicture() {
+        return $this->profilPicture;
+    }
+  
     public function getIsBanned() {
         return $this->isBanned;
     }
+  
+      public function getCreateDate() {
+        return $this->createDate;
+    }
+
 
     // SETTERS
 
@@ -79,9 +92,16 @@ class user {
     public function setRank($rank) {
         $this->rank = $rank;
     }
+  
+      public function setProfilPicture($profilPicture) {
+        $this->profilPicture = $profilPicture;
+    }
 
     public function setIsBanned($isBanned) {
         $this->isBanned = $isBanned;
     }
-
+  
+     public function setCreatedDate($createdDate) {
+        $this->isBanned = $isBanned;
+    }
 }

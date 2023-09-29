@@ -1,11 +1,14 @@
 <?php
-require($_SERVER['DOCUMENT_ROOT'] . '/layout.php');
 require '../Class/user.php';
 require '../Controller/userController.php';
+require './session_config.php';
 
 
 
-$userData = $results[0]; // Vous pouvez choisir l'index approprié en fonction de votre application
+
+// $userData = $results; // Vous pouvez choisir l'index approprié en fonction de votre application
+
+$userData = getSessionUser();
 
 $user = new user (
     $userData['id'],
@@ -15,7 +18,9 @@ $user = new user (
     $userData['email'],
     $userData['role'],
     $userData['rank'],
-    $userData['isBanned']
+    $userData['isBanned'],
+    $userData['profilPicture'],
+    $userData['createdDate']
 );
 
 ?>
@@ -45,8 +50,8 @@ $user = new user (
         <p class="mt-1 sm:text-center leading-8 text-gray-500"><?php echo $user->getNickName()?></p>
         <p class="mt-1 sm:text-center leading-8 text-gray-500"><?php echo $user->getRank()?></p>
   <div class="mt-6 border-t border-gray-100">
-    <dl class="divide-y divide-gray-100">
-      <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+    <dl class="justify-center divide-y divide-gray-100">
+      <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-2 sm:px-0">
         <dt class="sm:text-center font-medium leading-6 text-gray-900">Nom</dt>
         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><?php echo $user->getLastName()?></dd>
       </div>
