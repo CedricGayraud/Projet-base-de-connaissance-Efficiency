@@ -1,5 +1,7 @@
 <?php
 require($_SERVER['DOCUMENT_ROOT'] . '/layout.php');
+include('./sidebar.php');
+
 ?>
 
 <div>

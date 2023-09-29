@@ -11,10 +11,10 @@
 </head>
 
 <body>
-<?php 
-  include 'ressources/views/sidebar.php' 
-  include('./ressources/views/accueil.php');
-?>
+    <?php
+    include('./ressources/views/sidebar.php');
+    include('./ressources/views/accueil.php');
+    ?>
 </body>
 
 </html>
