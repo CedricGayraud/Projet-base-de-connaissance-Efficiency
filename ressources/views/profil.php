@@ -1,13 +1,13 @@
 <?php
 require($_SERVER['DOCUMENT_ROOT'] . '/layout.php');
-require '../Class/User.php';
+require '../Class/user.php';
 require '../Controller/userController.php';
 
 
 
 $userData = $results[0]; // Vous pouvez choisir l'index approprié en fonction de votre application
 
-$user = new User (
+$user = new user (
     $userData['id'],
     $userData['nickname'],
     $userData['lastName'],

@@ -4,7 +4,7 @@ class Post {
     public int $id;
     public string $title;
     public string  $content;
-    public User $author;
+    public user $author;
     public DateTime $dateLastInteraction;
     public DateTime $createdDate;
     public int $upvotes;
