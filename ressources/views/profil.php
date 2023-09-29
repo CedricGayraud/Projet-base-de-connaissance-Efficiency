@@ -10,7 +10,7 @@ require './session_config.php';
 
 $userData = getSessionUser();
 
-$user = new User (
+$user = new user (
     $userData['id'],
     $userData['nickname'],
     $userData['lastName'],

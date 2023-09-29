@@ -1,15 +1,15 @@
 <?php
-class User {
-    private $id;
-    private $nickname;
-    private $lastName;
-    private $firstName;
-    private $email;
-    private $role;
-    private $rank;
-    private $profilPicture;
-    private $isBanned;
-    private $createdDate;
+class user {
+    private int $id;
+    private string $nickname;
+    private string $lastName;
+    private string $firstName;
+    private string $email;
+    private bool $role;
+    private string $rank;
+    private string $profilPicture;
+    private bool $isBanned;
+    private datime $createdDate;
 
     public function __construct($id, $nickname, $lastName, $firstName, $email, $role, $rank, $profilPicture, $isBanned, $createdDate) {
         $this -> id = $id;
@@ -24,14 +24,19 @@ class User {
         $this->createDate = $createdDate;
     }
 
-    public function getLastName() {
-        return $this->lastName;
+    // GETTERS
+
+    public function getId() {
+        return $this->id;
     }
 
-    public function getNickName() {
+    public function getNickname() {
         return $this->nickname;
     }
 
+    public function getLastName() {
+        return $this->lastName;
+    }
 
     public function getFirstName() {
         return $this->firstName;
@@ -52,15 +57,51 @@ class User {
     public function getProfilPicture() {
         return $this->profilPicture;
     }
-
-
+  
     public function getIsBanned() {
         return $this->isBanned;
     }
-
-    public function getCreateDate() {
+  
+      public function getCreateDate() {
         return $this->createDate;
     }
 
+
+    // SETTERS
+
+    public function setNickname($nickname) {
+        $this->nickname = $nickname;
+    }
+
+    public function setLastName($lastName) {
+        $this->lastName = $lastName;
+    }
+
+    public function setFirstName($firstName) {
+        $this->firstName = $firstName;
+    }
+
+    public function setEmail($email) {
+        $this->email = $email;
+    }
+
+    public function setRole($role) {
+        $this->role = $role;
+    }
+
+    public function setRank($rank) {
+        $this->rank = $rank;
+    }
+  
+      public function setProfilPicture($profilPicture) {
+        $this->profilPicture = $profilPicture;
+    }
+
+    public function setIsBanned($isBanned) {
+        $this->isBanned = $isBanned;
+    }
+  
+     public function setCreatedDate($createdDate) {
+        $this->isBanned = $isBanned;
+    }
 }
-?>
