@@ -7,9 +7,11 @@ class User {
     private $email;
     private $role;
     private $rank;
+    private $profilPicture;
     private $isBanned;
+    private $createdDate;
 
-    public function __construct($id, $nickname, $lastName, $firstName, $email, $role, $rank, $isBanned) {
+    public function __construct($id, $nickname, $lastName, $firstName, $email, $role, $rank, $profilPicture, $isBanned, $createdDate) {
         $this -> id = $id;
         $this -> nickname = $nickname;
         $this->lastName = $lastName;
@@ -17,7 +19,9 @@ class User {
         $this->email = $email;
         $this->role = $role;
         $this->rank = $rank;
+        $this->profilPicture = $profilPicture;
         $this->isBanned = $isBanned;
+        $this->createDate = $createdDate;
     }
 
     public function getLastName() {
@@ -45,8 +49,18 @@ class User {
         return $this->rank;
     }
 
+    public function getProfilPicture() {
+        return $this->profilPicture;
+    }
+
+
     public function getIsBanned() {
         return $this->isBanned;
     }
+
+    public function getCreateDate() {
+        return $this->createDate;
+    }
+
 }
 ?>
