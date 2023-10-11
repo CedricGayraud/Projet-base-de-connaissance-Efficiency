@@ -1,6 +1,5 @@
 <?php
-require($_SERVER['DOCUMENT_ROOT'] . '/layout.php');
-//Le fichier layout contient la connexion à la base de données ainsi qu'au cdn de tailwind
+require($_SERVER['DOCUMENT_ROOT'] . '/layout.php');;
 
 ?>
 <!DOCTYPE html>
@@ -13,8 +12,9 @@ require($_SERVER['DOCUMENT_ROOT'] . '/layout.php');
 </head>
 
 <body>
-    <?php include 'sidebar.php' ?>
-    <h1 class="bg-purple-400">CECI EST LA PAGE forum <?php var_dump($currentPage); ?></h1>
+    <?php
+        include 'sidebar.php' ;
+    ?>
 
 
 </body>
