@@ -1,10 +1,16 @@
 <?php
-require($_SERVER['DOCUMENT_ROOT'] . '/layout.php');
-include('./sidebar.php');
+require './session_config.php';
+require '../Class/Card.php';
+require '../Controller/cardController.php';
 
+$controller = new CardController();
+$cards = $controller->getFiche();
 ?>
 
 <div>
+    <?php include 'sidebar.php' ?>
+
+    <h1 class="w-fit mx-auto mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 border-b-4 border-[#2CE6C1]">Créez votre fiche</h1>
 
     <form class="bg-slate-100 w-2/4 mx-auto mt-20 p-4 rounded-xl">
         <div class="flex justify-center">
@@ -62,5 +68,10 @@ include('./sidebar.php');
             <button type="submit" class="text-white bg-[#2CE6C1] hover:bg-[#BAE1FE] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Enregistrer</button>
         </div>
     </form>
+
+    <?php
+    foreach ($cards as $card) : ?>
+        <p class="text-center"> test <?php echo $card->getId(); ?></p>
+    <?php endforeach; ?>
 
 </div>

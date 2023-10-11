@@ -1,4 +1,7 @@
-<?php include 'ressources/views/session_config.php' ?>
+<?php include 'ressources/views/session_config.php';
+require './ressources/Controller/cardController.php';
+require './ressources/Class/Card.php';
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +15,7 @@
 
 <body>
     <?php
+
     include('./ressources/views/sidebar.php');
     include('./ressources/views/accueil.php');
     include('./ressources/views/footer.php');
