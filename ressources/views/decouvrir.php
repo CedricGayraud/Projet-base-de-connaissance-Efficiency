@@ -3,7 +3,6 @@ require './session_config.php';
 require('../Class/Thematic.php');
 require('../Class/Platform.php');
 require('../Class/Card.php');
-require('./decouvrir_controller.php');
 ?>
 
 <!DOCTYPE html>
@@ -24,11 +23,11 @@ require('./decouvrir_controller.php');
     $cards = Card::getAllCards($bdd);
     ?>
 
-    <div x-data="{ selectedThematic: null, selectedPlatform: null }">
+    <div x-data="{ selectedThematic: null, selectedPlatform: null }" class="md:ml-28 md:mr-8">
         <!-- Thématiques -->
         <div class="container mx-auto mt-8">
             <h1 class="text-2xl font-bold">Thématiques</h1>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+            <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
                 <?php foreach ($thematics as $thematic) : ?>
                     <div x-on:click="selectedThematic === <?= $thematic->getId(); ?> ? selectedThematic = null : selectedThematic = <?= $thematic->getId(); ?>" :class="{ 'border-4 border-[#2CE6C1]': selectedThematic === <?= $thematic->getId(); ?> }" class="rounded-lg overflow-hidden shadow-md p-4 bg-[<?= $thematic->getColor(); ?>] transition-transform transform hover:translate-y-1 cursor-pointer">
                         <h2 class="text-lg font-semibold text-white"><?= $thematic->getName(); ?></h2>
@@ -61,11 +60,13 @@ require('./decouvrir_controller.php');
                     <div x-show="(selectedThematic === null || selectedThematic === <?= $card->getThematic(); ?>) && (selectedPlatform === null || selectedPlatform === <?= $card->getPlatform(); ?>)" class="bg-white rounded-lg overflow-hidden shadow-md p-4 transition-transform transform hover:translate-y-1 cursor-pointer">
                         <div class="flex flex-col items-center">
                             <h2 class="text-lg font-semibold text-gray-800"><?= $card->getTitle(); ?></h2>
+                            <p class="text-gray-500">Le <?= formatDate($card->getCreatedDate()); ?> par <?= $card->getUser()->getNickname(); ?></p>
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
         </div>
+
     </div>
 </body>
 
