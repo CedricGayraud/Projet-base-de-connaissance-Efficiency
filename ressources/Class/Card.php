@@ -1,5 +1,6 @@
 <?php
 require($_SERVER['DOCUMENT_ROOT'] . '/layout.php');
+require('../Class/User.php');
 
 class Card
 {
@@ -12,7 +13,7 @@ class Card
     public string $createdDate;
     public string $updatedDate;
     public string $summary;
-    public int $user;
+    private User $user;
     public int $thematic;
     public int $platform;
     public string $img;
@@ -27,7 +28,7 @@ class Card
         string $createdDate,
         string $updatedDate,
         string $summary,
-        int $user,
+        User $user,
         int $thematic,
         int $platform,
         string $img
@@ -138,7 +139,7 @@ class Card
         $this->summary = $summary;
     }
 
-    public function getUser(): int
+    public function getUser(): User
     {
         return $this->user;
     }
@@ -180,13 +181,47 @@ class Card
 
     public static function getAllCards($bdd)
     {
-        $queryCards = $bdd->prepare("SELECT * FROM cards");
+        $queryCards = $bdd->prepare("SELECT c.*, u.nickname as user_nickname, u.id as user_id, u.lastName as user_lastName, u.firstName as user_firstName, u.email as user_email, u.role as user_role, u.rank as user_rank, u.profilPicture as user_profilPicture, u.isBanned as user_isBanned, u.createdDate as user_createdDate FROM cards c
+        JOIN users u ON c.user = u.id");
         $queryCards->execute();
 
         $cards = [];
 
         while ($row = $queryCards->fetch(PDO::FETCH_ASSOC)) {
-            $cards[] = new Card($row['id'], $row['title'], $row['contentText'], $row['gitHub'], $row['status'], $row['upVote'], $row['createdDate'], $row['updatedDate'], $row['summary'], $row['user'], $row['thematic'], $row['platform'], $row['img']);
+            $user = new User(
+                $row['user_id'],
+                $row['user_nickname'],
+                $row['user_lastName'],
+                $row['user_firstName'],
+                $row['user_email'],
+                $row['user_role'],
+                $row['user_rank'],
+                $row['user_profilPicture'],
+                $row['user_isBanned'],
+                $row['user_createdDate']
+            );
+
+            $cards[] = new Card(
+                $row['id'],
+                $row['title'],
+                $row['contentText'],
+                $row['gitHub'],
+                $row['status'],
+                $row['upVote'],
+                $row['createdDate'],
+                $row['updatedDate'],
+                $row['summary'],
+                $user,
+                $row['thematic'],
+                $row['platform'],
+                $row['img']
+            );
+        }
+
+        function formatDate($date)
+        {
+            $formattedDate = new DateTime($date);
+            return $formattedDate->format('m/Y');
         }
 
         return $cards;
