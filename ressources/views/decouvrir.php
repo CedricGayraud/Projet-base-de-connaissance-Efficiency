@@ -18,6 +18,12 @@ require('./decouvrir_controller.php');
 <?php include 'sidebar.php' ?>
 
 <body>
+
+    <?php $thematics = Thematic::getAllThematics($bdd);
+    $platforms = Platform::getAllPlatforms($bdd);
+    $cards = Card::getAllCards($bdd);
+    ?>
+
     <div x-data="{ selectedThematic: null, selectedPlatform: null }">
         <!-- Thématiques -->
         <div class="container mx-auto mt-8">

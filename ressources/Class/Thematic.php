@@ -57,4 +57,18 @@ class Thematic
     {
         $this->color = $color;
     }
+
+    public static function getAllThematics($bdd)
+    {
+        $queryThematics = $bdd->prepare("SELECT * FROM thematics");
+        $queryThematics->execute();
+
+        $thematics = [];
+
+        while ($row = $queryThematics->fetch(PDO::FETCH_ASSOC)) {
+            $thematics[] = new Thematic($row['id'], $row['name'], $row['description'], $row['color']);
+        }
+
+        return $thematics;
+    }
 }
