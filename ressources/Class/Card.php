@@ -177,4 +177,18 @@ class Card
     {
         $this->img = $img;
     }
+
+    public static function getAllCards($bdd)
+    {
+        $queryCards = $bdd->prepare("SELECT * FROM cards");
+        $queryCards->execute();
+
+        $cards = [];
+
+        while ($row = $queryCards->fetch(PDO::FETCH_ASSOC)) {
+            $cards[] = new Card($row['id'], $row['title'], $row['contentText'], $row['gitHub'], $row['status'], $row['upVote'], $row['createdDate'], $row['updatedDate'], $row['summary'], $row['user'], $row['thematic'], $row['platform'], $row['img']);
+        }
+
+        return $cards;
+    }
 }

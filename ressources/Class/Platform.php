@@ -69,4 +69,18 @@ class Platform
     {
         $this->img = $img;
     }
+
+    public static function getAllPlatforms($bdd)
+    {
+        $queryPlatforms = $bdd->prepare("SELECT * FROM platforms");
+        $queryPlatforms->execute();
+
+        $platforms = [];
+
+        while ($row = $queryPlatforms->fetch(PDO::FETCH_ASSOC)) {
+            $platforms[] = new Platform($row['id'], $row['name'], $row['description'], $row['link'], $row['img']);
+        }
+
+        return $platforms;
+    }
 }
