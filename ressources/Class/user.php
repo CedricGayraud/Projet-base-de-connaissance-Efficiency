@@ -123,6 +123,6 @@ class User
 
     public function setCreatedDate($createdDate)
     {
-        $this->isBanned = $createdDate;
+        $this->createdDate = $createdDate;
     }
 }

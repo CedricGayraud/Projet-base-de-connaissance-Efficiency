@@ -1,4 +1,9 @@
 <?php
+include '../../layout.php';
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 function getSessionUser() {
     global $bdd;
     try {
@@ -21,31 +26,39 @@ function getSessionUser() {
 
 
 
-function modifyUserDetails() {
+function modifyUserDetails($id, $newData) {
     try {
-        global $bdd;
+    global $bdd;
+    var_dump($newData);
+        
         // Définir la requête SQL pour mettre à jour les détails de l'utilisateur
         $query = "UPDATE users 
                    SET 
                       nickname = :nickname,
                       lastName = :lastName, 
                       firstName = :firstName, 
-                      email = :email, 
-                      role = :role, 
-                      rank = :rank, 
-                      isBanned = :isBanned 
-                  WHERE id = ?";
+                      email = :email";
+        
+        // Si un nouveau mot de passe a été fourni, inclure la colonne "password" dans la requête
+        if (isset($newData['password']) && !empty($newData['password'])) {
+            $query .= ", password = :password ";
+        }
+            // Terminez la requête avec la clause WHERE pour spécifier l'utilisateur à mettre à jour
+            $query .= "WHERE id = :id";
+        
         
         // Préparer la requête SQL
         $stmt = $bdd->prepare($query);
         
         // Liage des paramètres
+        $stmt->bindParam(':nickname', $newData['nickname']); // Assurez-vous de disposer d'une clé 'nickname' dans $newData
         $stmt->bindParam(':lastName', $newData['lastName']);
         $stmt->bindParam(':firstName', $newData['firstName']);
         $stmt->bindParam(':email', $newData['email']);
-        $stmt->bindParam(':role', $newData['role']);
-        $stmt->bindParam(':rank', $newData['rank']);
-        $stmt->bindParam(':isBanned', $newData['isBanned']);
+        if (isset($newData['password']) && !empty($newData['password'])) {
+            $hashedPassword = password_hash($newData['password'], PASSWORD_DEFAULT);
+            $stmt->bindParam(':password', $hashedPassword);
+        }
         $stmt->bindParam(':id', $id);
         
         // Exécuter la requête SQL
@@ -54,6 +67,7 @@ function modifyUserDetails() {
         // La mise à jour a réussi
         return true;
     } catch (PDOException $e) {
+        echo "Erreur lors de la récupération des données : " . $e->getMessage();
         // En cas d'erreur, vous pouvez choisir de la gérer ici.
         // Par exemple, affichez un message d'erreur ou enregistrez-le dans un fichier de journal.
         // Pour l'instant, nous retournons false en cas d'erreur.
@@ -68,26 +82,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (isset($_POST['save'])) {
         // Le bouton "Enregistrer" a été cliqué
         // Traitez les données du formulaire de modification et mettez à jour la base de données
-        
-        $newData = [
-            'lastName' => $_POST['last_name'],
-            'firstName' => $_POST['first_name'],
-            'email' => $_POST['email'],
-            'role' => $_POST['role'],
-            'rank' => $_POST['rank'],
-            'isBanned' => isset($_POST['is_banned']) ? 1 : 0, // Exemple pour une case à cocher
-        ];
+        var_dump($_POST);
 
         $userId = $_POST['user_id']; // Assurez-vous d'avoir un champ caché pour l'ID de l'utilisateur
+        $newData = [
+            'nickname' => $_POST['nickname'],
+            'lastName' => $_POST['lastName'],
+            'firstName' => $_POST['firstName'],
+            'email' => $_POST['email'],
+            'password' => $_POST['new_password'],
+        ];
+
+        // Ajoutez ici la vérification des mots de passe
+        if (!empty($newData['password']) && $newData['password'] !== $_POST['confirm_password']) {
+            echo "Les mots de passe ne correspondent pas.";
+            return false;
+        }
 
         // Appelez votre fonction de mise à jour des détails de l'utilisateur
-        if (modifyUserDetails($bdd, $userId, $newData)) {
+        if (modifyUserDetails($userId, $newData)) {
             // La mise à jour a réussi, redirigez l'utilisateur ou affichez un message de succès
-            header('Location: profil.php');
+            header('Location:../views/profil.php');
             exit;
         } else {
             // La mise à jour a échoué, affichez un message d'erreur si nécessaire
             echo "Erreur lors de la mise à jour des informations.";
+            return false;
         }
     }
 }
