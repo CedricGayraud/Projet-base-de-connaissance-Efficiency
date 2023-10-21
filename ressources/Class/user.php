@@ -125,4 +125,34 @@ class User
     {
         $this->isBanned = $createdDate;
     }
+
+    public static function getSessionUser($bdd)
+    {
+        try {
+            if (isset($_SESSION['user'])) {
+                $affich_users = $bdd->prepare('SELECT * FROM users WHERE id = ?');
+                $affich_users->execute(array($_SESSION['user']));
+                $result = $affich_users->fetch(PDO::FETCH_ASSOC);
+
+                if ($result) {
+                    return new User(
+                        $result['id'],
+                        $result['nickname'],
+                        $result['lastName'],
+                        $result['firstName'],
+                        $result['email'],
+                        $result['role'],
+                        $result['rank'],
+                        $result['profilPicture'],
+                        $result['isBanned'],
+                        $result['createdDate']
+                    );
+                }
+            }
+        } catch (PDOException $e) {
+            echo "Erreur lors de la récupération des données : " . $e->getMessage();
+        }
+
+        return null;
+    }
 }
