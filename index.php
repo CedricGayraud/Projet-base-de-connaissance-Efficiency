@@ -1,8 +1,5 @@
-<?php
-require('./layout.php');
-//Le fichier layout contient la connexion à la base de données ainsi qu'au cdn de tailwind
+<?php include 'ressources/views/session_config.php' ?>
 
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,10 +11,11 @@ require('./layout.php');
 </head>
 
 <body>
-    <?php include 'ressources/views/sidebar.php' ?>
-    <h1 class="bg-green-700">CECI EST LA PAGE INDEX <?php var_dump($currentPage); ?></h1>
-
-
+    <?php
+    include('./ressources/views/sidebar.php');
+    include('./ressources/views/accueil.php');
+    include('./ressources/views/footer.php');
+    ?>
 </body>
 
 </html>
