@@ -96,20 +96,23 @@ if (isset($_SESSION['user'])) {
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/ressources/views/fiche.php" x-bind:class="{ 'text-[#364BFF] hover:text-[#364BFF] bg-gray-50': currentPage === 'fiche', 'text-gray-400 hover:text-[#31ABFF] hover:bg-gray-50': currentPage !== 'fiche' }" class="group flex gap-x-1 rounded-md text-sm leading-6 font-semibold p-2">
-                                                <span class="h-8 w-8 shrink-0  material-symbols-outlined" :class="{ 'text-[#364BFF]': currentPage === 'fiche' }" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                            <a href="/ressources/views/creation_fiche.php" x-bind:class="{ 'text-[#364BFF] hover:text-[#364BFF] bg-gray-50': currentPage === 'creation_fiche', 'text-gray-400 hover:text-[#31ABFF] hover:bg-gray-50': currentPage !== 'fiche' }" class="group flex gap-x-1 rounded-md text-sm leading-6 font-semibold p-2">
+                                                <span class="h-8 w-8 shrink-0  material-symbols-outlined" :class="{ 'text-[#364BFF]': currentPage === 'creation_fiche' }" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                                     add
                                                 </span>
                                                 Fiche
                                             </a>
                                         </li>
-                                        <a href="/ressources/views/dashboard.php" x-bind:class="{ 'text-[#364BFF] hover:text-[#364BFF] bg-gray-50': currentPage === 'dashboard', 'text-gray-400 hover:text-[#31ABFF] hover:bg-gray-50': currentPage !== 'dashboard' }" class="group flex gap-x-1 rounded-md text-sm leading-6 font-semibold p-2">
-                                            <span class="h-8 w-8 shrink-0 material-symbols-outlined" :class="{ 'text-[#364BFF]': currentPage === 'dashboard' }" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                                dashboard
-                                            </span>
-                                            Dashboard
-                                        </a>
                                         <?php
+                                        if (isset($_SESSION['user']) &&  $affichage['role'] == 1) {
+                                        ?>
+                                            <a href="/ressources/views/dashboard.php" x-bind:class="{ 'text-[#364BFF] hover:text-[#364BFF] bg-gray-50': currentPage === 'dashboard', 'text-gray-400 hover:text-[#31ABFF] hover:bg-gray-50': currentPage !== 'dashboard' }" class="group flex gap-x-1 rounded-md text-sm leading-6 font-semibold p-2">
+                                                <span class="h-8 w-8 shrink-0 material-symbols-outlined" :class="{ 'text-[#364BFF]': currentPage === 'dashboard' }" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                                    dashboard
+                                                </span>
+                                                Dashboard
+                                            </a>
+                                        <?php }
                                         if (isset($_SESSION['user'])) {
                                         ?>
                                             <a href="/ressources/views/logout.php"><button type="submit" value="logout" class="text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-full px-5 py-2.5 text-center mr-4">Deconnexion</button></a>
@@ -162,20 +165,24 @@ if (isset($_SESSION['user'])) {
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/ressources/views/fiche.php" x-bind:class="{ 'bg-gray-50 text-indigo-600': currentPage === 'fiche', 'text-gray-400 hover:text-[#31ABFF] hover:bg-gray-50': currentPage !== 'fiche' }" class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
-                                        <span class="h-8 w-8 shrink-0 material-symbols-outlined" style="font-size: 36px;" x-bind:class="{ 'text-[#364BFF]': currentPage === 'fiche' }" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <a href="/ressources/views/creation_fiche.php" x-bind:class="{ 'bg-gray-50 text-indigo-600': currentPage === 'creation_fiche', 'text-gray-400 hover:text-[#31ABFF] hover:bg-gray-50': currentPage !== 'fiche' }" class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
+                                        <span class="h-8 w-8 shrink-0 material-symbols-outlined" style="font-size: 36px;" x-bind:class="{ 'text-[#364BFF]': currentPage === 'creation_fiche' }" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                             add
                                         </span>
                                     </a>
                                 </li>
-                                <li>
-                                    <div class="text-xs font-semibold leading-6 text-gray-400 text-center">Admin</div>
-                                    <a href="/ressources/views/dashboard.php" x-bind:class="{ 'bg-gray-50 text-indigo-600 ': currentPage === 'dashboard', 'text-gray-400 hover:text-[#31ABFF] hover:bg-gray-50': currentPage !== 'dashboard' }" class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
-                                        <span class="h-8 w-8 shrink-0 material-symbols-outlined" style="font-size: 36px;" x-bind:class="{ 'text-[#364BFF]': currentPage === 'dashboard' }" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                            dashboard
-                                        </span>
-                                    </a>
-                                </li>
+                                <?php
+                                if (isset($_SESSION['user']) && $affichage['role'] == 1) {
+                                ?>
+                                    <li>
+                                        <div class="text-xs font-semibold leading-6 text-gray-400 text-center">Admin</div>
+                                        <a href="/ressources/views/dashboard.php" x-bind:class="{ 'bg-gray-50 text-indigo-600 ': currentPage === 'dashboard', 'text-gray-400 hover:text-[#31ABFF] hover:bg-gray-50': currentPage !== 'dashboard' }" class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
+                                            <span class="h-8 w-8 shrink-0 material-symbols-outlined" style="font-size: 36px;" x-bind:class="{ 'text-[#364BFF]': currentPage === 'dashboard' }" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                                dashboard
+                                            </span>
+                                        </a>
+                                    </li>
+                                <?php } ?>
                             </ul>
                         </li>
                         <li class="mt-auto">
@@ -246,19 +253,23 @@ if (isset($_SESSION['user'])) {
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/ressources/views/fiche.php" x-bind:class="{ 'text-[#364BFF] hover:text-[#364BFF] bg-gray-50': currentPage === 'fiche', 'text-gray-400 hover:text-[#31ABFF] hover:bg-gray-50': currentPage !== 'fiche' }" class="group flex gap-x-1 rounded-md text-sm leading-6 font-semibold p-2">
-                                        <span class="h-8 w-8 shrink-0  material-symbols-outlined" :class="{ 'text-[#364BFF]': currentPage === 'fiche' }" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <a href="/ressources/views/creation_fiche.php" x-bind:class="{ 'text-[#364BFF] hover:text-[#364BFF] bg-gray-50': currentPage === 'creation_fiche', 'text-gray-400 hover:text-[#31ABFF] hover:bg-gray-50': currentPage !== 'fiche' }" class="group flex gap-x-1 rounded-md text-sm leading-6 font-semibold p-2">
+                                        <span class="h-8 w-8 shrink-0  material-symbols-outlined" :class="{ 'text-[#364BFF]': currentPage === 'creation_fiche' }" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                             add
                                         </span>
                                         Fiche
                                     </a>
                                 </li>
-                                <a href="/ressources/views/dashboard.php" x-bind:class="{ 'text-[#364BFF] hover:text-[#364BFF] bg-gray-50': currentPage === 'dashboard', 'text-gray-400 hover:text-[#31ABFF] hover:bg-gray-50': currentPage !== 'dashboard' }" class="group flex gap-x-1 rounded-md text-sm leading-6 font-semibold p-2">
-                                    <span class="h-8 w-8 shrink-0 material-symbols-outlined" :class="{ 'text-[#364BFF]': currentPage === 'dashboard' }" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                        dashboard
-                                    </span>
-                                    Dashboard
-                                </a>
+                                <?php
+                                if (isset($_SESSION['user']) && $affichage['role'] == 1) {
+                                ?>
+                                    <a href="/ressources/views/dashboard.php" x-bind:class="{ 'text-[#364BFF] hover:text-[#364BFF] bg-gray-50': currentPage === 'dashboard', 'text-gray-400 hover:text-[#31ABFF] hover:bg-gray-50': currentPage !== 'dashboard' }" class="group flex gap-x-1 rounded-md text-sm leading-6 font-semibold p-2">
+                                        <span class="h-8 w-8 shrink-0 material-symbols-outlined" :class="{ 'text-[#364BFF]': currentPage === 'dashboard' }" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                            dashboard
+                                        </span>
+                                        Dashboard
+                                    </a>
+                                <?php } ?>
                         </li>
                     </ul>
                     </li>
