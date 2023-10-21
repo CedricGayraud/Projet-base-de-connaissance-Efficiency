@@ -57,12 +57,12 @@ require('../Class/Card.php');
             <h1 class="text-2xl font-bold">Fiches</h1>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
                 <?php foreach ($cards as $card) : ?>
-                    <div x-show="(selectedThematic === null || selectedThematic === <?= $card->getThematic(); ?>) && (selectedPlatform === null || selectedPlatform === <?= $card->getPlatform(); ?>)" class="bg-white rounded-lg overflow-hidden shadow-md p-4 transition-transform transform hover:translate-y-1 cursor-pointer">
+                    <a href="fiche.php?fiche=<?= $card->getID(); ?>" x-show="(selectedThematic === null || selectedThematic === <?= $card->getThematic(); ?>) && (selectedPlatform === null || selectedPlatform === <?= $card->getPlatform(); ?>)" class="bg-white rounded-lg overflow-hidden shadow-md p-4 transition-transform transform hover:translate-y-1 cursor-pointer">
                         <div class="flex flex-col items-center">
                             <h2 class="text-lg font-semibold text-gray-800"><?= $card->getTitle(); ?></h2>
                             <p class="text-gray-500">Le <?= formatDate($card->getCreatedDate()); ?> par <?= $card->getUser()->getNickname(); ?></p>
                         </div>
-                    </div>
+                    </a>
                 <?php endforeach; ?>
             </div>
         </div>
