@@ -7,7 +7,6 @@ class Card
     public string $contentText;
     public string $gitHub;
     public string $status;
-    public int $upVote;
     public string $createdDate;
     public string $updatedDate;
     public string $summary;
@@ -22,7 +21,6 @@ class Card
         string $contentText,
         string $gitHub,
         string $status,
-        int $upVote,
         string $createdDate,
         string $updatedDate,
         string $summary,
@@ -36,7 +34,6 @@ class Card
         $this->contentText = $contentText;
         $this->gitHub = $gitHub;
         $this->status = $status;
-        $this->upVote = $upVote;
         $this->createdDate = $createdDate;
         $this->updatedDate = $updatedDate;
         $this->summary = $summary;
@@ -95,16 +92,6 @@ class Card
     public function setStatus(string $status): void
     {
         $this->status = $status;
-    }
-
-    public function getUpVote(): int
-    {
-        return $this->upVote;
-    }
-
-    public function setUpVote(int $upVote): void
-    {
-        $this->upVote = $upVote;
     }
 
     public function getCreatedDate(): string
@@ -205,7 +192,6 @@ class Card
                 $row['contentText'],
                 $row['gitHub'],
                 $row['status'],
-                $row['upVote'],
                 $row['createdDate'],
                 $row['updatedDate'],
                 $row['summary'],
@@ -253,7 +239,6 @@ class Card
                 $row['contentText'],
                 $row['gitHub'],
                 $row['status'],
-                $row['upVote'],
                 $row['createdDate'],
                 $row['updatedDate'],
                 $row['summary'],
@@ -301,7 +286,6 @@ class Card
                 $row['contentText'],
                 $row['gitHub'],
                 $row['status'],
-                $row['upVote'],
                 $row['createdDate'],
                 $row['updatedDate'],
                 $row['summary'],
