@@ -14,7 +14,6 @@ $platforms = Platform::getAllPlatforms($bdd);
     if (isset($_SESSION['user'])) {
 
         $userId = $_SESSION['user'];
-        var_dump($userId);
 
         // $connect = $bdd->prepare('SELECT * FROM users WHERE id = ' . $userId . '');
         // $connect->execute();

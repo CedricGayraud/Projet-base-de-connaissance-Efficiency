@@ -1,10 +1,12 @@
 <?php
 require('./layout.php');
-require('ressources\Class\Thematic.php');
-require('ressources\Class\Platform.php');
-require('ressources\Class\Card.php');
+require('ressources/Class/Thematic.php');
+require('ressources/Class/Platform.php');
+require('ressources/Class/Card.php');
 
-
+$thematics = Thematic::getAllThematics($bdd);
+$platforms = Platform::getAllPlatforms($bdd);
+$cards = Card::getAllCards($bdd);
 ?>
 
 <head>
@@ -20,10 +22,8 @@ require('ressources\Class\Card.php');
             width: 40% !important;
             text-align: center;
             font-size: 18px;
-            background: #fff;
             align-items: center;
             margin: 0px 35px 0px 35px;
-            border: solid 2px black;
             cursor: pointer;
         }
 
@@ -115,22 +115,19 @@ require('ressources\Class\Card.php');
 
         <p class="w-fit mx-auto mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 border-b-4 border-[#2CE6C1]">À la une</p>
 
+
+
         <div class="flex justify-center">
-            <div class="rounded-md mx-2 text-center border-2 cursor-pointer transform transition-transform duration-300 hover:scale-110">
-                <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" class="rounded-t-md" alt="">
-            </div>
-            <div class="rounded-md mx-2 text-center border-2 cursor-pointer transform transition-transform duration-300 hover:scale-110">
-                <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" class="rounded-t-md" alt="">
-            </div>
-            <div class="rounded-md mx-2 text-center border-2 cursor-pointer transform transition-transform duration-300 hover:scale-110">
-                <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" class="rounded-t-md" alt="">
-            </div>
-            <div class="rounded-md mx-2 text-center border-2 cursor-pointer transform transition-transform duration-300 hover:scale-110">
-                <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" class="rounded-t-md" alt="">
-            </div>
-            <div class="rounded-md mx-2 text-center border-2 cursor-pointer transform transition-transform duration-300 hover:scale-110">
-                <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" class="rounded-t-md" alt="">
-            </div>
+
+            <?php foreach ($cards as $card) : ?>
+                <a href="fiche.php?fiche=<?= $card->getID(); ?>" x-show="(selectedThematic === null || selectedThematic === <?= $card->getThematic(); ?>) && (selectedPlatform === null || selectedPlatform === <?= $card->getPlatform(); ?>)" class="bg-white rounded-lg overflow-hidden shadow-md p-4 transition-transform transform hover:translate-y-1 cursor-pointer">
+                    <div class="rounded-md mx-2 text-center border-2 cursor-pointer transform transition-transform duration-300 hover:scale-110">
+                        <h2 class="text-lg font-semibold text-gray-800"><?= $card->getTitle(); ?></h2>
+                        <p class="text-gray-500">Le <?= formatDate($card->getCreatedDate()); ?> par <?= $card->getUser()->getNickname(); ?></p>
+                    </div>
+                </a>
+            <?php endforeach; ?>
+
 
         </div>
 
@@ -157,9 +154,16 @@ require('ressources\Class\Card.php');
                     <div class="aspect-w-5 aspect-h-2 overflow-hidden rounded-lg bg-gray-100 max-w-3xl">
 
                         <div class="swiper">
-
-
                             <div class="swiper-wrapper rounded-md">
+
+                                <?php foreach ($thematics as $thematic) : ?>
+                                    <div class="swiper-slide rounded-md rounded-lg overflow-hidden shadow-md p-4 bg-[<?= $thematic->getColor(); ?>] transition-transform transform hover:translate-y-1 cursor-pointer">
+                                        <h2 class="text-lg font-semibold text-white"><?= $thematic->getName(); ?></h2>
+                                        <p class="text-white text-sm"><?= $thematic->getDescription(); ?></p>
+                                    </div>
+                                <?php endforeach; ?>
+
+                                <!-- <div class="swiper-wrapper rounded-md">
                                 <div class="swiper-slide rounded-md">
                                     <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" class="" alt="">
                                 </div>
@@ -177,7 +181,7 @@ require('ressources\Class\Card.php');
                                 </div>
                                 <div class="swiper-slide rounded-md">
                                     <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" alt="">
-                                </div>
+                                </div> -->
 
                             </div>
                             <div class="swiper-button-next"></div>
@@ -227,20 +231,22 @@ require('ressources\Class\Card.php');
 
                             <div class="swiper">
                                 <div class="swiper-wrapper rounded-md">
-                                    <?php foreach ($platforms as $platform) : ?>
-                                        <div class="swiper-slide rounded-md">
-                                            <a href="#">
-                                                <img src="<?php $platform->getImg(); ?>"><?php echo $platform->getName(); ?></img>
-                                            </a>
-                                        </div>
 
+                                    <?php foreach ($platforms as $platform) : ?>
+                                        <div class="swiper-slide rounded-md bg-white rounded-lg overflow-hidden shadow-md p-4 transition-transform transform hover:translate-y-1 cursor-pointer">
+                                            <div class="flex flex-col items-center">
+                                                <img src="<?= $platform->getImg(); ?>" alt="<?= $platform->getName(); ?>" class="w-16 h-16 mb-2">
+                                                <h2 class="text-lg font-semibold text-gray-800"><?= $platform->getName(); ?></h2>
+                                            </div>
+                                        </div>
                                     <?php endforeach; ?>
-                                    <!-- <div class="swiper-slide rounded-md">
+                                    <!--  <div class="swiper-slide rounded-md">
                                         <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" class="" alt="">
                                     </div>
                                     <div class="swiper-slide rounded-md">
                                         <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" alt="">
                                     </div>
+                                    
                                     <div class="swiper-slide rounded-md">
                                         <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" alt="">
                                     </div>
