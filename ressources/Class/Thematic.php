@@ -71,4 +71,25 @@ class Thematic
 
         return $thematics;
     }
+
+    public static function createThematic($name, $description, $color)
+    {
+        global $bdd;
+        $queryThematics = $bdd->prepare("INSERT INTO thematics (name, description, color) VALUES (:name, :description, :color) ");
+        $queryThematics->execute(array('name' => $name, 'description' => $description, 'color' => $color));
+    }
+
+    public static function deleteThematic($id)
+    {
+        global $bdd;
+        $queryThematics = $bdd->prepare("DELETE FROM thematics WHERE id = :id");
+        $queryThematics->execute(array('id' => $id));
+    }
+
+    public static function editThematic($id, $name, $description, $color)
+    {
+        global $bdd;
+        $queryPlatforms = $bdd->prepare("UPDATE thematics SET name=:name, description=:description, color=:color WHERE id=:id ");
+        $queryPlatforms->execute(array('name' => $name, 'description' => $description, 'color' => $color, 'id' => $id));
+    }
 }

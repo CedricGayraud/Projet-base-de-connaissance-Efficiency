@@ -83,4 +83,25 @@ class Platform
 
         return $platforms;
     }
+
+    public static function createPlatform($name, $description, $link, $img)
+    {
+        global $bdd;
+        $queryPlatforms = $bdd->prepare("INSERT INTO platforms (name, description, link, img) VALUES (:name, :description, :link, :img) ");
+        $queryPlatforms->execute(array('name' => $name, 'description' => $description, 'link' => $link, 'img' => $img));
+    }
+
+    public static function deletePlatform($id)
+    {
+        global $bdd;
+        $queryPlatforms = $bdd->prepare("DELETE FROM platforms WHERE id = :id");
+        $queryPlatforms->execute(array('id' => $id));
+    }
+
+    public static function editPlatform($id, $name, $description, $link, $img)
+    {
+        global $bdd;
+        $queryPlatforms = $bdd->prepare("UPDATE platforms SET name=:name, description=:description, link=:link, img=:img WHERE id=:id ");
+        $queryPlatforms->execute(array('name' => $name, 'description' => $description, 'link' => $link, 'img' => $img, 'id' => $id));
+    }
 }
