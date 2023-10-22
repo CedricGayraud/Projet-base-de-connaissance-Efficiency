@@ -19,7 +19,8 @@ require('../Class/Card.php');
     $sessionUser = User::getSessionUser($bdd);
     $thematics = Thematic::getAllThematics($bdd);
     $platforms = Platform::getAllPlatforms($bdd);
-    $cards = Card::getAllCards($bdd); ?>
+    $cards = Card::getAllCards($bdd);
+    $cardsToVerify = Card::getAllToVerifyCards($bdd); ?>
     <?php include 'sidebar.php' ?>
     <div class="bg-cover bg-center bg-opacity-50 bg-[#2CE6C1] h-auto text-black py-8 px-10 object-fill mr-8 ml-28 mt-5 mb-5 rounded-lg flex">
         <div class="md:w-1/2 pr-4 flex items-center ml-16">
@@ -57,13 +58,19 @@ require('../Class/Card.php');
             <!-- Fiches -->
             <div class="container mx-auto mt-8">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-                    <?php foreach ($cards as $card) : ?>
-                        <a href="fiche.php?fiche=<?= $card->getID(); ?>" class="bg-white rounded-lg overflow-hidden shadow-md p-4 transition-transform transform hover:translate-y-1 cursor-pointer">
+                    <?php foreach ($cardsToVerify as $card) : ?>
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md p-4 transition-transform transform hover:translate-y-1 cursor-pointer">
                             <div class="flex flex-col items-center">
                                 <h2 class="text-lg font-semibold text-gray-800"><?= $card->getTitle(); ?></h2>
                                 <p class="text-gray-500">Le <?= formatDate($card->getCreatedDate()); ?> par <?= $card->getUser()->getNickname(); ?></p>
                             </div>
-                        </a>
+                            <form action="dashboard_controller.php" method="post">
+                                <input type="hidden" name="card_id" value="<?= $card->getId(); ?>">
+                                <button type="submit" name="verify_card" class="cursor-pointer text-white font-medium rounded-lg text-sm w-full text-center h-6 bg-[#2CE6C1] hover:bg-[#BAE1FE]">
+                                    Vérifier
+                                </button>
+                            </form>
+                        </div>
                     <?php endforeach; ?>
                 </div>
             </div>

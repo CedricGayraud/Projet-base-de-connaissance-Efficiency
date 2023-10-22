@@ -1,7 +1,11 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 require './session_config.php';
 require('../Class/Thematic.php');
 require('../Class/Platform.php');
+require('../Class/Card.php');
 
 
 //Creation d'une platforme
@@ -71,6 +75,16 @@ if (isset($_POST['update_thematic'])) {
     $color = $_POST['color'];
 
     Thematic::editThematic($thematicId, $name, $description, $color);
+
+    header("Location: dashboard.php");
+    exit;
+}
+
+if (isset($_POST['verify_card'])) {
+    $cardId = $_POST['card_id'];
+    echo "Le formulaire a été soumis avec verify_card. Card ID : " . $cardId;
+
+    Card::verifyCard($cardId);
 
     header("Location: dashboard.php");
     exit;
