@@ -1,7 +1,5 @@
 <?php
 require($_SERVER['DOCUMENT_ROOT'] . '/layout.php');
-require('../Class/User.php');
-
 class Card
 {
     public int $id;
