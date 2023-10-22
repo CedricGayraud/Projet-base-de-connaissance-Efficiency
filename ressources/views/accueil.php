@@ -4,6 +4,7 @@ require('ressources\Class\Thematic.php');
 require('ressources\Class\Platform.php');
 require('ressources\Class\Card.php');
 
+
 ?>
 
 <head>
@@ -68,11 +69,6 @@ require('ressources\Class\Card.php');
     </style>
 </head>
 
-<?php
-$sessionUser = User::getSessionUser($bdd);
-$thematics = Thematic::getAllThematics($bdd);
-$platforms = Platform::getAllPlatforms($bdd);
-$cards = Card::getAllCards($bdd); ?>
 
 <div class="h-screen w-full bg-cover bg-top py-8" style="background-image: url(https://img.freepik.com/photos-gratuite/conception-cerveau-cyborg-complexe-carte-circuit-imprime-rougeoyante-generee-par-ia_188544-36674.jpg?w=1380&t=st=1695627849~exp=1695628449~hmac=26ff3873ed29d02e4ba0525da3b591c98887a56f444c9cc325004c886b32ab4b)">
     <div class="ml-32 mr-12">
@@ -161,10 +157,8 @@ $cards = Card::getAllCards($bdd); ?>
                     <div class="aspect-w-5 aspect-h-2 overflow-hidden rounded-lg bg-gray-100 max-w-3xl">
 
                         <div class="swiper">
-                            <?php
-                            foreach ($thematics as $thematic) {
-                            }
-                            ?>
+
+
                             <div class="swiper-wrapper rounded-md">
                                 <div class="swiper-slide rounded-md">
                                     <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" class="" alt="">
@@ -233,7 +227,15 @@ $cards = Card::getAllCards($bdd); ?>
 
                             <div class="swiper">
                                 <div class="swiper-wrapper rounded-md">
-                                    <div class="swiper-slide rounded-md">
+                                    <?php foreach ($platforms as $platform) : ?>
+                                        <div class="swiper-slide rounded-md">
+                                            <a href="#">
+                                                <img src="<?php $platform->getImg(); ?>"><?php echo $platform->getName(); ?></img>
+                                            </a>
+                                        </div>
+
+                                    <?php endforeach; ?>
+                                    <!-- <div class="swiper-slide rounded-md">
                                         <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" class="" alt="">
                                     </div>
                                     <div class="swiper-slide rounded-md">
@@ -250,7 +252,7 @@ $cards = Card::getAllCards($bdd); ?>
                                     </div>
                                     <div class="swiper-slide rounded-md">
                                         <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" alt="">
-                                    </div>
+                                    </div> -->
 
                                 </div>
                                 <div class="swiper-button-next"></div>

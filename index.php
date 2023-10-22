@@ -1,6 +1,4 @@
 <?php include 'ressources/views/session_config.php';
-require './ressources/Controller/cardController.php';
-require './ressources/Class/Card.php';
 ?>
 
 <!DOCTYPE html>
