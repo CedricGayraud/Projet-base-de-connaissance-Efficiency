@@ -23,6 +23,37 @@ function getSessionUser() {
 }
 
 
+function updateProfilePicture($userId, $newProfilePictureUrl) {
+    global $bdd;
+    
+    // Utilisez une requête préparée pour mettre à jour le champ "profilPicture" dans la base de données
+    $sql = "UPDATE users SET profilPicture = :profilePicture WHERE id = :id";
+    $stmt = $bdd->prepare($sql);
+    $stmt->bindParam(':profilePicture', $newProfilePictureUrl);
+    $stmt->bindParam(':id', $userId);
+    
+    try {
+        // Exécutez la requête SQL
+        $stmt->execute();
+        
+        // La mise à jour a réussi, redirigez l'utilisateur
+        header('Location: ../views/profil.php');
+        exit;
+    } catch (PDOException $e) {
+        // La mise à jour a échoué, affichez un message d'erreur si nécessaire
+        echo "Erreur lors de la mise à jour des informations : " . $e->getMessage();
+        return false;
+    }
+}
+
+// Appelez la fonction avec l'ID de l'utilisateur et l'URL de la nouvelle image de profil
+if (isset($_POST['update_profile_picture'])) {
+    $userId = $_POST['user_id']; // Assurez-vous d'avoir un champ caché pour l'ID de l'utilisateur
+    $newProfilePictureUrl = $_POST['profile_picture'];
+    
+    // Appelez la fonction pour mettre à jour l'image de profil
+    updateProfilePicture($userId, $newProfilePictureUrl);
+}
 
 
 
@@ -81,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Affichez le formulaire de modification (déjà géré dans le fichier de vue)
     } elseif (isset($_POST['save'])) {
         // Le bouton "Enregistrer" a été cliqué
-        // Traitez les données du formulaire de modification et mettez à jour la base de données
+        // Traitez les données du formulaire de modification des détails de l'utilisateur
         var_dump($_POST);
 
         $userId = $_POST['user_id']; // Assurez-vous d'avoir un champ caché pour l'ID de l'utilisateur
@@ -99,7 +130,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             return false;
         }
 
-        // Appelez votre fonction de mise à jour des détails de l'utilisateur
+        // Si l'URL de l'image de profil est fournie dans le deuxième formulaire
+        
+
+        // Appelez votre fonction de mise à jour des détails de l'utilisateur (à l'exception de l'image de profil)
         if (modifyUserDetails($userId, $newData)) {
             // La mise à jour a réussi, redirigez l'utilisateur ou affichez un message de succès
             header('Location:../views/profil.php');
@@ -111,5 +145,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+
 
 ?>
