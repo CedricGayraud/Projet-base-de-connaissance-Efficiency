@@ -36,21 +36,39 @@ $user = new user (
     <?php include 'sidebar.php' ?>
     <div>
     
-  <div class=" flex justify-center mt-12 px-4 sm:px-0">
+    <div class="flex justify-center mt-12 px-4 sm:px-0 relative" x-data="{ showModal: false }">
     <div class="bg-gray-400 w-24 h-24 rounded-full flex items-center justify-center">
-        <!-- Vous pouvez ajouter une icône, une image ou du texte comme contenu de l'avatar -->
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-        </svg>
+        <!-- Avatar actuel -->
+        <img src=<?= $affichage['profilPicture']?> alt="Avatar" class="flex w-24 h-24 rounded-full flex items-center justify-center cursor-pointer" x-on:click="showModal = true">
+        <!-- Bouton pour téléverser l'image -->
+        <label class="flex justify-center mt-12 px-4 sm:px-0 relative cursor-pointer"></label>
+        <!-- L'élément d'entrée de fichier caché -->
+        <input type="file" accept="image/*" class="hidden" @change="updateAvatar($event)">
     </div>
-        
-  </div>
+    
+    <!-- Fenêtre modale pour téléverser l'image -->
+    <div x-show="showModal" class="fixed inset-0 flex items-center justify-center z-50" style="background-color: rgba(0, 0, 0, 0.5);">
+        <div class="bg-white p-8 rounded-lg shadow-lg" @click.away="showModal = false">
+            <span class="absolute top-0 right-0 p-4 cursor-pointer" @click="showModal = false">&times;</span>
+            <!-- Formulaire pour téléverser l'image -->
+            <form action="votre_traitement_image.php" method="post" enctype="multipart/form-data">
+                <!-- L'élément d'entrée de fichier dans la fenêtre modale -->
+                <input type="file" accept="image/*" @change="updateAvatar($event)">
+                <!-- Bouton d'envoi -->
+                <button type="submit">Téléverser</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
        
         <p class="mt-1 sm:text-center leading-8 text-gray-500"><?php echo $user->getNickName()?></p>
         <div class= "mt-2 flex justify-center">
         <span class="flex justify-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10"><?php echo $user->getRank()?></span>
         </div>
-    <div class="flex justify-center mt-6 border-t border-gray-100  ">
+    <div class="flex justify-center mt-20 border-t border-gray-100  ">
         
         <dl class="divide-y divide-gray-100">
             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-2 sm:px-0">
