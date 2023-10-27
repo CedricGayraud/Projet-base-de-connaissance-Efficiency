@@ -52,11 +52,14 @@ $user = new user (
             <span class="absolute top-0 right-0 p-4 cursor-pointer" @click="showModal = false">&times;</span>
             <!-- Formulaire pour téléverser l'image -->
             <form action="votre_traitement_image.php" method="post" enctype="multipart/form-data">
-                <!-- L'élément d'entrée de fichier dans la fenêtre modale -->
-                <input type="file" accept="image/*" @change="updateAvatar($event)">
-                <!-- Bouton d'envoi -->
-                <button type="submit">Téléverser</button>
-            </form>
+            <div class="mb-4">
+                  <label class="text-sm font-medium text-gray-900" for="img">Image</label>
+                      <input type="text" id="img" name="img" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none focus:ring focus:ring-[#BAE1FE]" x-model="platformImg" required>
+                            </div>
+                              <button type="submit" name="update_platform" class="text-white bg-[#2CE6C1] hover:bg-[#BAE1FE] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center mr-4">Enregistrer</button>
+                            </form>
+                      <button class="mx-auto text-white bg-red-500 hover:bg-red-600 text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center mr-4" @click="showModal = false">Fermer</button>
+                    </div>
         </div>
     </div>
 </div>
