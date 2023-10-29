@@ -3,6 +3,8 @@ require './session_config.php';
 require('../Class/Thematic.php');
 require('../Class/Platform.php');
 require('../Class/Card.php');
+require('../Class/Message.php');
+require('../Class/UserBanned.php');
 
 ?>
 <!DOCTYPE html>
@@ -20,8 +22,11 @@ require('../Class/Card.php');
     $thematics = Thematic::getAllThematics($bdd);
     $platforms = Platform::getAllPlatforms($bdd);
     $cards = Card::getAllCards($bdd);
-    $cardsToVerify = Card::getAllToVerifyCards($bdd); ?>
-    <?php include 'sidebar.php' ?>
+    $cardsToVerify = Card::getAllToVerifyCards($bdd);
+    $messagesToVerify = Message::getAllMessagesToVerify($bdd);
+    $usersBanned = UserBanned::getAllUsersBanned($bdd);
+
+    include 'sidebar.php' ?>
     <div class="bg-cover bg-center bg-opacity-50 bg-[#2CE6C1] h-auto text-black py-8 px-10 object-fill mr-8 ml-28 mt-5 mb-5 rounded-lg flex">
         <div class="md:w-1/2 pr-4 flex items-center ml-16">
             <div>
@@ -194,13 +199,62 @@ require('../Class/Card.php');
             </div>
         </div>
 
-
         <div x-show="activeTab === 4">
-            Contenu de l'onglet 4
+            <!-- Messages -->
+            <div class="container mx-auto mt-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mt-4">
+                    <?php foreach ($messagesToVerify as $message) : ?>
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md p-4 transition-transform transform hover:translate-y-1 cursor-pointer">
+                            <div class="flex flex-col items-center">
+                                <h2 class="text-lg font-semibold text-gray-800"><?= $message->getEmail(); ?></h2>
+                                <h2 class="text-lg font-semibold text-gray-800"><?= $message->getName(); ?></h2>
+                                <p class="text-gray-500"><?= $message->getMessage(); ?></p>
+                            </div>
+                            <form action="dashboard_controller.php" method="post">
+                                <input type="hidden" name="message_id" value="<?= $message->getId(); ?>">
+                                <button type="submit" name="verify_message" class="cursor-pointer text-white font-medium rounded-lg text-sm w-full text-center h-6 bg-[#2CE6C1] hover:bg-[#BAE1FE]">
+                                    Vérifier
+                                </button>
+                            </form>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
         </div>
-        <div x-show="activeTab === 5">
-            Contenu de l'onglet 5
+
+        <div x-show="activeTab === 5" x-data="{ isOpen: false, username: ''}">
+            <!-- User banned -->
+            <div class="container mx-auto mt-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 mt-4">
+                    <?php foreach ($usersBanned as $ban) : ?>
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md p-4 transition-transform transform hover:translate-y-1 cursor-pointer" x-data="{ xUserId: '<?= $ban->getUser()->getId(); ?>' }">
+                            <div class="flex flex-col items-center">
+                                <img class="h-8 w-8 rounded-full bg-gray-50" src="<?= $ban->getUser()->getProfilPicture() ?>" alt="profil picture">
+                                <h2 class="text-lg font-semibold text-gray-800"><?= $ban->getUser()->getNickName(); ?></h2>
+                                <p class="text-gray-500">Raison :<?= $ban->getMessage(); ?></p>
+                                <p class="text-gray-500">Le : <?= formatDateDay($ban->getDate()); ?></p>
+                            </div>
+                            <button type="submit" name="unBanned" @click="isOpen = true; username = '<?= $ban->getUser()->getNickName(); ?>'; xUserId = '<?= $ban->getUser()->getId(); ?>'" class="cursor-pointer text-white font-medium rounded-lg text-sm w-full text-center h-6 bg-[#2CE6C1] hover:bg-[#BAE1FE]">
+                                Unban
+                            </button>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <!-- Pop-up unban -->
+            <div x-show="isOpen" x-transition:enter="transform duration-300 ease-out" x-transition:enter-start="scale-0" x-transition:enter-end="scale-100" x-transition:leave="scale-100" x-transition:leave-start="scale-100" x-transition:leave-end="scale-0" class="fixed inset-0 flex items-center justify-center z-50">
+                <div class="bg-white p-8 rounded-lg shadow-md text-center">
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4">Etes-vous sûr de vouloir unban <span x-text="username"></span> ?</h2>
+                    <form action="dashboard_controller.php" method="post">
+                        <input type="hidden" name="ban_id" value="<?= $ban->getId(); ?>">
+                        <button type="submit" name="unBan" class="text-white bg-[#2CE6C1] hover:bg-[#BAE1FE] font-medium rounded-lg text-sm w-36 mt-4 mx-auto">OUI</button>
+                    </form>
+                    <button class="text-white bg-red-500 hover:bg-red-600 font-medium rounded-lg text-sm w-36 mt-2 mx-auto" @click="isOpen = false">NON</button>
+                </div>
+            </div>
         </div>
+
+
     </div>
 
 </body>
