@@ -22,8 +22,6 @@ function getSessionUser() {
     }
 }
 
-
-
 function modifyUserDetails($id, $newData) {
     try {
     global $bdd;
