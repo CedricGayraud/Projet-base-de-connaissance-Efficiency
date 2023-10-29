@@ -64,33 +64,37 @@ require('../Class/UserBanned.php');
             <div class="container mx-auto mt-8">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
                     <?php foreach ($cardsToVerify as $card) : ?>
-                        <div class="bg-white rounded-lg overflow-hidden shadow-md p-4 transition-transform transform hover:translate-y-1 cursor-pointer">
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md p-4 transition-transform transform hover:translate-y-1">
                             <div class="flex flex-col items-center">
                                 <h2 class="text-lg font-semibold text-gray-800"><?= $card->getTitle(); ?></h2>
                                 <p class="text-gray-500">Le <?= formatDate($card->getCreatedDate()); ?> par <?= $card->getUser()->getNickname(); ?></p>
                             </div>
-                            <form action="dashboard_controller.php" method="post">
-                                <input type="hidden" name="card_id" value="<?= $card->getId(); ?>">
-                                <button type="submit" name="verify_card" class="cursor-pointer text-white font-medium rounded-lg text-sm w-full text-center h-6 bg-[#2CE6C1] hover:bg-[#BAE1FE]">
-                                    Vérifier
-                                </button>
-                            </form>
+                            <div class="flex justify-between mt-1">
+                                <a href="fiche.php?fiche=<?= $card->getID(); ?>" class="text-white font-medium rounded-lg text-sm w-1/2 text-center h-6 mr-1 text-white bg-[#2CE6C1] hover:bg-[#BAE1FE]">
+                                    Voir
+                                </a>
+                                <form action="dashboard_controller.php" method="post" class="cursor-pointer text-white font-medium rounded-lg text-sm w-1/2 text-center h-6 bg-[#2CE6C1] hover:bg-[#BAE1FE]">
+                                    <input type="hidden" name="card_id" value="<?= $card->getId(); ?>">
+                                    <button type="submit" name="verify_card" class="cursor-pointer text-white font-medium rounded-lg text-sm w-full text-center h-6 bg-[#2CE6C1] hover:bg-[#BAE1FE]">
+                                        Vérifier
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     <?php endforeach; ?>
                 </div>
             </div>
+
         </div>
-        <div x-show="activeTab === 2" x-data="{ isOpen: false, editThematicId: null, thematicName: '', thematicDescription: '', thematicColor: '' }">
+        <div x-show="activeTab === 2" x-data="{ popUpAdd:false, isOpen: false, editThematicId: null, thematicName: '', thematicDescription: '', thematicColor: '' }">
             <div class="flex items-center mx-auto my-auto">
-                <a href="/ressources/views/creation_thematic.php">
-                    <button class="rounded-full border-2 border-white w-20 h-20 bg-[#2CE6C1] text-white hover:text-[#2CE6C1] border-[3px] border-[#2CE6C1] hover:bg-white duration-500 mx-auto !important">
-                        <span class="material-symbols-outlined" style="font-size: 48px;">add</span>
-                    </button>
-                </a>
+                <button class="rounded-full border-2 border-white w-20 h-20 bg-[#2CE6C1] text-white hover:text-[#2CE6C1] border-[3px] border-[#2CE6C1] hover:bg-white duration-500 mx-auto mt-4 !important" @click="popUpAdd = true">
+                    <span class="material-symbols-outlined" style="font-size: 48px;">add</span>
+                </button>
             </div>
             <!-- Thématiques -->
-            <div class="container mx-auto mt-8">
-                <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+            <div class="container mx-auto">
+                <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-1">
                     <?php foreach ($thematics as $thematic) : ?>
                         <div class="rounded-lg overflow-hidden shadow-md p-4 bg-[<?= $thematic->getColor(); ?>] transition-transform transform hover:translate-y-1">
                             <h2 class="text-lg font-semibold text-white"><?= $thematic->getName(); ?></h2>
@@ -110,7 +114,34 @@ require('../Class/UserBanned.php');
                     <?php endforeach; ?>
                 </div>
             </div>
-            <!-- Pop-up thématique -->
+            <!-- Pop-up add thématique -->
+            <div x-show="popUpAdd" x-transition:enter="transform duration-300 ease-out" x-transition:enter-start="scale-0" x-transition:enter-end="scale-100" x-transition:leave="scale-100" x-transition:leave-start="scale-100" x-transition:leave-end="scale-0" class="fixed inset-0 flex items-center justify-center z-50">
+                <div class="bg-white p-8 rounded-lg shadow-md text-center">
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4">Ajouter une thématique</h2>
+                    <!-- Formulaire d'ajout -->
+                    <form class=" w-4/4 mx-auto mt-2 p-4 rounded-xl" action="dashboard_controller.php" method="post">
+                        <div class="justify-cente w-2/4r">
+                            <div>
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Titre de la thématique</label>
+                                <input type="text" name="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none focus:ring focus:ring-[#BAE1FE]" placeholder="Votre thématique" required>
+                            </div>
+                            <div class="mt-2">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                                <textarea type="text" name="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring focus:ring-[#BAE1FE] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Votre description" required></textarea>
+                            </div>
+                            <div class="mt-2">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Couleur en héxadécimal</label>
+                                <input type="text" name="color" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none focus:ring focus:ring-[#BAE1FE]" placeholder="Votre couleur (#BAE1FE)" required>
+                            </div>
+                        </div>
+                        <div class="flex mt-4">
+                            <button type="submit" name="create_thematic" class="text-white bg-[#2CE6C1] hover:bg-[#BAE1FE] mx-auto font-medium rounded-lg text-sm w-36 mt-2">Enregistrer</button>
+                        </div>
+                    </form>
+                    <button class="mx-auto text-white bg-red-500 hover:bg-red-600 font-medium rounded-lg text-sm w-36 mt-2 text-center" @click="popUpAdd = false">Fermer</button>
+                </div>
+            </div>
+            <!-- Pop-up edit thématique -->
             <div x-show="isOpen" x-transition:enter="transform duration-300 ease-out" x-transition:enter-start="scale-0" x-transition:enter-end="scale-100" x-transition:leave="scale-100" x-transition:leave-start="scale-100" x-transition:leave-end="scale-0" class="fixed inset-0 flex items-center justify-center z-50">
                 <div class="bg-white p-8 rounded-lg shadow-md">
                     <h2 class="text-lg font-semibold text-gray-800 mb-4">Modifier la thématique</h2>
@@ -131,17 +162,15 @@ require('../Class/UserBanned.php');
                         </div>
                         <button type="submit" name="update_thematic" class="mx-auto text-white bg-[#2CE6C1] hover:bg-[#BAE1FE] font-medium rounded-lg text-sm w-36 mt-4">Enregistrer</button>
                     </form>
-                    <button class="mx-auto text-white bg-red-500 hover:bg-red-600 font-medium rounded-lg text-sm w-36 mt-2" @click="isOpen = false">Fermer</button>
+                    <button class="mx-auto text-white bg-red-500 hover:bg-red-600 font-medium rounded-lg text-sm w-36" @click="isOpen = false">Fermer</button>
                 </div>
             </div>
         </div>
-        <div x-show="activeTab === 3" x-data="{ isOpen: false, editPlatformId: null, platformName: '', platformDescription: '', platformLink: '', platformImg: '' }">
+        <div x-show="activeTab === 3" x-data="{ popUpAdd: false, isOpen: false, editPlatformId: null, platformName: '', platformDescription: '', platformLink: '', platformImg: '' }">
             <div class="flex items-center mx-auto my-auto">
-                <a href="/ressources/views/creation_platform.php">
-                    <button class="rounded-full border-2 border-white w-20 h-20 bg-[#2CE6C1] text-white hover:text-[#2CE6C1] border-[3px] border-[#2CE6C1] hover:bg-white duration-500 mx-auto !important">
-                        <span class="material-symbols-outlined" style="font-size: 48px;">add</span>
-                    </button>
-                </a>
+                <button class="rounded-full border-2 border-white w-20 h-20 bg-[#2CE6C1] text-white hover:text-[#2CE6C1] border-[3px] border-[#2CE6C1] hover:bg-white duration-500 mx-auto mt-4 !important" @click="popUpAdd = true">
+                    <span class="material-symbols-outlined" style="font-size: 48px;">add</span>
+                </button>
             </div>
             <!-- Plateformes -->
             <div class="container mx-auto mt-8">
@@ -167,7 +196,38 @@ require('../Class/UserBanned.php');
                             </div>
                         <?php endforeach; ?>
                     </div>
-                    <!-- Pop-up platforme -->
+                    <!-- Pop-up add platfomes -->
+                    <div x-show="popUpAdd" x-transition:enter="transform duration-300 ease-out" x-transition:enter-start="scale-0" x-transition:enter-end="scale-100" x-transition:leave="scale-100" x-transition:leave-start="scale-100" x-transition:leave-end="scale-0" class="fixed inset-0 flex items-center justify-center z-50">
+                        <div class="bg-white p-8 rounded-lg shadow-md text-center">
+                            <h2 class="text-lg font-semibold text-gray-800 mb-4">Ajouter une platforme</h2>
+                            <!-- Formulaire d'ajout -->
+                            <form class="w-4/4 mx-auto mt-2 p-4 rounded-xl" action="dashboard_controller.php" method="post">
+                                <div class="justify-cente w-2/4r">
+                                    <div>
+                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Titre de la platforme</label>
+                                        <input type="text" name="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none focus:ring focus:ring-[#BAE1FE]" placeholder="Votre platforme" required>
+                                    </div>
+                                    <div class="mt-2">
+                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                                        <textarea type="text" name="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring focus:ring-[#BAE1FE] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Votre description" required></textarea>
+                                    </div>
+                                    <div class="mt-2">
+                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Lien</label>
+                                        <input type="text" name="link" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none focus:ring focus:ring-[#BAE1FE]" placeholder="Votre lien" required>
+                                    </div>
+                                    <div class="mt-2">
+                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Image</label>
+                                        <input type="text" name="img" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none focus:ring focus:ring-[#BAE1FE]" placeholder="Votre image en url" required>
+                                    </div>
+                                </div>
+                                <div class="flex mt-4">
+                                    <button type="submit" name="create_platform" class="text-white bg-[#2CE6C1] hover:bg-[#BAE1FE] mx-auto font-medium rounded-lg text-sm w-36 mt-2">Enregistrer</button>
+                                </div>
+                            </form>
+                            <button class="mx-auto text-white bg-red-500 hover:bg-red-600 font-medium rounded-lg text-sm w-36 mt-2 text-center" @click="popUpAdd = false">Fermer</button>
+                        </div>
+                    </div>
+                    <!-- Pop-up edit platforme -->
                     <div x-show="isOpen" x-transition:enter="transform duration-300 ease-out" x-transition:enter-start="scale-0" x-transition:enter-end="scale-100" x-transition:leave="scale-100" x-transition:leave-start="scale-100" x-transition:leave-end="scale-0" class="fixed inset-0 flex items-center justify-center z-50">
                         <div class="bg-white p-8 rounded-lg shadow-md">
                             <h2 class="text-lg font-semibold text-gray-800 mb-4">Modifier la plateforme</h2>
