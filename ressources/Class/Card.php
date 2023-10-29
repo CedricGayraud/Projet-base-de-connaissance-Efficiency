@@ -9,7 +9,6 @@ class Card
     public string $contentText;
     public string $gitHub;
     public string $status;
-    public int $upVote;
     public string $createdDate;
     public string $updatedDate;
     public string $summary;
@@ -24,7 +23,6 @@ class Card
         string $contentText,
         string $gitHub,
         string $status,
-        int $upVote,
         string $createdDate,
         string $updatedDate,
         string $summary,
@@ -38,7 +36,6 @@ class Card
         $this->contentText = $contentText;
         $this->gitHub = $gitHub;
         $this->status = $status;
-        $this->upVote = $upVote;
         $this->createdDate = $createdDate;
         $this->updatedDate = $updatedDate;
         $this->summary = $summary;
@@ -97,16 +94,6 @@ class Card
     public function setStatus(string $status): void
     {
         $this->status = $status;
-    }
-
-    public function getUpVote(): int
-    {
-        return $this->upVote;
-    }
-
-    public function setUpVote(int $upVote): void
-    {
-        $this->upVote = $upVote;
     }
 
     public function getCreatedDate(): string
@@ -207,7 +194,6 @@ class Card
                 $row['contentText'],
                 $row['gitHub'],
                 $row['status'],
-                $row['upVote'],
                 $row['createdDate'],
                 $row['updatedDate'],
                 $row['summary'],
@@ -255,7 +241,6 @@ class Card
                 $row['contentText'],
                 $row['gitHub'],
                 $row['status'],
-                $row['upVote'],
                 $row['createdDate'],
                 $row['updatedDate'],
                 $row['summary'],
@@ -273,5 +258,52 @@ class Card
         }
 
         return null; // Retourner null si aucune valeur n'a été trouvée
+    }
+
+    public static function getAllToVerifyCards($bdd)
+    {
+        $queryCards = $bdd->prepare("SELECT c.*, u.nickname as user_nickname, u.id as user_id, u.lastName as user_lastName, u.firstName as user_firstName, u.email as user_email, u.role as user_role, u.rank as user_rank, u.profilPicture as user_profilPicture, u.isBanned as user_isBanned, u.createdDate as user_createdDate FROM cards c
+        JOIN users u ON c.user = u.id WHERE c.status = 'toVerify'");
+        $queryCards->execute();
+
+        $cards = [];
+
+        while ($row = $queryCards->fetch(PDO::FETCH_ASSOC)) {
+            $user = new User(
+                $row['user_id'],
+                $row['user_nickname'],
+                $row['user_lastName'],
+                $row['user_firstName'],
+                $row['user_email'],
+                $row['user_role'],
+                $row['user_rank'],
+                $row['user_profilPicture'],
+                $row['user_isBanned'],
+                $row['user_createdDate']
+            );
+
+            $cards[] = new Card(
+                $row['id'],
+                $row['title'],
+                $row['contentText'],
+                $row['gitHub'],
+                $row['status'],
+                $row['createdDate'],
+                $row['updatedDate'],
+                $row['summary'],
+                $user,
+                $row['thematic'],
+                $row['platform'],
+                $row['img']
+            );
+        }
+        return $cards;
+    }
+
+    public static function verifyCard($id)
+    {
+        global $bdd;
+        $queryPlatforms = $bdd->prepare("UPDATE cards SET status='verify'WHERE id=:id ");
+        $queryPlatforms->execute(array('id' => $id));
     }
 }
