@@ -122,8 +122,8 @@
                 <span class="absolute top-0 right-0 p-4 cursor-pointer" @click="showModal = false">&times;</span>
                <form action="../Controller/userController.php" method="post" enctype="multipart/form-data">
                   <label for="msg" class="text-sm mt-2 block mb-2 font-medium text-gray-900">Bannissement</label>
-                  <textarea type="text" name="msg" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring focus:ring-[#BAE1FE] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Quels sont les raisons du bannissement?" required>
-        </textarea>
+                  <textarea type="text" name="msg" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring focus:ring-[#BAE1FE] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Quels sont les raisons du bannissement?" required></textarea>
+        
                   <button name="banned" type="submit" class="mx-auto mt-4 mb-4 text-white bg-red-500 hover:bg-red-600 text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center mr-4">Bannir définitevement</button>
             </div>
         </div>
