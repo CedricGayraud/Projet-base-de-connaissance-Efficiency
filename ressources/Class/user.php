@@ -73,11 +73,11 @@ class User
         return $this->isBanned;
     }
 
-    public function getCreateDate()
-    {
-        return $this->createdDate;
+    public function getCreatedDate()
+    { {
+            return $this->createdDate;
+        }
     }
-
 
     // SETTERS
 
