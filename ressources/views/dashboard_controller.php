@@ -7,6 +7,7 @@ require('../Class/Thematic.php');
 require('../Class/Platform.php');
 require('../Class/Card.php');
 require('../Class/Message.php');
+require('../Class/UserBanned.php');
 
 
 //Creation d'une platforme
@@ -94,6 +95,14 @@ if (isset($_POST['verify_message'])) {
     $messageId = $_POST['message_id'];
 
     Message::verifyMessage($messageId);
+
+    header("Location: dashboard.php");
+    exit;
+}
+
+if (isset($_POST['unBan'])) {
+    $banId = $_POST['ban_id'];
+    UserBanned::unBan($banId);
 
     header("Location: dashboard.php");
     exit;
