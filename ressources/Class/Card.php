@@ -304,8 +304,17 @@ class Card
     public static function verifyCard($id)
     {
         global $bdd;
-        $queryPlatforms = $bdd->prepare("UPDATE cards SET status='verify'WHERE id=:id ");
-        $queryPlatforms->execute(array('id' => $id));
+        $queryCard = $bdd->prepare("UPDATE cards SET status='verify' WHERE id=:id");
+        $queryCard->execute(array('id' => $id));
+
+        $card = self::getCardById($id);
+
+        if ($card) {
+            $userID = $card->getUser()->getId();
+            $pointsToAdd = 100;
+
+            User::addPointsToUser($userID, $pointsToAdd);
+        }
     }
 
     public static function createCard($title, $contentText, $gitHub, $summary, $user, $thematic, $platform, $img)
