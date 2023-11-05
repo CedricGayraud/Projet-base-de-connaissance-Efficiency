@@ -1,7 +1,6 @@
 <?php
 require($_SERVER['DOCUMENT_ROOT'] . '/layout.php');
-require('../Class/Card.php');
-
+require($_SERVER['DOCUMENT_ROOT'] . '/ressources/Class/Card.php');
 class CardLike
 {
     public int $id;
