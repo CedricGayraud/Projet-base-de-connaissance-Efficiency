@@ -1,5 +1,12 @@
 <?php
 require('./layout.php');
+require('ressources/Class/Thematic.php');
+require('ressources/Class/Platform.php');
+require('ressources/Class/CardLike.php');
+
+$thematics = Thematic::getAllThematics($bdd);
+$platforms = Platform::getAllPlatforms($bdd);
+$cards = Card::getAllCards($bdd);
 ?>
 
 <head>
@@ -15,21 +22,19 @@ require('./layout.php');
             width: 40% !important;
             text-align: center;
             font-size: 18px;
-            background: #fff;
             align-items: center;
             margin: 0px 35px 0px 35px;
-            border: solid 2px black;
             cursor: pointer;
         }
 
         .swiper-button-next {
             color: white;
-            right: 10px;
+            right: 0px;
         }
 
         .swiper-button-prev {
             color: white;
-            left: -2px;
+            left: 0px;
         }
 
         @media (max-width: 760px) {
@@ -61,20 +66,41 @@ require('./layout.php');
             color: black;
             border: 2px solid black;
         }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            left: -5px;
+            margin: auto;
+            width: 105%;
+            height: 264px;
+            border-radius: 10px;
+            background: linear-gradient(-45deg, #364BFF 0%, #2CE6C1 100%);
+            z-index: -10;
+            pointer-events: none;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+
+        .card:hover::before {
+            transform: rotate(-90deg) scaleX(1.34) scaleY(0.77);
+        }
     </style>
 </head>
 
-<div class="h-screen w-full bg-cover bg-top py-8" style="background-image: url(https://img.freepik.com/photos-gratuite/conception-cerveau-cyborg-complexe-carte-circuit-imprime-rougeoyante-generee-par-ia_188544-36674.jpg?w=1380&t=st=1695627849~exp=1695628449~hmac=26ff3873ed29d02e4ba0525da3b591c98887a56f444c9cc325004c886b32ab4b)">
+
+<div class="h-screen w-full bg-contain bg-top py-8" style="background-image: url(https://cdn.discordapp.com/attachments/889843132949213214/1169284109877653675/rocket-volant-dans-espace.jpg?ex=6554d7b0&is=654262b0&hm=3c8ecb2144e2e30d96ff1b92da2f6ed0582328cb35cf3bac4cef52410bbe67c3&)">
     <div class="ml-32 mr-12">
         <div class="w-7/12 flex flex-wrap my-12">
             <h1 class="text-[#2CE6C1] text-7xl font-semibold">Votre hub communautaire</h1>
             <h1 class="text-slate-50 text-7xl font-semibold">pour l'automatisation de la connaissance.</h1>
         </div>
 
-        <p class="text-slate-50 text-2xl w-7/12 my-12">Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte</p>
+        <p class="text-slate-50 text-2xl w-7/12 my-12">How to mate est une plateforme communautaire qui simplifie les tâches informatiques en permettant aux utilisateurs de créer et de consulter des fiches de scripts pour divers logiciels. Rejoignez notre communauté pour faciliter vos opérations informatiques.</p>
 
         <div class="flex my-6">
-            <a href="" class="w-fit p-3 h-16 bg-[#2CE6C1] border-[3px] border-[#2CE6C1] text-white text-lg text-center flex justify-center items-center mr-6 rounded-full font-semibold hover:bg-white hover:text-[#2CE6C1] duration-500">
+            <a href="/ressources/views/decouvrir.php" class="w-fit p-3 h-16 bg-[#2CE6C1] border-[3px] border-[#2CE6C1] text-white text-lg text-center flex justify-center items-center mr-6 rounded-full font-semibold hover:bg-white hover:text-[#2CE6C1] duration-500">
                 <button class=""> Découvrir les thématiques</button>
             </a>
             <a href="" class="w-fit p-3 h-16 text-[#2CE6C1] border-[3px] border-white bg-white text-lg text-center flex justify-center items-center mx-6 rounded-full font-semibold hover:bg-[#2CE6C1] hover:text-white duration-500">
@@ -96,35 +122,65 @@ require('./layout.php');
 
 <div class="mx-40">
 
-    <form action="" method="post" class="flex items-center m-auto w-3/4 h-[52px] w-[90%] sm:w-[500px] bg-white rounded-full border-[#31ABFF] border-2 my-16">
-        <input type="text" class="text-gray-900 text-lg rounded-full w-full pl-2 p-2.5 focus:outline-none" placeholder="Rechercher une fiche">
-        <button type="submit" class="p-2.5 text-lg font-medium text-white bg-[#31ABFF] border-2 border-[#31ABFF] rounded-full border hover:border-2 hover:border-[#31ABFF] hover:bg-[#BAE1FE]">
-            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-            </svg>
-        </button>
-    </form>
+    <p class="w-fit mx-auto mb-6 mt-10 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 border-b-4 border-[#2CE6C1]">Rechercher une fiche</p>
+
+    <div class="relative z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-center">
+                <div class="w-full bg-white rounded-lg" x-data="dropdownCards()" x-init="$watch('card', () => selectedCardIndex='')">
+                    <div>
+                        <div class="flex items-center shadow-lg rounded-lg border border-gray-200 p-1">
+                            <svg class="text-gray-400 h-7 w-7 fill-current cursor-pointer" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 56.966 56.966" style="enable-background:new 0 0 56.966 56.966;" xml:space="preserve" width="512px" height="512px">
+                                <path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
+                            </svg>
+                            <input type="text" class="text-gray-900 text-lg rounded-full w-full pl-2 p-2.5 focus:outline-none " placeholder="Rechercher une fiche" x-model="card" x-on:click.outside="reset()" x-on:keyup.escape="reset()" x-on:keyup.down="selectNextCard" x-on:keyup.up="selectPreviousCard" x-on:keyup.enter="goToUrl()">
+                        </div>
+                        <div class="shadow-lg rounded-md border mt-1 overflow-y-auto bg-white" x-show="filteredCards.length > 0" x-transition x-ref="cards">
+                            <template x-for="(card, index) in filteredCards">
+                                <button x-text="card.title" class="px-4 py-2 block w-full text-left hover:bg-gray-200 border-b border-[#2CE6C1]" :class="{ 'bg-gray-100 outline-none': index === selectedCardIndex }" x-on:click.prevent="goToUrl(card)"></button>
+                            </template>
+                        </div>
+                        <div class="mt-1 px-4 py-2 block shadow-gray-50 rounded-md border bg-white" x-show="card !== '' && filteredCards.length === 0">
+                            pas de résultat
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="my-20">
-
         <p class="w-fit mx-auto mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 border-b-4 border-[#2CE6C1]">À la une</p>
 
+
+
         <div class="flex justify-center">
-            <div class="rounded-md mx-2 text-center border-2 cursor-pointer transform transition-transform duration-300 hover:scale-110">
-                <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" class="rounded-t-md" alt="">
-            </div>
-            <div class="rounded-md mx-2 text-center border-2 cursor-pointer transform transition-transform duration-300 hover:scale-110">
-                <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" class="rounded-t-md" alt="">
-            </div>
-            <div class="rounded-md mx-2 text-center border-2 cursor-pointer transform transition-transform duration-300 hover:scale-110">
-                <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" class="rounded-t-md" alt="">
-            </div>
-            <div class="rounded-md mx-2 text-center border-2 cursor-pointer transform transition-transform duration-300 hover:scale-110">
-                <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" class="rounded-t-md" alt="">
-            </div>
-            <div class="rounded-md mx-2 text-center border-2 cursor-pointer transform transition-transform duration-300 hover:scale-110">
-                <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" class="rounded-t-md" alt="">
-            </div>
+
+            <?php foreach ($cards as $card) : ?>
+                <div class="card relative w-[190px] h-[254] bg-white justify-between flex flex-col p-3 cursor-pointer rounded-md mx-6">
+
+                    <a href="/ressources/views/fiche.php?fiche=<?= $card->getId(); ?>" class="">
+                        <h2 class="text-lg font-semibold text-gray-800 mb-4 h-20"><?= $card->getTitle(); ?></h2>
+                    </a>
+                    <a class="flex items-center border-b-2 border-[#2CE6C1] pb-2" href="ressources/views/profil.php">
+                        <img class="h-10 w-10 rounded-full bg-gray-50 mr-3" src="<?= $card->getUser()->getProfilPicture(); ?>" alt="">
+
+                        <p class="text-xl"><?= $card->getUser()->getNickname(); ?></p>
+                    </a>
+
+                    <div class="flex justify-between">
+                        <div class="flex">
+                            <svg class="w-6 h-6 mr-1 fill-current text-red-500" viewBox="0 0 20 20">
+                                <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" fill-rule="evenodd"></path>
+                            </svg>
+                            <p class="text-lg"><?php echo CardLike::getAllLikesByCardId($card->getId()); ?></p>
+                        </div>
+                        <p class="text-end font-semibold"><?= formatDate($card->getCreatedDate()); ?></p>
+                    </div>
+
+                </div>
+            <?php endforeach; ?>
+
 
         </div>
 
@@ -152,24 +208,13 @@ require('./layout.php');
 
                         <div class="swiper">
                             <div class="swiper-wrapper rounded-md">
-                                <div class="swiper-slide rounded-md">
-                                    <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" class="" alt="">
-                                </div>
-                                <div class="swiper-slide rounded-md">
-                                    <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" alt="">
-                                </div>
-                                <div class="swiper-slide rounded-md">
-                                    <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" alt="">
-                                </div>
-                                <div class="swiper-slide rounded-md">
-                                    <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" alt="">
-                                </div>
-                                <div class="swiper-slide rounded-md">
-                                    <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" alt="">
-                                </div>
-                                <div class="swiper-slide rounded-md">
-                                    <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" alt="">
-                                </div>
+
+                                <?php foreach ($thematics as $thematic) : ?>
+                                    <div class="swiper-slide bg-white p-2 rounded-md relative overflow-hidden text-[<?= $thematic->getColor(); ?>] transition-all duration-500 ease-in-out shadow-md hover:scale-105 hover:shadow-lg before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-[<?= $thematic->getColor(); ?>] before:to-[<?= $thematic->getColor(); ?>] before:transition-all before:duration-500 before:ease-in-out before:z-[-1] hover:before:left-0 hover:text-white swiper-slide-active">
+                                        <h2 class="text-lg font-semibold"><?= $thematic->getName(); ?></h2>
+                                        <p class="text-sm"><?= $thematic->getDescription(); ?></p>
+                                    </div>
+                                <?php endforeach; ?>
 
                             </div>
                             <div class="swiper-button-next"></div>
@@ -196,6 +241,7 @@ require('./layout.php');
                 Accéder au Forum
             </button>
 
+
         </div>
     </div>
 
@@ -219,24 +265,19 @@ require('./layout.php');
 
                             <div class="swiper">
                                 <div class="swiper-wrapper rounded-md">
-                                    <div class="swiper-slide rounded-md">
-                                        <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" class="" alt="">
-                                    </div>
-                                    <div class="swiper-slide rounded-md">
-                                        <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" alt="">
-                                    </div>
-                                    <div class="swiper-slide rounded-md">
-                                        <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" alt="">
-                                    </div>
-                                    <div class="swiper-slide rounded-md">
-                                        <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" alt="">
-                                    </div>
-                                    <div class="swiper-slide rounded-md">
-                                        <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" alt="">
-                                    </div>
-                                    <div class="swiper-slide rounded-md">
-                                        <img src="https://img.freepik.com/photos-gratuite/jeune-adulte-posant-lunettes-futuristes-generees-par-ia_188544-19658.jpg?w=1380&t=st=1695388214~exp=1695388814~hmac=365a3864aa600d92051b8422a858023f1763639ce83c7a5345e20f0187328929" alt="">
-                                    </div>
+
+                                    <?php foreach ($platforms as $platform) : ?>
+                                        <div class="swiper-slide px-5 py-2.5 relative rounded group font-medium text-white inline-block swiper-slide-active" style="width: 384px;" role="group" aria-label="1 / 6">
+                                            <span class="absolute top-0 left-0 w-full h-full rounded opacity-50 filter blur-sm bg-gradient-to-br from-[#31ABFF] to-[#364BFF]"></span>
+                                            <span class="absolute inset-0 w-full h-full transition-all duration-200 ease-out rounded shadow-xl bg-gradient-to-br filter group-active:opacity-0 group-hover:blur-sm from-[#31ABFF] to-[#364BFF]"></span>
+                                            <span class="absolute inset-0 w-full h-full transition duration-200 ease-out rounded bg-gradient-to-br from-[#31ABFF] to-[#364BFF]"></span>
+                                            <div class="flex flex-col items-center">
+                                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Adobe_Photoshop_CC_icon.svg/langfr-220px-Adobe_Photoshop_CC_icon.svg.png" alt="Photoshop" class="relative w-16 h-16 mb-2">
+                                                <h2 class="relative text-lg font-semibold text-gray-800">Photoshop</h2>
+                                            </div>
+                                        </div>
+
+                                    <?php endforeach; ?>
 
                                 </div>
                                 <div class="swiper-button-next"></div>
@@ -281,5 +322,66 @@ require('./layout.php');
         var direction = window.innerWidth <= 760 ? 'vertical' : 'horizontal';
 
         return direction;
+    }
+
+    function dropdownCards() {
+        return {
+            card: "",
+            selectedCardIndex: "",
+            cards: <?php echo json_encode($cards); ?>,
+
+
+            get filteredCards() {
+                if (this.card === "") {
+                    return [];
+                }
+
+                return this.cards.filter(card => card.title.toLowerCase().includes(this.card.toLowerCase()))
+            },
+
+            reset() {
+                this.card = "";
+            },
+
+            selectNextCard() {
+                if (this.selectedCardIndex === "") {
+                    this.selectedCardIndex = 0;
+                } else {
+                    this.selectedCardIndex++;
+                }
+
+                if (this.selectedCardIndex === this.filteredCards.length) {
+                    this.selectedCardIndex = 0;
+                }
+
+                this.focusSelectedCard();
+            },
+
+            selectPreviousCard() {
+                if (this.selectedCardIndex === "") {
+                    this.selectedCardIndex = this.filteredCards.length - 1;
+                } else {
+                    this.selectedCardIndex--;
+                }
+
+                if (this.selectedCardIndex < 0) {
+                    this.selectedCardIndex = this.filteredCards.length - 1;
+                }
+
+                this.focusSelectedCard();
+            },
+
+            focusSelectedCard() {
+                this.$refs.cards.children[this.selectedCardIndex + 1].scrollIntoView({
+                    block: 'nearest'
+                })
+            },
+
+            goToUrl(card) {
+                let currentCard = card ? card : this.filteredCards[this.selectedCardIndex];
+
+                window.location = `ressources/views/fiche.php?fiche=${currentCard.id}`;
+            },
+        };
     }
 </script>

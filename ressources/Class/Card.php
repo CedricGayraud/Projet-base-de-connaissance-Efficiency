@@ -1,7 +1,6 @@
 <?php
 require($_SERVER['DOCUMENT_ROOT'] . '/layout.php');
-require('../Class/User.php');
-
+require('User.php');
 class Card
 {
     public int $id;
@@ -166,6 +165,8 @@ class Card
         $this->img = $img;
     }
 
+
+
     public static function getAllCards($bdd)
     {
         $queryCards = $bdd->prepare("SELECT c.*, u.nickname as user_nickname, u.id as user_id, u.lastName as user_lastName, u.firstName as user_firstName, u.email as user_email, u.role as user_role, u.rank as user_rank, u.profilPicture as user_profilPicture, u.isBanned as user_isBanned, u.createdDate as user_createdDate FROM cards c
@@ -303,7 +304,33 @@ class Card
     public static function verifyCard($id)
     {
         global $bdd;
-        $queryPlatforms = $bdd->prepare("UPDATE cards SET status='verify'WHERE id=:id ");
-        $queryPlatforms->execute(array('id' => $id));
+        $queryCard = $bdd->prepare("UPDATE cards SET status='verify' WHERE id=:id");
+        $queryCard->execute(array('id' => $id));
+
+        $card = self::getCardById($id);
+
+        if ($card) {
+            $userID = $card->getUser()->getId();
+            $pointsToAdd = 100;
+
+            User::addPointsToUser($userID, $pointsToAdd);
+        }
+    }
+
+    public static function createCard($title, $contentText, $gitHub, $summary, $user, $thematic, $platform, $img)
+    {
+        global $bdd;
+        $insertQuery = $bdd->prepare("INSERT INTO cards (title, summary, user, platform, thematic, contentText, gitHub, img) 
+        VALUES (:title, :summary, :user, :platform, :thematic, :contentText, :gitHub, :img)");
+        $insertQuery->execute(array(
+            'title' => $title,
+            'summary' => $summary,
+            'user' => $user,
+            'platform' => $platform,
+            'thematic' => $thematic,
+            'contentText' => $contentText,
+            'gitHub' => $gitHub,
+            'img' => $img,
+        ));
     }
 }
