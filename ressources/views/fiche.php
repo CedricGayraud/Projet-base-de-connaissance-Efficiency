@@ -18,7 +18,7 @@ $id_card = $_GET['fiche'];
 
 </head>
 
-<body>
+<body class="bg-gray-100">
     <?php
 
     $sessionUser = User::getSessionUser($bdd);
@@ -46,7 +46,11 @@ $id_card = $_GET['fiche'];
             <h1 class="text-2xl font-bold"><?php echo $card->getTitle() ?></h1>
         </div>
         <div class="text-center mt-4">
-            <p class="text-lg font-semibold"><?php echo $card->getUser()->getNickname() ?></p>
+            <a class="flex justify-center mt-4" href="../views/profil.php">
+                <img class="h-10 w-10 rounded-full bg-gray-50 mr-3" src="<?= $card->getUser()->getProfilPicture(); ?>" alt="">
+
+                <p class="text-xl"><?= $card->getUser()->getNickname(); ?></p>
+            </a>
             <p class="text-lg"><?= formatDate($card->getCreatedDate()); ?></p>
         </div>
         <div class="flex justify-center mt-4">
@@ -85,7 +89,7 @@ $id_card = $_GET['fiche'];
                                 <label for="comment" class="sr-only">Votre commentaire</label>
                                 <textarea name="content" rows="6" class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800" placeholder="Écrire un commentaire..." required></textarea>
                             </div>
-                            <button type="submit" name="create_Comment" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover-bg-primary-800">
+                            <button type="submit" name="create_Comment" class="text-white bg-[#2CE6C1] hover:bg-[#BAE1FE] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
                                 Envoyer
                             </button>
                         </form>
