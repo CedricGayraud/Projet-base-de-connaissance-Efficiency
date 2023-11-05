@@ -11,7 +11,7 @@
     <title>Effiiciency</title>
 </head>
 
-<body>
+<body class="bg-gray-100">
     <?php
 
     include('./ressources/views/sidebar.php');
