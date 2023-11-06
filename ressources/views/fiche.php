@@ -51,33 +51,45 @@ $countComments = Comment::countCommentsByCardId($id_card);
             <p class="text-lg"><?php echo $card->getContentText() ?></p>
             <p class="text-lg"><?php echo $card->getGitHub() ?></p>
         </div>
+        <form class="mt-4 text-center" action="../Controller/commentController.php" method="post">
+            <input type="hidden" name="card_id" value="<?php echo $card->getId(); ?>">
+            <input type="hidden" name="user_id" value="<?php echo $sessionUserId; ?>">
+            <button name="likeCard" class="inline-flex items-center h-10 px-5 text-indigo-100 transition-colors duration-150 <?php echo $isLiked ? 'bg-red-500 hover:bg-red-300' : 'bg-gray-300 hover:bg-gray-100'; ?> rounded-lg focus:shadow-outline  type=" submit"">
+                <svg class="w-4 h-4 mr-3 fill-current" viewBox="0 0 20 20">
+                    <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" fill-rule="evenodd"></path>
+                </svg>
+                <span><?php echo $likes ?></span>
+            </button>
+
+        </form>
+        <?php foreach ($comments as $comment) : ?>
+            <div class="max-w-2xl mx-auto px-4 mt-4">
+                <article class="p-6 text-base bg-white rounded-lg shadow-lg dark:bg-gray-900">
+                    <footer class="flex justify-between items-center mb-2">
+                        <div class="flex items-center">
+                            <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
+                                <img class="mr-2 w-6 h-6 rounded-full" src="<?= $comment->getUser()->getProfilPicture(); ?>" alt="Michael Gough">
+                                <?= $comment->getUser()->getNickname(); ?>
+                            </p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Le <?= formatDateDay($comment->getCreatedDate()); ?></p>
+                        </div>
+                        <?php if (isset($_SESSION['user']) && $sessionUser->getRole() == 1) { ?>
+                            <form action="../Controller/commentController.php" method="post">
+                                <input type="hidden" name="comment_id" value="<?php echo $comment->getId(); ?>">
+                                <input type="hidden" name="card_id" value="<?php echo $card->getId(); ?>">
+                                <button type="submit" name="delete_Comment" class="text-white bg-red-500 hover:bg-red-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm ml-auto px-5 py-2.5 text-center">
+                                    X
+                                </button>
+                            </form>
+                        <?php } ?>
+                    </footer>
+                    <p class="text-gray-500 dark:text-gray-400"><?= $comment->getContent(); ?></p>
+                </article>
+            </div>
+        <?php endforeach; ?>
         <?php
         if (isset($_SESSION['user'])) {
         ?>
-            <form class="mt-4 text-center" action="../Controller/commentController.php" method="post">
-                <input type="hidden" name="card_id" value="<?php echo $card->getId(); ?>">
-                <input type="hidden" name="user_id" value="<?php echo $sessionUserId; ?>">
-                <button name="likeCard" class="inline-flex items-center h-10 px-5 text-indigo-100 transition-colors duration-150 <?php echo $isLiked ? 'bg-red-500 hover:bg-red-300' : 'bg-gray-300 hover:bg-gray-100'; ?> rounded-lg focus:shadow-outline  type=" submit"">
-                    <svg class="w-4 h-4 mr-3 fill-current" viewBox="0 0 20 20">
-                        <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" fill-rule="evenodd"></path>
-                    </svg>
-                    <span><?php echo $likes ?></span>
-                </button>
-
-            </form>
-            <?php foreach ($comments as $comment) : ?>
-                <div class="max-w-2xl mx-auto px-4 mt-4">
-                    <article class="p-6 text-base bg-white rounded-lg shadow-lg dark:bg-gray-900">
-                        <footer class="flex justify-between items-center mb-2">
-                            <div class="flex items-center">
-                                <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold"><img class="mr-2 w-6 h-6 rounded-full" src="<?= $comment->getUser()->getProfilPicture(); ?>" alt="Michael Gough"><?= $comment->getUser()->getNickname(); ?></p>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Le <?= formatDateDay($comment->getCreatedDate()); ?></p>
-                            </div>
-                        </footer>
-                        <p class="text-gray-500 dark:text-gray-400"><?= $comment->getContent(); ?></p>
-                    </article>
-                </div>
-            <?php endforeach; ?>
             <div class="mt-2 text-center">
                 <section class="dark:bg-gray-900 py-8 lg:py-8 antialiased">
                     <div class="max-w-2xl mx-auto px-4">
