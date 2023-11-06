@@ -430,4 +430,11 @@ class Card
         $formattedDate = new DateTime($date);
         return $formattedDate->format('m/Y');
     }
+
+    public static function deleteCardById($id)
+    {
+        global $bdd;
+        $queryPlatforms = $bdd->prepare("DELETE FROM cards WHERE id = :id");
+        $queryPlatforms->execute(array('id' => $id));
+    }
 }

@@ -73,17 +73,26 @@ require('../Class/UserBanned.php');
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
                         <?php foreach ($cardsToVerify as $card) : ?>
                             <div class="bg-white rounded-lg overflow-hidden shadow-md p-4 transition-transform transform hover:translate-y-1">
-                                <div class="flex flex-col items-center">
-                                    <h2 class="text-lg font-semibold text-gray-800"><?= $card->getTitle(); ?></h2>
-                                    <p class="text-gray-500">Le <?= formatDate($card->getCreatedDate()); ?> par <?= $card->getUser()->getNickname(); ?></p>
+                                <div class="flex flex-row items-center justify-between">
+                                    <h2 class="text-lg font-semibold text-gray-800 text-center">
+                                        <?= $card->getTitle(); ?>
+                                    </h2>
+                                    <form action="dashboard_controller.php" method="post">
+                                        <input type="hidden" name="card_id" value="<?php echo $card->getId(); ?>">
+                                        <button type="submit" name="delete_card" class="text-white bg-red-500 hover:bg-red-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                            X
+                                        </button>
+                                    </form>
                                 </div>
+                                <p class="text-gray-500 text-center">Le <?= formatDate($card->getCreatedDate()); ?> par <?= $card->getUser()->getNickname(); ?></p>
+
                                 <div class="flex justify-between mt-1">
                                     <a href="fiche.php?fiche=<?= $card->getID(); ?>" class="text-white font-medium rounded-lg text-sm w-1/2 text-center h-6 mr-1 text-white bg-[#2CE6C1] hover:bg-[#BAE1FE]">
                                         Voir
                                     </a>
-                                    <form action="dashboard_controller.php" method="post" class="cursor-pointer text-white font-medium rounded-lg text-sm w-1/2 text-center h-6 bg-[#2CE6C1] hover.bg-[#BAE1FE]">
+                                    <form action="dashboard_controller.php" method="post" class="cursor-pointer text-white font-medium rounded-lg text-sm w-1/2 text-center h-6 bg-[#2CE6C1] hover:bg-[#BAE1FE]">
                                         <input type="hidden" name="card_id" value="<?= $card->getId(); ?>">
-                                        <button type="submit" name="verify_card" class="cursor-pointer text-white font-medium rounded-lg text-sm w-full text-center h-6 bg-[#2CE6C1] hover.bg-[#BAE1FE]">
+                                        <button type="submit" name="verify_card" class="cursor-pointer text-white font-medium rounded-lg text-sm w-full text-center h-6 bg-[#2CE6C1] hover:bg-[#BAE1FE]">
                                             Vérifier
                                         </button>
                                     </form>
