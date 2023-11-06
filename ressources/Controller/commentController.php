@@ -35,9 +35,19 @@ if (isset($_POST['delete_Comment'])) {
 //Edit contentText
 if (isset($_POST['edit_contentText'])) {
     $cardId = $_POST['card_id'];
-    $newContent = $_POST['new_content'];
-    var_dump($newContent);
+    $newContent = $_POST['new_content_text'];
+
     Card::editContentTextByCardId($cardId, $newContent);
+
+    header("Location:../views/fiche.php?fiche=" . $cardId);
+    exit;
+}
+
+//Edit code
+if (isset($_POST['edit_code'])) {
+    $cardId = $_POST['card_id'];
+    $newCode = $_POST['new_code_text'];
+    Card::editCodeByCardId($cardId, $newCode);
 
     header("Location:../views/fiche.php?fiche=" . $cardId);
     exit;
