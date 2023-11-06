@@ -14,8 +14,8 @@ if (isset($_POST['create_card'])) {
     $user = $_POST['user'];
     $platform = $_POST['cardPlateforme'];
     $thematic = $_POST['cardTheme'];
-    $img = $_POST['cardImg'];
-    Card::createCard($title, $contentText, $gitHub, $summary, $user, $thematic, $platform, $img);
+    // $img = $_POST['cardImg'];
+    Card::createCard($title, $contentText, $gitHub, $summary, $user, $thematic, $platform);
 
     header("Location: decouvrir.php");
     exit;

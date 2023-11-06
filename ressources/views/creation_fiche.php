@@ -56,8 +56,8 @@ $platforms = Platform::getAllPlatforms($bdd);
 
             </div>
             <div class="m-4">
-                <label for="cardContent" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Content</label>
-                <textarea type="text" name="cardContent" class="bg-gray-50 border-2 border-[#2CE6C1] text-gray-900 text-sm rounded-lg focus:outline-none focus:ring focus:ring-[#BAE1FE] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required></textarea>
+                <label for="" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Content</label>
+                <textarea name="cardContent" id="cardContent" class="bg-gray-50 border-2 border-[#2CE6C1] text-gray-900 text-sm rounded-lg focus:outline-none focus:ring focus:ring-[#BAE1FE] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
             </div>
             <div class="m-4">
                 <label for="cardGitHub" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Script</label>
@@ -65,11 +65,11 @@ $platforms = Platform::getAllPlatforms($bdd);
                 </input>
             </div>
 
-            <div class="m-4">
+            <!-- <div class="m-4">
                 <label for="cardImg" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image lien</label>
                 <input type="text" name="cardImg" class="bg-gray-50 border-2 border-[#2CE6C1] text-gray-900 text-sm rounded-lg focus:outline-none focus:ring focus:ring-[#BAE1FE] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                 </input>
-            </div>
+            </div> -->
             <div class="flex ml-4">
                 <button class="text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center mr-4">Annuler</button>
                 <button type="submit" name="create_card" class="text-white bg-[#2CE6C1] hover:bg-[#BAE1FE] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Enregistrer</button>
@@ -98,6 +98,8 @@ $platforms = Platform::getAllPlatforms($bdd);
 
     <?php } ?>
 
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+
     <script>
         function updateFileName() {
             const fileInput = document.getElementById('file_input');
@@ -120,6 +122,14 @@ $platforms = Platform::getAllPlatforms($bdd);
                 fileNameSpan.innerText = 'Aucun fichier sélectionné';
             }
         }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            ClassicEditor
+                .create(document.querySelector('#cardContent'))
+                .catch(error => {
+                    console.error(error);
+                });
+        });
     </script>
 
 </div>
