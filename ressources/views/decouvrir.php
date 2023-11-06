@@ -20,7 +20,7 @@ require('../Class/Card.php');
 
     <?php $thematics = Thematic::getAllThematics($bdd);
     $platforms = Platform::getAllPlatforms($bdd);
-    $cards = Card::getAllCards($bdd);
+    $cards = Card::getAllCardsVerify($bdd);
     ?>
 
     <div x-data="{ selectedThematic: null, selectedPlatform: null }" class="md:ml-28 md:mr-8">
@@ -60,7 +60,7 @@ require('../Class/Card.php');
                     <a href="fiche.php?fiche=<?= $card->getID(); ?>" x-show="(selectedThematic === null || selectedThematic === <?= $card->getThematic(); ?>) && (selectedPlatform === null || selectedPlatform === <?= $card->getPlatform(); ?>)" class="bg-white rounded-lg overflow-hidden shadow-md p-4 transition-transform transform hover:translate-y-1 cursor-pointer">
                         <div class="flex flex-col items-center">
                             <h2 class="text-lg font-semibold text-gray-800"><?= $card->getTitle(); ?></h2>
-                            <p class="text-gray-500">Le <?= formatDate($card->getCreatedDate()); ?> par <?= $card->getUser()->getNickname(); ?></p>
+                            <p class="text-gray-500">Le <?= CARD::formatDate($card->getCreatedDate()); ?> par <?= $card->getUser()->getNickname(); ?></p>
                         </div>
                     </a>
                 <?php endforeach; ?>
