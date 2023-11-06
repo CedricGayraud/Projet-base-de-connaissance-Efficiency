@@ -7,6 +7,7 @@ require('ressources/Class/CardLike.php');
 $thematics = Thematic::getAllThematics($bdd);
 $platforms = Platform::getAllPlatforms($bdd);
 $cards = Card::getAllCards($bdd);
+$mostLiked = Card::getCardByLike($bdd);
 ?>
 
 <head>
@@ -156,18 +157,15 @@ $cards = Card::getAllCards($bdd);
 
         <div class="flex justify-center">
 
-            <?php foreach ($cards as $card) : ?>
+            <?php foreach ($mostLiked as $card) : ?>
                 <div class="card relative w-[190px] h-[254] bg-white justify-between flex flex-col p-3 cursor-pointer rounded-md mx-6">
-
                     <a href="/ressources/views/fiche.php?fiche=<?= $card->getId(); ?>" class="">
                         <h2 class="text-lg font-semibold text-gray-800 mb-4 h-20"><?= $card->getTitle(); ?></h2>
                     </a>
                     <a class="flex items-center border-b-2 border-[#2CE6C1] pb-2" href="ressources/views/profil.php">
                         <img class="h-10 w-10 rounded-full bg-gray-50 mr-3" src="<?= $card->getUser()->getProfilPicture(); ?>" alt="">
-
                         <p class="text-xl"><?= $card->getUser()->getNickname(); ?></p>
                     </a>
-
                     <div class="flex justify-between">
                         <div class="flex">
                             <svg class="w-6 h-6 mr-1 fill-current text-red-500" viewBox="0 0 20 20">
@@ -177,9 +175,9 @@ $cards = Card::getAllCards($bdd);
                         </div>
                         <p class="text-end font-semibold"><?= formatDate($card->getCreatedDate()); ?></p>
                     </div>
-
                 </div>
             <?php endforeach; ?>
+
 
 
         </div>
