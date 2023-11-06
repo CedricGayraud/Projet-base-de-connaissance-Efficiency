@@ -437,4 +437,11 @@ class Card
         $queryPlatforms = $bdd->prepare("DELETE FROM cards WHERE id = :id");
         $queryPlatforms->execute(array('id' => $id));
     }
+
+    public static function editContentTextByCardId($id, $newContent)
+    {
+        global $bdd;
+        $queryCard = $bdd->prepare("UPDATE cards SET contentText=:newContent WHERE id=:id");
+        $queryCard->execute(array('newContent' => $newContent, 'id' => $id));
+    }
 }

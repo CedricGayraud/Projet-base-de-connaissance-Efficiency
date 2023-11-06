@@ -51,36 +51,60 @@ $countComments = Comment::countCommentsByCardId($id_card);
 
 <body class="bg-gray-100">
     <?php include 'sidebar.php' ?>
-    <div class="bg-cover bg-center bg-opacity-50 bg-[#2CE6C1] h-auto text-black py-8 px-10 object-fill mr-8 ml-28 mt-5 mb-5 rounded-lg flex">
-        <div class="md:w-1/2 pr-4 flex items-center ml-16">
-            <div>
+    <div class="bg-opacity-50 bg-[#2CE6C1] py-8 mx-auto m-auto mt-5 mb-5 rounded-lg w-4/5 flex items-center justify-center">
+        <div class="md:w-1/2 pr-4 flex items-center">
+            <div class="text-center">
                 <p class="text-3xl font-bold"><?php echo $card->getTitle() ?></p>
-                <a class="flex mt-4" href="../views/profil.php">
+                <a class="flex mt-4 justify-center" href="../views/profil.php">
                     <img class="h-10 w-10 rounded-full bg-gray-50 mr-3 ml-1" src="<?= $card->getUser()->getProfilPicture(); ?>" alt="">
-
                     <p class="text-xl"><?= $card->getUser()->getNickname(); ?></p>
                 </a>
                 <p class="text-lg mt-2"><?= formatDate($card->getCreatedDate()); ?></p>
                 <form class="mt-4" action="../Controller/commentController.php" method="post">
                     <input type="hidden" name="card_id" value="<?php echo $card->getId(); ?>">
-                    <input type="hidden" name="user_id" value="<?php echo $sessionUserId; ?>">
-                    <button name="likeCard" class="inline-flex items-center h-10 px-5 text-indigo-100 transition-colors duration-150 <?php echo $isLiked ? 'bg-red-500 hover:bg-red-300' : 'bg-gray-300 text-white hover:bg-gray-200 text-gray-300'; ?> rounded-lg focus:shadow-outline">
-                        <svg class="w-4 h-4 mr-3 fill-current" viewBox="0 0 20 20">
-                            <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" fill-rule="evenodd"></path>
-                        </svg>
-                        <span><?php echo $likes ?></span>
-                    </button>
+                    <?php if (isset($_SESSION['user'])) { ?>
+                        <input type="hidden" name="user_id" value="<?php echo $sessionUserId; ?>">
+                        <button name="likeCard" class="inline-flex items-center h-10 px-5 text-indigo-100 transition-colors duration-150 <?php echo $isLiked ? 'bg-red-500 hover:bg-red-300' : 'bg-gray-300 text-white hover:bg-gray-200 text-gray-300'; ?> rounded-lg focus:shadow-outline">
+                            <svg class="w-4 h-4 mr-3 fill-current" viewBox="0 0 20 20">
+                                <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" fill-rule="evenodd"></path>
+                            </svg>
+                            <span><?php echo $likes ?></span>
+                        </button>
+                    <?php } else { ?>
+                        <button disabled name="likeCard" class="inline-flex items-center h-10 px-5 text-indigo-100 transition-colors duration-150 bg-gray-300 text-white hover:bg-gray-200 text-gray-300'; ?> rounded-lg focus:shadow-outline">
+                            <svg class="w-4 h-4 mr-3 fill-current" viewBox="0 0 20 20">
+                                <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" fill-rule="evenodd"></path>
+                            </svg>
+                            <span><?php echo $likes ?></span>
+                        </button>
+                    <?php } ?>
                 </form>
             </div>
         </div>
-        <div class="w-96">
-            <img src="https://image.noelshack.com/fichiers/2023/42/6/1697877626-undraw-software-engineer-re-tnjc.png" class="w-full">
-        </div>
     </div>
+
+
     <div class="md:ml-28 md:mr-8">
-        <div class="mt-8 text-center">
-            <p class="text-lg"><?php echo html_entity_decode($card->getContentText()); ?></p>
+        <div class="p-6 text-base bg-white rounded-lg shadow-lg dark:bg-gray-900 w-4/5 m-auto mb-6">
+            <form action="../Controller/commentController.php" method="post">
+                <input type="hidden" name="card_id" value="<?php echo $card->getId(); ?>">
+                <!-- Utilisez un champ de formulaire pour stocker le contenu modifié -->
+                <input type="hidden" name="new_content" id="new_content" value="<?php echo html_entity_decode($card->getContentText()); ?>">
+
+                <?php if (isset($_SESSION['user']) && $sessionUser->getRole() == 1) { ?>
+                    <div class="text-lg" contentEditable="true" id="editableContent" oninput="updateHiddenField()"><?php echo html_entity_decode($card->getContentText()); ?></div>
+                    <button type="submit" name="edit_contentText" class="text-white bg-[#2CE6C1] hover:bg-[#BAE1FE] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center mt-4">Enregistrer</button>
+                <?php } else { ?>
+                    <div class="text-lg" id="editableContent"><?php echo html_entity_decode($card->getContentText()); ?></div>
+                <?php } ?>
+            </form>
         </div>
+        <script>
+            function updateHiddenField() {
+                var newContent = document.getElementById("editableContent").textContent;
+                document.getElementById("new_content").value = newContent;
+            }
+        </script>
 
         <div x-data="{ copied: false }" class="w-3/5 block m-auto">
             <div class="bg-black rounded-lg">
@@ -98,31 +122,36 @@ $countComments = Comment::countCommentsByCardId($id_card);
                 </div>
             </div>
         </div>
-        <?php foreach ($comments as $comment) : ?>
-            <div class="max-w-2xl mx-auto px-4 mt-4">
-                <article class="p-6 text-base bg-white rounded-lg shadow-lg dark:bg-gray-900">
-                    <footer class="flex justify-between items-center mb-2">
-                        <div class="flex items-center">
-                            <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
-                                <img class="mr-2 w-6 h-6 rounded-full" src="<?= $comment->getUser()->getProfilPicture(); ?>" alt="Michael Gough">
-                                <?= $comment->getUser()->getNickname(); ?>
-                            </p>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">Le <?= formatDateDay($comment->getCreatedDate()); ?></p>
-                        </div>
-                        <?php if (isset($_SESSION['user']) && $sessionUser->getRole() == 1) { ?>
-                            <form action="../Controller/commentController.php" method="post">
-                                <input type="hidden" name="comment_id" value="<?php echo $comment->getId(); ?>">
-                                <input type="hidden" name="card_id" value="<?php echo $card->getId(); ?>">
-                                <button type="submit" name="delete_Comment" class="text-white bg-red-500 hover:bg-red-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm ml-auto px-5 py-2.5 text-center">
-                                    X
-                                </button>
-                            </form>
-                        <?php } ?>
-                    </footer>
-                    <p class="text-gray-500 dark:text-gray-400"><?= $comment->getContent(); ?></p>
-                </article>
+        <div class="max-w-2xl mx-auto px-4 mt-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Discussion (<?php echo $countComments ?>)</h2>
             </div>
-        <?php endforeach; ?>
+            <?php foreach ($comments as $comment) : ?>
+                <div class="max-w-2xl mx-auto px-4 mt-4">
+                    <article class="p-6 text-base bg-white rounded-lg shadow-lg dark:bg-gray-900">
+                        <footer class="flex justify-between items-center mb-2">
+                            <div class="flex items-center">
+                                <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
+                                    <img class="mr-2 w-6 h-6 rounded-full" src="<?= $comment->getUser()->getProfilPicture(); ?>" alt="Michael Gough">
+                                    <?= $comment->getUser()->getNickname(); ?>
+                                </p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Le <?= formatDateDay($comment->getCreatedDate()); ?></p>
+                            </div>
+                            <?php if (isset($_SESSION['user']) && $sessionUser->getRole() == 1) { ?>
+                                <form action="../Controller/commentController.php" method="post">
+                                    <input type="hidden" name="comment_id" value="<?php echo $comment->getId(); ?>">
+                                    <input type="hidden" name="card_id" value="<?php echo $card->getId(); ?>">
+                                    <button type="submit" name="delete_Comment" class="text-white bg-red-500 hover:bg-red-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm ml-auto px-5 py-2.5 text-center">
+                                        X
+                                    </button>
+                                </form>
+                            <?php } ?>
+                        </footer>
+                        <p class="text-gray-500 dark:text-gray-400"><?= $comment->getContent(); ?></p>
+                    </article>
+                </div>
+            <?php endforeach; ?>
+        </div>
         <?php
         if (isset($_SESSION['user'])) {
         ?>
@@ -130,7 +159,7 @@ $countComments = Comment::countCommentsByCardId($id_card);
                 <section class="dark:bg-gray-900 py-8 lg:py-8 antialiased">
                     <div class="max-w-2xl mx-auto px-4">
                         <div class="flex justify-between items-center mb-6">
-                            <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Discussion (<?php echo $countComments ?>)</h2>
+                            <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Votre commentaire :</h2>
                         </div>
                         <form action="../Controller/commentController.php" method="post">
                             <input type="hidden" name="card_id" value="<?php echo $card->getId(); ?>">

@@ -20,6 +20,7 @@ if (isset($_POST['likeCard'])) {
     header("Location:../views/fiche.php?fiche=" . $card);
     exit;
 }
+
 //Supression d'un commentaire 
 if (isset($_POST['delete_Comment'])) {
     $card = $_POST['card_id'];
@@ -28,5 +29,16 @@ if (isset($_POST['delete_Comment'])) {
     Comment::deleteCommentById($commentId);
 
     header("Location:../views/fiche.php?fiche=" . $card);
+    exit;
+}
+
+//Edit contentText
+if (isset($_POST['edit_contentText'])) {
+    $cardId = $_POST['card_id'];
+    $newContent = $_POST['new_content'];
+    var_dump($newContent);
+    Card::editContentTextByCardId($cardId, $newContent);
+
+    header("Location:../views/fiche.php?fiche=" . $cardId);
     exit;
 }
