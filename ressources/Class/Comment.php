@@ -149,4 +149,11 @@ class Comment
 
         return $result['comment_count'];
     }
+
+    public static function deleteCommentById($id)
+    {
+        global $bdd;
+        $queryComments = $bdd->prepare("DELETE FROM comments WHERE id = :id");
+        $queryComments->execute(array('id' => $id));
+    }
 }

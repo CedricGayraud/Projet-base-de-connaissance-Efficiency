@@ -253,7 +253,7 @@ class Card
             function formatDate($date)
             {
                 $formattedDate = new DateTime($date);
-                return $formattedDate->format('m/Y');
+                return $formattedDate->format('d/m/Y');
             }
             return $card; // Renvoyer l'objet Card
         }

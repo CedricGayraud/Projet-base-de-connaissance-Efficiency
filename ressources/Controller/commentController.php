@@ -20,4 +20,13 @@ if (isset($_POST['likeCard'])) {
     header("Location:../views/fiche.php?fiche=" . $card);
     exit;
 }
+//Supression d'un commentaire 
+if (isset($_POST['delete_Comment'])) {
+    $card = $_POST['card_id'];
+    $commentId = $_POST['comment_id'];
 
+    Comment::deleteCommentById($commentId);
+
+    header("Location:../views/fiche.php?fiche=" . $card);
+    exit;
+}
