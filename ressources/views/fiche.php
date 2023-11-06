@@ -26,6 +26,27 @@ $countComments = Comment::countCommentsByCardId($id_card);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Efficiency - <?php echo $card->getTitle() ?></title>
     <link rel="icon" type="image/x-icon" href="https://image.noelshack.com/fichiers/2023/39/3/1695821591-logo-efficiency.png" />
+    <style>
+        img {
+            width: 60%;
+            object-fit: contain;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h1 {
+            font-size: 28px !important;
+        }
+
+        h2 {
+            font-size: 24px !important;
+        }
+
+        h3 {
+            font-size: 20px !important;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100">
@@ -35,7 +56,7 @@ $countComments = Comment::countCommentsByCardId($id_card);
             <div>
                 <p class="text-3xl font-bold"><?php echo $card->getTitle() ?></p>
                 <a class="flex mt-4" href="../views/profil.php">
-                    <img class="h-10 w-10 rounded-full bg-gray-50 mr-3" src="<?= $card->getUser()->getProfilPicture(); ?>" alt="">
+                    <img class="h-10 w-10 rounded-full bg-gray-50 mr-3 ml-1" src="<?= $card->getUser()->getProfilPicture(); ?>" alt="">
 
                     <p class="text-xl"><?= $card->getUser()->getNickname(); ?></p>
                 </a>
@@ -58,8 +79,10 @@ $countComments = Comment::countCommentsByCardId($id_card);
     </div>
     <div class="md:ml-28 md:mr-8">
         <div class="mt-8 text-center">
-            <p class="text-lg"><?php echo $card->getContentText() ?></p>
-            <p class="text-lg"><?php echo $card->getGitHub() ?></p>
+            <p class="text-lg"><?php echo html_entity_decode($card->getContentText()); ?></p>
+        </div>
+        <div class="block m-auto p-5 mt-8 text-center bg-black rounded-lg w-3/5 justify-center">
+            <p class="text-white"><?php echo $card->getGitHub() ?></p>
         </div>
         <?php foreach ($comments as $comment) : ?>
             <div class="max-w-2xl mx-auto px-4 mt-4">
