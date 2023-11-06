@@ -30,38 +30,37 @@ $countComments = Comment::countCommentsByCardId($id_card);
 
 <body class="bg-gray-100">
     <?php include 'sidebar.php' ?>
+    <div class="bg-cover bg-center bg-opacity-50 bg-[#2CE6C1] h-auto text-black py-8 px-10 object-fill mr-8 ml-28 mt-5 mb-5 rounded-lg flex">
+        <div class="md:w-1/2 pr-4 flex items-center ml-16">
+            <div>
+                <p class="text-3xl font-bold"><?php echo $card->getTitle() ?></p>
+                <a class="flex mt-4" href="../views/profil.php">
+                    <img class="h-10 w-10 rounded-full bg-gray-50 mr-3" src="<?= $card->getUser()->getProfilPicture(); ?>" alt="">
+
+                    <p class="text-xl"><?= $card->getUser()->getNickname(); ?></p>
+                </a>
+                <p class="text-lg mt-2"><?= formatDate($card->getCreatedDate()); ?></p>
+                <form class="mt-4" action="../Controller/commentController.php" method="post">
+                    <input type="hidden" name="card_id" value="<?php echo $card->getId(); ?>">
+                    <input type="hidden" name="user_id" value="<?php echo $sessionUserId; ?>">
+                    <button name="likeCard" class="inline-flex items-center h-10 px-5 text-indigo-100 transition-colors duration-150 <?php echo $isLiked ? 'bg-red-500 hover:bg-red-300' : 'bg-gray-300 text-white hover:bg-gray-200 text-gray-300'; ?> rounded-lg focus:shadow-outline">
+                        <svg class="w-4 h-4 mr-3 fill-current" viewBox="0 0 20 20">
+                            <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" fill-rule="evenodd"></path>
+                        </svg>
+                        <span><?php echo $likes ?></span>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="w-96">
+            <img src="https://image.noelshack.com/fichiers/2023/42/6/1697877626-undraw-software-engineer-re-tnjc.png" class="w-full">
+        </div>
+    </div>
     <div class="md:ml-28 md:mr-8">
-        <div class="flex justify-center mt-10">
-            <h1 class="text-2xl font-bold"><?php echo $card->getTitle() ?></h1>
-        </div>
-        <div class="text-center mt-4">
-            <a class="flex justify-center mt-4" href="../views/profil.php">
-                <img class="h-10 w-10 rounded-full bg-gray-50 mr-3" src="<?= $card->getUser()->getProfilPicture(); ?>" alt="">
-
-                <p class="text-xl"><?= $card->getUser()->getNickname(); ?></p>
-            </a>
-            <p class="text-lg"><?= formatDate($card->getCreatedDate()); ?></p>
-        </div>
-        <div class="flex justify-center mt-4">
-
-            <img src=" <?php echo $card->getImg() ?>" class="w-96  max-w-full" />
-
-        </div>
         <div class="mt-8 text-center">
             <p class="text-lg"><?php echo $card->getContentText() ?></p>
             <p class="text-lg"><?php echo $card->getGitHub() ?></p>
         </div>
-        <form class="mt-4 text-center" action="../Controller/commentController.php" method="post">
-            <input type="hidden" name="card_id" value="<?php echo $card->getId(); ?>">
-            <input type="hidden" name="user_id" value="<?php echo $sessionUserId; ?>">
-            <button name="likeCard" class="inline-flex items-center h-10 px-5 text-indigo-100 transition-colors duration-150 <?php echo $isLiked ? 'bg-red-500 hover:bg-red-300' : 'bg-gray-300 hover:bg-gray-100'; ?> rounded-lg focus:shadow-outline  type=" submit"">
-                <svg class="w-4 h-4 mr-3 fill-current" viewBox="0 0 20 20">
-                    <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" fill-rule="evenodd"></path>
-                </svg>
-                <span><?php echo $likes ?></span>
-            </button>
-
-        </form>
         <?php foreach ($comments as $comment) : ?>
             <div class="max-w-2xl mx-auto px-4 mt-4">
                 <article class="p-6 text-base bg-white rounded-lg shadow-lg dark:bg-gray-900">
