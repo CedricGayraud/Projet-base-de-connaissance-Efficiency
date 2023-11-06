@@ -7,7 +7,7 @@ class User
     private string $firstName;
     private string $email;
     private bool $role;
-    private string $rank;
+    private int $rank;
     private string $profilPicture;
     private bool $isBanned;
     private string $createdDate;
@@ -73,11 +73,11 @@ class User
         return $this->isBanned;
     }
 
-    public function getCreateDate()
-    {
-        return $this->createdDate;
+    public function getCreatedDate()
+    { {
+            return $this->createdDate;
+        }
     }
-
 
     // SETTERS
 
@@ -123,7 +123,7 @@ class User
 
     public function setCreatedDate($createdDate)
     {
-        $this->isBanned = $createdDate;
+        $this->createdDate = $createdDate;
     }
 
     public static function getSessionUser($bdd)
@@ -154,5 +154,12 @@ class User
         }
 
         return null;
+    }
+
+    public static function addPointsToUser($idUser, $pointToAdd)
+    {
+        global $bdd;
+        $queryRank = $bdd->prepare("UPDATE users SET rank = rank + :pointToAdd WHERE id=:id ");
+        $queryRank->execute(array('pointToAdd' => $pointToAdd, 'id' => $idUser));
     }
 }
