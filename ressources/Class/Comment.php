@@ -78,12 +78,13 @@ class Comment
         $queryComments = $bdd->prepare("INSERT INTO comments (content, user, card) VALUES(:content, :user, :card)");
         $queryComments->execute(array('content' => $content, 'user' => $sessinUserId, 'card' => $idCard));
     }
+
     public static function getAllCommentsByCardId($id)
     {
         global $bdd;
         $queryComment = $bdd->prepare("SELECT DISTINCT cards.*, c.*, u1.nickname as user_nickname, u1.id as user_id, u1.lastName as user_lastName, u1.firstName as user_firstName, u1.email as user_email, u1.role as user_role, u1.rank as user_rank, u1.profilPicture as user_profilPicture, u1.isBanned as user_isBanned, u1.createdDate as user_createdDate FROM comments c JOIN users u1 ON c.user = u1.id JOIN cards ON cards.user = u1.id
         WHERE cards.id = :id");
-        
+
         $queryComment->execute(array('id' => $id));
 
         $comments = [];
@@ -125,6 +126,34 @@ class Comment
                 $card
             );
         }
+
+        function formatDateDay($date)
+        {
+            $formattedDate = new DateTime($date);
+            return $formattedDate->format('d/m/Y H:i');
+        }
         return $comments;
+    }
+
+    public static function countCommentsByCardId($id)
+    {
+        global $bdd;
+
+        $queryCommentCount = $bdd->prepare("SELECT COUNT(*) as comment_count FROM comments c 
+            JOIN users u1 ON c.user = u1.id 
+            JOIN cards ON cards.user = u1.id 
+            WHERE cards.id = :id");
+        $queryCommentCount->execute(array('id' => $id));
+
+        $result = $queryCommentCount->fetch(PDO::FETCH_ASSOC);
+
+        return $result['comment_count'];
+    }
+
+    public static function deleteCommentById($id)
+    {
+        global $bdd;
+        $queryComments = $bdd->prepare("DELETE FROM comments WHERE id = :id");
+        $queryComments->execute(array('id' => $id));
     }
 }

@@ -84,12 +84,26 @@ class CardLike
     {
         global $bdd;
         $isLiked = CardLike::isLiked($idCard, $idUser);
+        $card = Card::getCardById($idCard);
         if (!$isLiked) {
             $queryCards = $bdd->prepare("INSERT INTO cardLikes (user, card) VALUES(:idUser, :idCard)");
             $queryCards->execute(array('idUser' => $idUser, 'idCard' => $idCard));
+
+            if ($card) {
+                $userID = $card->getUser()->getId();
+                $pointsToAdd = 10;
+
+                User::addPointsToUser($userID, $pointsToAdd);
+            }
         } else {
             $queryDelete = $bdd->prepare("DELETE FROM cardLikes WHERE card=:idCard and user=:idUser");
             $queryDelete->execute(array('idCard' => $idCard, 'idUser' => $idUser));
+            if ($card) {
+                $userID = $card->getUser()->getId();
+                $pointsToAdd = -10;
+
+                User::addPointsToUser($userID, $pointsToAdd);
+            }
         }
     }
 }
