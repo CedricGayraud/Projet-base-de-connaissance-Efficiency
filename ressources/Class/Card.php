@@ -255,10 +255,10 @@ class Card
                 $formattedDate = new DateTime($date);
                 return $formattedDate->format('d/m/Y');
             }
-            return $card; // Renvoyer l'objet Card
+            return $card;
         }
 
-        return null; // Retourner null si aucune valeur n'a été trouvée
+        return null;
     }
 
     public static function getAllToVerifyCards($bdd)
@@ -375,12 +375,59 @@ class Card
                 $user,
                 $row['thematic'],
                 $row['platform'],
-                $row['img'] // Utilisez le nom de colonne correct
+                $row['img']
             );
 
-            $mostLiked[] = $card; // Ajoutez la carte au tableau des plus likées.
+            $mostLiked[] = $card;
         }
 
         return $mostLiked;
+    }
+
+    public static function getAllCardsVerify($bdd)
+    {
+        $queryCards = $bdd->prepare("SELECT c.*, u.nickname as user_nickname, u.id as user_id, u.lastName as user_lastName, u.firstName as user_firstName, u.email as user_email, u.role as user_role, u.rank as user_rank, u.profilPicture as user_profilPicture, u.isBanned as user_isBanned, u.createdDate as user_createdDate FROM cards c
+        JOIN users u ON c.user = u.id WHERE status='verify'");
+        $queryCards->execute();
+
+        $cards = [];
+
+        while ($row = $queryCards->fetch(PDO::FETCH_ASSOC)) {
+            $user = new User(
+                $row['user_id'],
+                $row['user_nickname'],
+                $row['user_lastName'],
+                $row['user_firstName'],
+                $row['user_email'],
+                $row['user_role'],
+                $row['user_rank'],
+                $row['user_profilPicture'],
+                $row['user_isBanned'],
+                $row['user_createdDate']
+            );
+
+            $cards[] = new Card(
+                $row['id'],
+                $row['title'],
+                $row['contentText'],
+                $row['gitHub'],
+                $row['status'],
+                $row['createdDate'],
+                $row['updatedDate'],
+                $row['summary'],
+                $user,
+                $row['thematic'],
+                $row['platform'],
+                $row['img']
+            );
+        }
+
+        return $cards;
+    }
+
+    public static function formatDate($date)
+    {
+        $formattedDate = new DateTime($date);
+        return $formattedDate->format('m/Y');
     }
 }
