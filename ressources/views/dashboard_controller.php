@@ -82,6 +82,7 @@ if (isset($_POST['update_thematic'])) {
     exit;
 }
 
+//Vérifier une fiche
 if (isset($_POST['verify_card'])) {
     $cardId = $_POST['card_id'];
 
@@ -91,6 +92,7 @@ if (isset($_POST['verify_card'])) {
     exit;
 }
 
+//Vérifier un message
 if (isset($_POST['verify_message'])) {
     $messageId = $_POST['message_id'];
 
@@ -100,6 +102,7 @@ if (isset($_POST['verify_message'])) {
     exit;
 }
 
+//Unban un utilisateur
 if (isset($_POST['unBan'])) {
     $banId = $_POST['ban_id'];
     UserBanned::unBan($banId);
@@ -108,4 +111,12 @@ if (isset($_POST['unBan'])) {
     exit;
 }
 
+//Delete une fiche
+if (isset($_POST['delete_card'])) {
+    $cardId = $_POST['card_id'];
+    Card::deleteCardById($cardId);
+
+    header("Location: dashboard.php");
+    exit;
+}
 include 'dashboard.php';
