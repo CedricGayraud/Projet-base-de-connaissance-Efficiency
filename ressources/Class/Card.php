@@ -1,7 +1,6 @@
 <?php
 require($_SERVER['DOCUMENT_ROOT'] . '/layout.php');
-require('../Class/User.php');
-
+require('User.php');
 class Card
 {
     public int $id;
@@ -9,7 +8,6 @@ class Card
     public string $contentText;
     public string $gitHub;
     public string $status;
-    public int $upVote;
     public string $createdDate;
     public string $updatedDate;
     public string $summary;
@@ -24,7 +22,6 @@ class Card
         string $contentText,
         string $gitHub,
         string $status,
-        int $upVote,
         string $createdDate,
         string $updatedDate,
         string $summary,
@@ -38,7 +35,6 @@ class Card
         $this->contentText = $contentText;
         $this->gitHub = $gitHub;
         $this->status = $status;
-        $this->upVote = $upVote;
         $this->createdDate = $createdDate;
         $this->updatedDate = $updatedDate;
         $this->summary = $summary;
@@ -97,16 +93,6 @@ class Card
     public function setStatus(string $status): void
     {
         $this->status = $status;
-    }
-
-    public function getUpVote(): int
-    {
-        return $this->upVote;
-    }
-
-    public function setUpVote(int $upVote): void
-    {
-        $this->upVote = $upVote;
     }
 
     public function getCreatedDate(): string
@@ -179,6 +165,8 @@ class Card
         $this->img = $img;
     }
 
+
+
     public static function getAllCards($bdd)
     {
         $queryCards = $bdd->prepare("SELECT c.*, u.nickname as user_nickname, u.id as user_id, u.lastName as user_lastName, u.firstName as user_firstName, u.email as user_email, u.role as user_role, u.rank as user_rank, u.profilPicture as user_profilPicture, u.isBanned as user_isBanned, u.createdDate as user_createdDate FROM cards c
@@ -207,7 +195,6 @@ class Card
                 $row['contentText'],
                 $row['gitHub'],
                 $row['status'],
-                $row['upVote'],
                 $row['createdDate'],
                 $row['updatedDate'],
                 $row['summary'],
@@ -225,5 +212,175 @@ class Card
         }
 
         return $cards;
+    }
+    public static function getCardById($id_card)
+    {
+        global $bdd;
+        $queryCard = $bdd->prepare("SELECT c.*, u.nickname as user_nickname, u.id as user_id, u.lastName as user_lastName, u.firstName as user_firstName, u.email as user_email, u.role as user_role, u.rank as user_rank, u.profilPicture as user_profilPicture, u.isBanned as user_isBanned, u.createdDate as user_createdDate FROM cards c 
+    JOIN users u ON c.user = u.id WHERE c.id=:id");
+        $queryCard->execute(array('id' => $id_card));
+
+        $row = $queryCard->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            $user = new User(
+                $row['user_id'],
+                $row['user_nickname'],
+                $row['user_lastName'],
+                $row['user_firstName'],
+                $row['user_email'],
+                $row['user_role'],
+                $row['user_rank'],
+                $row['user_profilPicture'],
+                $row['user_isBanned'],
+                $row['user_createdDate']
+            );
+
+            $card = new Card(
+                $row['id'],
+                $row['title'],
+                $row['contentText'],
+                $row['gitHub'],
+                $row['status'],
+                $row['createdDate'],
+                $row['updatedDate'],
+                $row['summary'],
+                $user,
+                $row['thematic'],
+                $row['platform'],
+                $row['img']
+            );
+            function formatDate($date)
+            {
+                $formattedDate = new DateTime($date);
+                return $formattedDate->format('d/m/Y');
+            }
+            return $card; // Renvoyer l'objet Card
+        }
+
+        return null; // Retourner null si aucune valeur n'a été trouvée
+    }
+
+    public static function getAllToVerifyCards($bdd)
+    {
+        $queryCards = $bdd->prepare("SELECT c.*, u.nickname as user_nickname, u.id as user_id, u.lastName as user_lastName, u.firstName as user_firstName, u.email as user_email, u.role as user_role, u.rank as user_rank, u.profilPicture as user_profilPicture, u.isBanned as user_isBanned, u.createdDate as user_createdDate FROM cards c
+        JOIN users u ON c.user = u.id WHERE c.status = 'toVerify'");
+        $queryCards->execute();
+
+        $cards = [];
+
+        while ($row = $queryCards->fetch(PDO::FETCH_ASSOC)) {
+            $user = new User(
+                $row['user_id'],
+                $row['user_nickname'],
+                $row['user_lastName'],
+                $row['user_firstName'],
+                $row['user_email'],
+                $row['user_role'],
+                $row['user_rank'],
+                $row['user_profilPicture'],
+                $row['user_isBanned'],
+                $row['user_createdDate']
+            );
+
+            $cards[] = new Card(
+                $row['id'],
+                $row['title'],
+                $row['contentText'],
+                $row['gitHub'],
+                $row['status'],
+                $row['createdDate'],
+                $row['updatedDate'],
+                $row['summary'],
+                $user,
+                $row['thematic'],
+                $row['platform'],
+                $row['img']
+            );
+        }
+        return $cards;
+    }
+
+    public static function verifyCard($id)
+    {
+        global $bdd;
+        $queryCard = $bdd->prepare("UPDATE cards SET status='verify' WHERE id=:id");
+        $queryCard->execute(array('id' => $id));
+
+        $card = self::getCardById($id);
+
+        if ($card) {
+            $userID = $card->getUser()->getId();
+            $pointsToAdd = 100;
+
+            User::addPointsToUser($userID, $pointsToAdd);
+        }
+    }
+
+    public static function createCard($title, $contentText, $gitHub, $summary, $user, $thematic, $platform)
+    {
+        global $bdd;
+        $insertQuery = $bdd->prepare("INSERT INTO cards (title, summary, user, platform, thematic, contentText, gitHub) 
+        VALUES (:title, :summary, :user, :platform, :thematic, :contentText, :gitHub)");
+        $insertQuery->execute(array(
+            'title' => $title,
+            'summary' => $summary,
+            'user' => $user,
+            'platform' => $platform,
+            'thematic' => $thematic,
+            'contentText' => $contentText,
+            'gitHub' => $gitHub,
+        ));
+    }
+
+    public static function getCardByLike($bdd)
+    {
+        $queryMostLiked = $bdd->prepare("SELECT cards.*, COUNT(cardlikes.id) as total_likes, users.id as user_id, users.nickname as user_nickname, users.lastName as user_lastName, users.firstName as user_firstName, users.email as user_email, users.role as user_role, users.rank as user_rank, users.profilPicture as user_profilPicture, users.isBanned as user_isBanned, users.createdDate as user_createdDate
+        FROM cards
+        INNER JOIN cardlikes ON cardlikes.card = cards.id
+        INNER JOIN users ON cards.user = users.id
+        WHERE status = 'verify'
+        GROUP BY cards.id
+        ORDER BY total_likes DESC
+        LIMIT 3
+        ");
+
+        $queryMostLiked->execute();
+
+        $mostLiked = [];
+
+        while ($row = $queryMostLiked->fetch(PDO::FETCH_ASSOC)) {
+            $user = new User(
+                $row['user_id'],
+                $row['user_nickname'],
+                $row['user_lastName'],
+                $row['user_firstName'],
+                $row['user_email'],
+                $row['user_role'],
+                $row['user_rank'],
+                $row['user_profilPicture'],
+                $row['user_isBanned'],
+                $row['user_createdDate']
+            );
+
+            $card = new Card(
+                $row['id'],
+                $row['title'],
+                $row['contentText'],
+                $row['gitHub'],
+                $row['status'],
+                $row['createdDate'],
+                $row['updatedDate'],
+                $row['summary'],
+                $user,
+                $row['thematic'],
+                $row['platform'],
+                $row['img'] // Utilisez le nom de colonne correct
+            );
+
+            $mostLiked[] = $card; // Ajoutez la carte au tableau des plus likées.
+        }
+
+        return $mostLiked;
     }
 }

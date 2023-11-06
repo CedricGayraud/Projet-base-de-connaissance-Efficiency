@@ -7,7 +7,7 @@ class User
     private string $firstName;
     private string $email;
     private bool $role;
-    private string $rank;
+    private int $rank;
     private string $profilPicture;
     private bool $isBanned;
     private string $createdDate;
@@ -73,11 +73,11 @@ class User
         return $this->isBanned;
     }
 
-    public function getCreateDate()
-    {
-        return $this->createdDate;
+    public function getCreatedDate()
+    { {
+            return $this->createdDate;
+        }
     }
-
 
     // SETTERS
 
@@ -123,6 +123,43 @@ class User
 
     public function setCreatedDate($createdDate)
     {
-        $this->isBanned = $createdDate;
+        $this->createdDate = $createdDate;
+    }
+
+    public static function getSessionUser($bdd)
+    {
+        try {
+            if (isset($_SESSION['user'])) {
+                $affich_users = $bdd->prepare('SELECT * FROM users WHERE id = ?');
+                $affich_users->execute(array($_SESSION['user']));
+                $result = $affich_users->fetch(PDO::FETCH_ASSOC);
+
+                if ($result) {
+                    return new User(
+                        $result['id'],
+                        $result['nickname'],
+                        $result['lastName'],
+                        $result['firstName'],
+                        $result['email'],
+                        $result['role'],
+                        $result['rank'],
+                        $result['profilPicture'],
+                        $result['isBanned'],
+                        $result['createdDate']
+                    );
+                }
+            }
+        } catch (PDOException $e) {
+            echo "Erreur lors de la récupération des données : " . $e->getMessage();
+        }
+
+        return null;
+    }
+
+    public static function addPointsToUser($idUser, $pointToAdd)
+    {
+        global $bdd;
+        $queryRank = $bdd->prepare("UPDATE users SET rank = rank + :pointToAdd WHERE id=:id ");
+        $queryRank->execute(array('pointToAdd' => $pointToAdd, 'id' => $idUser));
     }
 }
