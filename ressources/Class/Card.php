@@ -451,4 +451,113 @@ class Card
         $queryCard = $bdd->prepare("UPDATE cards SET github=:newContent WHERE id=:id");
         $queryCard->execute(array('newContent' => $newContent, 'id' => $id));
     }
+
+    public static function getAllCardByUserId($idUser)
+    {
+        global $bdd;
+        $queryCards = $bdd->prepare("SELECT c.*, u.nickname as user_nickname, u.id as user_id, u.lastName as user_lastName, u.firstName as user_firstName, u.email as user_email, u.role as user_role, u.rank as user_rank, u.profilPicture as user_profilPicture, u.isBanned as user_isBanned, u.createdDate as user_createdDate FROM cards c
+        JOIN users u ON c.user = u.id WHERE c.user=:idUser");
+        $queryCards->execute(array('idUser' => $idUser));
+
+        $cards = [];
+
+        while ($row = $queryCards->fetch(PDO::FETCH_ASSOC)) {
+            $user = new User(
+                $row['user_id'],
+                $row['user_nickname'],
+                $row['user_lastName'],
+                $row['user_firstName'],
+                $row['user_email'],
+                $row['user_role'],
+                $row['user_rank'],
+                $row['user_profilPicture'],
+                $row['user_isBanned'],
+                $row['user_createdDate']
+            );
+
+            $cards[] = new Card(
+                $row['id'],
+                $row['title'],
+                $row['contentText'],
+                $row['gitHub'],
+                $row['status'],
+                $row['createdDate'],
+                $row['updatedDate'],
+                $row['summary'],
+                $user,
+                $row['thematic'],
+                $row['platform'],
+                $row['img']
+            );
+        }
+
+        return $cards;
+    }
+
+    public static function getCardUserHaveLikedByUserId($idUser)
+    {
+        global $bdd;
+        $queryCards = $bdd->prepare("SELECT
+            cards.id AS card_id,
+            cards.title AS card_title,
+            cards.contentText AS card_contentText,
+            cards.gitHub AS card_gitHub,
+            cards.status AS card_status,
+            cards.createdDate AS card_createdDate,
+            cards.updatedDate AS card_updatedDate,
+            cards.summary AS card_summary,
+            cards.thematic AS card_thematic,
+            cards.platform AS card_platform,
+            cards.img AS card_img,
+            users.id AS user_id,
+            users.nickname AS user_nickname,
+            users.lastName AS user_lastName,
+            users.firstName AS user_firstName,
+            users.email AS user_email,
+            users.role AS user_role,
+            users.rank AS user_rank,
+            users.profilPicture AS user_profilPicture,
+            users.isBanned AS user_isBanned,
+            users.createdDate AS user_createdDate
+            FROM cards
+            INNER JOIN cardlikes ON cardlikes.card = cards.id
+            INNER JOIN users ON cardlikes.user = users.id
+            WHERE cardlikes.user = :idUser");
+
+        $queryCards->execute(array('idUser' => $idUser));
+
+        $cards = [];
+
+        while ($row = $queryCards->fetch(PDO::FETCH_ASSOC)) {
+            $user = new User(
+                $row['user_id'],
+                $row['user_nickname'],
+                $row['user_lastName'],
+                $row['user_firstName'],
+                $row['user_email'],
+                $row['user_role'],
+                $row['user_rank'],
+                $row['user_profilPicture'],
+                $row['user_isBanned'],
+                $row['user_createdDate']
+            );
+
+            $cards[] = new Card(
+                $row['card_id'],
+                $row['card_title'],
+                $row['card_contentText'],
+                $row['card_gitHub'],
+                $row['card_status'],
+                $row['card_createdDate'],
+                $row['card_updatedDate'],
+                $row['card_summary'],
+                $user,
+                $row['card_thematic'],
+                $row['card_platform'],
+                $row['card_img']
+            );
+        }
+
+        return $cards;
+    }
 }

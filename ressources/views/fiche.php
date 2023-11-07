@@ -55,7 +55,7 @@ $countComments = Comment::countCommentsByCardId($id_card);
         <div class="md:w-1/2 pr-4 flex items-center">
             <div class="text-center">
                 <p class="text-3xl font-bold"><?php echo $card->getTitle() ?></p>
-                <a class="flex mt-4 justify-center" href="../views/profil.php">
+                <a class="flex mt-4 justify-center" href="../views/profil.php?user=<?= $card->getUser()->getId(); ?>">
                     <img class="h-10 w-10 rounded-full bg-gray-50 mr-3 ml-1" src="<?= $card->getUser()->getProfilPicture(); ?>" alt="">
                     <p class="text-xl"><?= $card->getUser()->getNickname(); ?></p>
                 </a>
@@ -158,10 +158,10 @@ $countComments = Comment::countCommentsByCardId($id_card);
                 <article class="p-6 text-base bg-white rounded-lg shadow-lg dark:bg-gray-900">
                     <footer class="flex justify-between items-center mb-2">
                         <div class="flex items-center">
-                            <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
+                            <a href="profil.php?user=<?= $card->getUser()->getId(); ?>" class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
                                 <img class="mr-2 w-6 h-6 rounded-full" src="<?= $comment->getUser()->getProfilPicture(); ?>" alt="Michael Gough">
                                 <?= $comment->getUser()->getNickname(); ?>
-                            </p>
+                            </a>
                             <p class="text-sm text-gray-600 dark:text-gray-400">Le <?= formatDateDay($comment->getCreatedDate()); ?></p>
                         </div>
                         <?php if (isset($_SESSION['user']) && $sessionUser->getRole() == 1) { ?>
