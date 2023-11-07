@@ -1,4 +1,5 @@
-<?php include 'ressources/views/session_config.php' ?>
+<?php include 'ressources/views/session_config.php';
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,8 +11,9 @@
     <title>Effiiciency</title>
 </head>
 
-<body>
+<body class="bg-gray-100">
     <?php
+
     include('./ressources/views/sidebar.php');
     include('./ressources/views/accueil.php');
     include('./ressources/views/footer.php');
