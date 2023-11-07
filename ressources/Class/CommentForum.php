@@ -69,4 +69,18 @@ class CommentForum {
 
         return $comments;
     }
+
+    //addComment and update the post dateLastInteraction
+
+    public static function addComment(int $idPost, string $content): void {
+        global $bdd;
+        $query = $bdd->prepare("INSERT INTO comments (content, createdDate, idPost) VALUES (:content, NOW(), :idPost)");
+        $query->execute(array('content' => $content, 'idPost' => $idPost));
+
+        $queryUpdate = $bdd->prepare("UPDATE posts SET dateLastInteraction=NOW() WHERE id=:idPost");
+        $queryUpdate->execute(array('idPost' => $idPost));
+    }
+
+
+
 }
