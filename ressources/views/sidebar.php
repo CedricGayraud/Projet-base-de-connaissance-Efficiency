@@ -33,7 +33,7 @@ if (isset($_SESSION['user'])) {
             <?php
             if (isset($_SESSION['user'])) {
             ?>
-                <a href="/ressources/views/profil.php" class="flex items-center gap-x-4 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50">
+                <a href="/ressources/views/profil.php?user=<?= $affichage['id'] ?>" class="flex items-center gap-x-4 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50">
                     <img class="h-8 w-8 rounded-full bg-gray-50" src="<?= $affichage['profilPicture'] ?>" alt="">
                 </a>
             <?php
@@ -194,7 +194,7 @@ if (isset($_SESSION['user'])) {
                             <?php
                             if (isset($_SESSION['user'])) {
                             ?>
-                                <a href="/ressources/views/profil.php" class="flex items-center gap-x-4 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50">
+                                <a href="/ressources/views/profil.php?user=<?= $affichage['id'] ?>" class="flex items-center gap-x-4 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50">
                                     <img class="h-8 w-8 rounded-full bg-gray-50" src="<?= $affichage['profilPicture'] ?>" alt="">
                                 </a>
                             <?php
@@ -289,7 +289,7 @@ if (isset($_SESSION['user'])) {
                         <?php
                         if (isset($_SESSION['user'])) {
                         ?>
-                            <a href="/ressources/views/profil.php" class="flex items-center gap-x-4 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50">
+                            <a href="/ressources/views/profil.php?user=<?= $affichage['id'] ?>" class="flex items-center gap-x-4 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50">
                                 <img class="h-8 w-8 rounded-full bg-gray-50" src="<?= $affichage['profilPicture'] ?>" alt="">
                                 <span class="sr-only">Votre profile</span>
                                 <span aria-hidden="true"><?= $affichage['nickname'] ?></span>
