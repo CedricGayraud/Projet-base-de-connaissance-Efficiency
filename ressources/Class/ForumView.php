@@ -9,17 +9,20 @@ class ForumView
     {
         foreach ($posts as $post) {
             echo "<div class='post'>";
-            echo $post->getContent();
-            echo $post->getAuthor()->getNickname();
+            echo "<h2>" . htmlspecialchars($post->getTitle()) . "</h2>";
+            echo "<p>" . htmlspecialchars($post->getAuthor()->getNickname()) . "</p>";
+            echo "<p>Created Date: " . $post->getCreatedDate() . "</p>";
             echo "</div>";
         }
     }
 
+
     public static function showPost($post)
     {
         echo "<div class='post'>";
-        echo $post->getContent();
-        echo $post->getAuthor()->getNickname();
+        echo "<h2>" . htmlspecialchars($post->getTitle()) . "</h2>";
+        echo "<p>" . htmlspecialchars($post->getAuthor()->getNickname()) . "</p>";
+        echo "<p>Created Date: " . htmlspecialchars($post->getCreatedDate()) . "</p>";
         echo "</div>";
     }
 

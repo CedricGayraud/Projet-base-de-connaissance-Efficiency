@@ -162,4 +162,34 @@ class User
         $queryRank = $bdd->prepare("UPDATE users SET rank = rank + :pointToAdd WHERE id=:id ");
         $queryRank->execute(array('pointToAdd' => $pointToAdd, 'id' => $idUser));
     }
+
+    public static function getUserById($userId): ?User
+    {
+        global $bdd;
+
+        $query = $bdd->prepare("SELECT * FROM users WHERE id = :userId");
+        $query->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $query->execute();
+
+        $row = $query->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            return new User(
+                $row['id'],
+                $row['nickname'],
+                $row['lastName'],
+                $row['firstName'],
+                $row['email'],
+                $row['role'],
+                $row['rank'],
+                $row['profilPicture'],
+                $row['isBanned'],
+                $row['createdDate']
+            );
+        }
+
+        return null;
+    }
+
+
 }

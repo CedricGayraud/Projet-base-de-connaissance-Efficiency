@@ -7,9 +7,16 @@ include($_SERVER['DOCUMENT_ROOT'] . '/ressources/Class/ForumView.php');
 
 class ForumController
 {
-    public function displayPosts($numberOfPostsToShow)
+    public function displayPosts($numberOfPostsToShow, $isTrending)
     {
         $posts = Post::getPosts();
+
+        if ($isTrending) {
+            usort($posts, function($a, $b) {
+                return $b->getUpVotes() - $a->getUpVotes();
+            });
+        }
+
         for ($i = 0; $i < min($numberOfPostsToShow, count($posts)); $i++) {
             ForumView::showPost($posts[$i]);
         }

@@ -12,6 +12,8 @@ class Post
     public string  $content;
 
     public string $createdDate;
+
+
     public string $dateLastInteraction;
 
     public string $status;
@@ -26,6 +28,7 @@ class Post
         $this->dateLastInteraction = $dateLastInteraction;
         $this->createdDate = $createdDate;
         $this->status = $status;
+
     }
 
     // GETTERS & SETTERS
@@ -51,7 +54,7 @@ class Post
         return $this->author;
     }
 
-    public function getDateCreation(): string
+    public function getCreatedDate(): string
     {
         return $this->createdDate;
     }
@@ -151,15 +154,16 @@ class Post
             return new Post(
                 $row['id'],
                 $row['title'],
-                User::getUserById($row['user']),
                 $row['content'],
+                User::getUserById($row['user']),
                 $row['createdDate'],
                 $row['dateLastInteraction'],
-                $row['status'],
+                $row['status']
 
             );
         }
 
         return null;
     }
+
 }

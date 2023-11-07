@@ -45,10 +45,12 @@ $forumController = new ForumController();
             background-color: #ffffff;
             border-radius: 15px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+            padding: 40px;
             margin: 10px;
             width: 800px;
             text-align: left;
+            display: flex;
+            flex-direction: column;
         }
 
         .search-bar {
@@ -93,8 +95,7 @@ $forumController = new ForumController();
     <h1 class="section-title"> À la Une </h1>
     <div id="featured-posts-test-div">
         <?php
-        $forumController->displayPosts(1);
-        var_dump($forumController);
+        $forumController->displayPosts(3);
         ?>
     </div>
 
