@@ -1,17 +1,23 @@
 <?php
-require($_SERVER['DOCUMENT_ROOT'] . 'layout.php');
+require($_SERVER['DOCUMENT_ROOT'] . '/layout.php');
+include($_SERVER['DOCUMENT_ROOT'] . '/ressources/Class/user.php');
 class Post
 {
     public int $id;
+
     public string $title;
-    public string  $content;
+
     public User $author;
-    public DateTime $dateLastInteraction;
-    public DateTime $createdDate;
-    public int $upvotes;
+
+    public string  $content;
+
+    public string $createdDate;
+    public string $dateLastInteraction;
+
+    public string $status;
 
 
-    public function __construct($id, $title, $content, $auteur, $createdDate, $upvotes, $dateLastInteraction)
+    public function __construct($id, $title, $content, $auteur, $createdDate, $dateLastInteraction, $status)
     {
         $this->id = $id;
         $this->title = $title;
@@ -19,40 +25,48 @@ class Post
         $this->author = $auteur;
         $this->dateLastInteraction = $dateLastInteraction;
         $this->createdDate = $createdDate;
-        $this->upvotes = $upvotes;
+        $this->status = $status;
     }
 
     // GETTERS & SETTERS
+
 
     public function getId()
     {
         return $this->id;
     }
 
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
 
-    public function getAuthor()
+    public function getAuthor(): User
     {
         return $this->author;
     }
 
-    public function getDateCreation()
+    public function getDateCreation(): string
     {
         return $this->createdDate;
     }
 
-    public function getUpVote()
+    public function getDateLastInteraction(): string
     {
-        return $this->upvotes;
+        return $this->dateLastInteraction;
     }
+
+    public function getStatus(): int
+    {
+        return $this->status;
+    }
+
+
 
     //SETTERS
 
@@ -76,8 +90,76 @@ class Post
         $this->createdDate = $date_creation;
     }
 
-    public function setUpVote($upVote)
+    public function setDateLastInteraction($dateLastInteraction)
     {
-        $this->upvotes = $upVote;
+        $this->dateLastInteraction = $dateLastInteraction;
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+
+    // STATIC METHODS
+
+    public static function createPost($userId, $title, $content)
+    {
+        global $bdd;
+        $query = $bdd->prepare("INSERT INTO posts (title, content, user, createdDate, dateLastInteraction, upVote, status) VALUES (:title, :content, :user, NOW(), NOW(), :status)");
+        $query->execute(array(
+            'title' => $title,
+            'content' => $content,
+            'user' => $userId,
+            'status' => 0
+        ));
+    }
+
+    public static function getPosts(): array
+    {
+        global $bdd;
+        $query = $bdd->prepare("SELECT * FROM posts");
+        $query->execute();
+        $posts = [];
+
+        while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+            $post = new Post(
+                $row['id'],
+                $row['title'],
+                $row['content'],
+                User::getUserById($row['user']),
+                $row['createdDate'],
+                $row['dateLastInteraction'],
+                $row['status'],
+            );
+            $posts[] = $post;
+        }
+
+        return $posts;
+    }
+
+    public static function getPostById($postId): ?Post
+    {
+        global $bdd;
+        $query = $bdd->prepare("SELECT * FROM posts WHERE id = :postId");
+        $query->bindParam(':postId', $postId, PDO::PARAM_INT);
+        $query->execute();
+
+        $row = $query->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            return new Post(
+                $row['id'],
+                $row['title'],
+                User::getUserById($row['user']),
+                $row['content'],
+                $row['createdDate'],
+                $row['dateLastInteraction'],
+                $row['status'],
+
+            );
+        }
+
+        return null;
     }
 }

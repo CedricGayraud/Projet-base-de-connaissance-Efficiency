@@ -1,17 +1,35 @@
 <?php
-require($_SERVER['DOCUMENT_ROOT'] . '/layout.php');
 
-class ForumController {
-    public function displayPost() {
-        global $bdd;
-        try {
-            $affich_post = $bdd->prepare('SELECT * FROM post');
-            $affich_post->execute();
-            $results = $affich_post->fetchAll();
-            return $results;
-        } catch (PDOException $e) {
-            echo "Erreur lors de la récupération des données : " . $e->getMessage();
-            return array(); // Retournez un tableau vide en cas d'erreur
+include($_SERVER['DOCUMENT_ROOT'] . '/ressources/Class/Post.php');
+include($_SERVER['DOCUMENT_ROOT'] . '/ressources/Class/ForumView.php');
+
+
+
+class ForumController
+{
+    public function displayPosts($numberOfPostsToShow)
+    {
+        $posts = Post::getPosts();
+        for ($i = 0; $i < min($numberOfPostsToShow, count($posts)); $i++) {
+            ForumView::showPost($posts[$i]);
         }
+    }
+
+    public function displayPost($postId)
+    {
+        $post = Post::getPostById($postId);
+        ForumView::showPost($post);
+    }
+
+
+
+    public function showPostForm()
+    {
+        ForumView::showPostForm();
+    }
+
+    public function getPostById($postId): ?Post
+    {
+        return Post::getPostById($postId);
     }
 }

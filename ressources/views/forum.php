@@ -1,51 +1,112 @@
 <?php
-require($_SERVER['DOCUMENT_ROOT'] . '/layout.php');;
-
+require($_SERVER['DOCUMENT_ROOT'] . '/layout.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/ressources/Controller/forumController.php');
+$forumController = new ForumController();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Efficiency - Forum</title>
+    <style>
+        .forum-body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ecf0f1;
+            margin: 0;
+            padding: 15px 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+
+        header {
+            background-color: #3498db;
+            color: #ffffff;
+            padding: 10px;
+            text-align: center;
+            font-size: 40px;
+            width: 100%;
+            font-family: "Poppins", sans-serif;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #featured-posts {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            max-width: 800px;
+            margin-top: 20px;
+        }
+
+        .post {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 10px;
+            width: 800px;
+            text-align: left;
+        }
+
+        .search-bar {
+            margin-top: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            width: 300px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #2ecc71;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .section-title {
+            font-family: "Poppins", sans-serif;
+            font-size: 25px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+    </style>
 </head>
-
 <body>
-    <?php
-        include 'sidebar.php' ;
-    ?>
+<?php include 'sidebar.php'; ?>
 
-    <div class="flex justify-center min-h-screen">
-        <div class="flex-col bg-white p-8 rounded shadow-lg w-full justify-center max-w-5xl h-full">
-            <h1 class="flex text-4xl font-bold mb-4">Forum Efficiency</h1>
-            <p class="flex text-gray-600 mb-4">Trouver une solution, ou alors aider quelqu'un à en trouver </p>
-            <div class="mb-4 flex">
-                <!-- Barre de recherche -->
-                <label>
-                    <input type="text" placeholder="Rechercher..." class="w-full p-4 border inline-block">
-                </label>
-                <!--button de recherche qui prend en vompte le label input -->
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-block">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M11.76 10.27L17.49 16L16 17.49L10.27 11.76C9.2 12.53 7.91 13 6.5 13C2.91 13 0 10.09 0 6.5C0 2.91 2.91 0 6.5 0C10.09 0 13 2.91 13 6.5C13 7.91 12.53 9.2 11.76 10.27ZM6.5 2C4.01 2 2 4.01 2 6.5C2 8.99 4.01 11 6.5 11C8.99 11 11 8.99 11 6.5C11 4.01 8.99 2 6.5 2Z" fill="white"/>
-                    </svg>
-                </button>
+<div class="forum-body">
+    <header>
+        <h1>Forum</h1>
+    </header>
 
-            </div>
-
-            <h2> - À LA UNE </h2>
-
-            <?php
-
-
-
-            ?>
-
-        </div>
+    <h1 class="section-title"> À la Une </h1>
+    <div id="featured-posts-test-div">
+        <?php
+        $forumController->displayPosts(1);
+        var_dump($forumController);
+        ?>
     </div>
 
+    <div class="search-bar">
+        <form action="/rechercher" method="get">
+            <label>
+                <input type="text" name="q" placeholder="Rechercher...">
+            </label>
+            <input type="submit" value="Rechercher">
+        </form>
+    </div>
+</div>
 
 </body>
-
 </html>
