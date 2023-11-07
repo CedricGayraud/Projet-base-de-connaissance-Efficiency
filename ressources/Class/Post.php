@@ -106,18 +106,6 @@ class Post
 
     // STATIC METHODS
 
-    public static function createPost($userId, $title, $content)
-    {
-        global $bdd;
-        $query = $bdd->prepare("INSERT INTO posts (title, content, user, createdDate, dateLastInteraction, upVote, status) VALUES (:title, :content, :user, NOW(), NOW(), :status)");
-        $query->execute(array(
-            'title' => $title,
-            'content' => $content,
-            'user' => $userId,
-            'status' => 0
-        ));
-    }
-
     public static function getPosts(): array
     {
         global $bdd;
@@ -166,4 +154,39 @@ class Post
         return null;
     }
 
+    //createPost function and set status to 0
+
+    public static function createPost($title, $content, $author)
+    {
+        global $bdd;
+        $query = $bdd->prepare("INSERT INTO posts (title, content, user, createdDate, dateLastInteraction, status) VALUES (:title, :content, :author, NOW(), NOW(), 0)");
+        $query->bindParam(':title', $title, PDO::PARAM_STR);
+        $query->bindParam(':content', $content, PDO::PARAM_STR);
+        $query->bindParam(':author', $author, PDO::PARAM_INT);
+        $query->execute();
+    }
+
+    public static function getAllPostsByUserId($userId): array
+    {
+        global $bdd;
+        $query = $bdd->prepare("SELECT * FROM posts WHERE user = :userId");
+        $query->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $query->execute();
+        $posts = [];
+
+        while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+            $post = new Post(
+                $row['id'],
+                $row['title'],
+                $row['content'],
+                User::getUserById($row['user']),
+                $row['createdDate'],
+                $row['dateLastInteraction'],
+                $row['status'],
+            );
+            $posts[] = $post;
+        }
+
+        return $posts;
+    }
 }

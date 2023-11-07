@@ -41,17 +41,6 @@ $forumController = new ForumController();
             margin-top: 20px;
         }
 
-        .post {
-            background-color: #ffffff;
-            border-radius: 15px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-            margin: 10px;
-            width: 800px;
-            text-align: left;
-            display: flex;
-            flex-direction: column;
-        }
 
         .search-bar {
             margin-top: 20px;
@@ -82,6 +71,7 @@ $forumController = new ForumController();
             margin-bottom: 20px;
         }
 
+
     </style>
 </head>
 <body>
@@ -93,9 +83,9 @@ $forumController = new ForumController();
     </header>
 
     <h1 class="section-title"> À la Une </h1>
-    <div id="featured-posts-test-div">
+    <div id="featured-posts">
         <?php
-        $forumController->displayPosts(3);
+            $forumController->displayPosts(3, true);
         ?>
     </div>
 

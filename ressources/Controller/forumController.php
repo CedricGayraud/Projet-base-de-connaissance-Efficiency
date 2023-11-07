@@ -2,6 +2,7 @@
 
 include($_SERVER['DOCUMENT_ROOT'] . '/ressources/Class/Post.php');
 include($_SERVER['DOCUMENT_ROOT'] . '/ressources/Class/ForumView.php');
+include($_SERVER['DOCUMENT_ROOT'] . '/ressources/Class/PostLike.php');
 
 
 
@@ -13,7 +14,9 @@ class ForumController
 
         if ($isTrending) {
             usort($posts, function($a, $b) {
-                return $b->getUpVotes() - $a->getUpVotes();
+                $likesA = PostLike::getAllLikesByPostId($a->getId());
+                $likesB = PostLike::getAllLikesByPostId($b->getId());
+                return $likesB - $likesA;
             });
         }
 
@@ -21,6 +24,7 @@ class ForumController
             ForumView::showPost($posts[$i]);
         }
     }
+
 
     public function displayPost($postId)
     {

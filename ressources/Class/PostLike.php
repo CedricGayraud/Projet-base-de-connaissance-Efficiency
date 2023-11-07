@@ -33,7 +33,7 @@ class PostLike {
         return $this->user;
     }
 
-    public function setUser(int $user): void
+    public function setUser($user): void
     {
         $this->user = $user;
     }
@@ -43,7 +43,7 @@ class PostLike {
         return $this->card;
     }
 
-    public function setCard(int $card): void
+    public function setCard($card): void
     {
         $this->card = $card;
     }
@@ -65,7 +65,7 @@ class PostLike {
         }
     }
 
-    public static function isLiked($id_post, $id_user)
+    public static function isLiked($id_post, $id_user): bool
     {
         global $bdd;
         $queryPosts = $bdd->prepare("SELECT COUNT(*) as total FROM postlikes as cl WHERE post=:idPost and user=:idUser");
@@ -92,7 +92,7 @@ class PostLike {
             $queryPosts->execute(array('idUser' => $idUser, 'idPost' => $idPost));
 
             if ($post) {
-                $userID = $post->getUser()->getId();
+                $userID = $post->getAuthor()->getId();
                 $pointsToAdd = 10;
 
                 User::addPointsToUser($userID, $pointsToAdd);
@@ -101,7 +101,7 @@ class PostLike {
             $queryDelete = $bdd->prepare("DELETE FROM postlikes WHERE post=:idPost and user=:idUser");
             $queryDelete->execute(array('idPost' => $idPost, 'idUser' => $idUser));
             if ($post) {
-                $userID = $post->getUser()->getId();
+                $userID = $post->getAuthor()->getId();
                 $pointsToAdd = -10;
 
                 User::addPointsToUser($userID, $pointsToAdd);
