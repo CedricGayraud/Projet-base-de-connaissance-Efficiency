@@ -41,12 +41,22 @@ $mostLiked = Card::getCardByLike($bdd);
         @media (max-width: 760px) {
             .swiper-button-next {
                 right: 20px;
-                transform: rotate(90deg);
+                top: 100px;
             }
 
             .swiper-button-prev {
                 left: 20px;
-                transform: rotate(90deg);
+                top: 100px;
+            }
+
+            .swiper-wrapper {
+                flex-direction: row !important;
+                height: 140px;
+                width: 375px;
+            }
+
+            .swiper-slide {
+                margin: 0px 15px;
             }
         }
 
@@ -91,23 +101,23 @@ $mostLiked = Card::getCardByLike($bdd);
 </head>
 
 
-<div class="h-screen w-full bg-contain bg-top py-8" style="background-image: url(https://cdn.discordapp.com/attachments/889843132949213214/1170995988190732298/rocket-volant-dans-espace.webp?ex=655b11ff&is=65489cff&hm=ddc9fc10a8a5b4538613d6d00bded4b68726f61aae9005d08dbffea3f66846ae&)">
-    <div class="ml-32 mr-12">
-        <div class="w-7/12 flex flex-wrap my-12">
-            <h1 class="text-[#2CE6C1] text-7xl font-semibold">Votre hub communautaire</h1>
-            <h1 class="text-slate-50 text-7xl font-semibold">pour l'automatisation de la connaissance.</h1>
+<div class="h-screen lg:w-full lg:bg-contain lg:bg-top lg:py-8 bg-cover bg-center" style="background-image: url(https://cdn.discordapp.com/attachments/889843132949213214/1170995988190732298/rocket-volant-dans-espace.webp?ex=655b11ff&is=65489cff&hm=ddc9fc10a8a5b4538613d6d00bded4b68726f61aae9005d08dbffea3f66846ae&)">
+    <div class="lg:ml-32 lg:mr-12">
+        <div class="lg:w-7/12 flex flex-wrap my-12 lg:mx-0 mx-auto w-9/12">
+            <h1 class="text-[#2CE6C1] lg:text-7xl font-semibold lg:text-start text-center text-3xl">Votre hub communautaire</h1>
+            <h1 class="text-slate-50 lg:text-7xl font-semibold lg:text-start text-center text-3xl">pour l'automatisation de la connaissance.</h1>
         </div>
 
-        <p class="text-slate-50 text-2xl w-7/12 my-12">Efficiency est une plateforme communautaire qui simplifie les tâches informatiques en permettant aux utilisateurs de créer et de consulter des fiches de scripts pour divers logiciels. Rejoignez notre communauté pour faciliter vos opérations informatiques.</p>
+        <p class="text-slate-50 lg:text-2xl lg:w-7/12 my-12 w-full text-lg p-2">Efficiency est une plateforme communautaire qui simplifie les tâches informatiques en permettant aux utilisateurs de créer et de consulter des fiches de scripts pour divers logiciels. Rejoignez notre communauté pour faciliter vos opérations informatiques.</p>
 
         <div class="flex my-6">
-            <a href="/ressources/views/decouvrir.php" class="w-fit p-3 h-16 bg-[#2CE6C1] border-[3px] border-[#2CE6C1] text-white text-lg text-center flex justify-center items-center mr-6 rounded-full font-semibold hover:bg-white hover:text-[#2CE6C1] duration-500">
+            <a href="/ressources/views/decouvrir.php" class="w-fit lg:p-3 lg:h-16 bg-[#2CE6C1] border-[3px] border-[#2CE6C1] text-white lg:text-lg text-center flex justify-center items-center mr-6 rounded-full font-semibold hover:bg-white hover:text-[#2CE6C1] duration-500 text-md p-1 h-14">
                 <button class=""> Découvrir les thématiques</button>
             </a>
-            <a href="" class="w-fit p-3 h-16 text-[#2CE6C1] border-[3px] border-white bg-white text-lg text-center flex justify-center items-center mx-6 rounded-full font-semibold hover:bg-[#2CE6C1] hover:text-white duration-500">
+            <a href="" class="w-fit lg:p-3 lg:h-16 text-[#2CE6C1] border-[3px] border-white bg-white lg:text-lg text-center flex justify-center items-center mx-6 rounded-full font-semibold hover:bg-[#2CE6C1] hover:text-white duration-500 text-md p-1 h-14">
                 Découvrir les plateformes
             </a>
-            <div class="flex ml-auto mr-12">
+            <div class="flex ml-auto mr-12 lg:block hidden">
                 <a href="/ressources/views/creation_fiche.php">
                     <button class="fixed rounded-full border-2 border-white w-20 h-20 bg-[#2CE6C1] text-white hover:text-[#2CE6C1] border-[3px] border-[#2CE6C1] hover:bg-white duration-500">
                         <span class="material-symbols-outlined" style="font-size: 48px;">add</span>
@@ -121,9 +131,9 @@ $mostLiked = Card::getCardByLike($bdd);
     </div>
 </div>
 
-<div class="mx-40">
+<div class="lg:mx-40 mx-8">
 
-    <p class="w-fit mx-auto mb-6 mt-10 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 border-b-4 border-[#2CE6C1]">Rechercher une fiche</p>
+    <p class="w-fit mx-auto lg:mb-6 lg:mt-10 lg:text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 border-b-4 border-[#2CE6C1] mb-4 mt-4 text-xl">Rechercher une fiche</p>
 
     <div class="relative z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -150,15 +160,15 @@ $mostLiked = Card::getCardByLike($bdd);
         </div>
     </div>
 
-    <div class="my-20">
+    <div class="lg:my-20 my-8">
         <p class="w-fit mx-auto mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 border-b-4 border-[#2CE6C1]">À la une</p>
 
 
 
-        <div class="flex justify-center">
+        <div class="flex justify-center flex-wrap">
 
             <?php foreach ($mostLiked as $card) : ?>
-                <div class="card relative w-[190px] h-[254] bg-white justify-between flex flex-col p-3 cursor-pointer rounded-md mx-6">
+                <div class="card relative w-[190px] h-[254] bg-white justify-between flex flex-col p-3 cursor-pointer rounded-md mx-6 lg:my-0 my-6">
                     <a href="/ressources/views/fiche.php?fiche=<?= $card->getId(); ?>" class="">
                         <h2 class="text-lg font-semibold text-gray-800 mb-4 h-20"><?= $card->getTitle(); ?></h2>
                     </a>
@@ -232,7 +242,7 @@ $mostLiked = Card::getCardByLike($bdd);
         </svg>
 
         <div class="mx-auto max-w-3xl text-center">
-            <h2 class="w-fit m-auto text-3xl  font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 border-b-4 border-[#2CE6C1]">Partagez Vos Idées d'Automatisation </h2>
+            <h2 class="w-fit m-auto text-3xl  font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 lg:border-b-4 lg:border-[#2CE6C1] border-none">Partagez Vos Idées d'Automatisation </h2>
             <p class="mt-4 text-gray-900 text-lg">Découvrez, partagez et innovez sur notre forum. Vos idées peuvent façonner le futur de l'automatisation informatique.</p>
             <button class="custom-button">
                 Accéder au Forum
