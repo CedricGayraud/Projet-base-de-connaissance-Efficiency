@@ -6,7 +6,12 @@ class CommentForum {
     private int $id;
     private string $content;
     private string $createdDate;
-    private int $idPost;
+    private int $post;
+
+    private int $user;
+
+
+
 
     //getters
 
@@ -23,7 +28,11 @@ class CommentForum {
     }
 
     public function getIdPost(): int {
-        return $this->idPost;
+        return $this->post;
+    }
+
+    public function getUser(): int {
+        return $this->user;
     }
 
     //setters
@@ -41,16 +50,21 @@ class CommentForum {
     }
 
     public function setIdPost(int $idPost): void {
-        $this->idPost = $idPost;
+        $this->post = $idPost;
+    }
+
+    public function setUser(int $user): void {
+        $this->user = $user;
     }
 
     //construct
 
-    public function __construct(int $id, string $content, string $createdDate, int $idPost) {
+    public function __construct(int $id, string $content, string $createdDate, int $idPost, int $user) {
         $this->id = $id;
         $this->content = $content;
         $this->createdDate = $createdDate;
-        $this->idPost = $idPost;
+        $this->post = $idPost;
+        $this->user = $user;
     }
 
     //static methods
@@ -63,22 +77,30 @@ class CommentForum {
         $comments = [];
 
         while ($data = $queryComments->fetch()) {
-            $comment = new CommentForum($data['id'], $data['content'], $data['createdDate'], $data['idPost']);
+            $comment = new CommentForum($data['id'], $data['content'], $data['createdDate'], $data['post'], $data['user']);
             array_push($comments, $comment);
         }
 
         return $comments;
     }
 
+
+
     //addComment and update the post dateLastInteraction
 
-    public static function addComment(int $idPost, string $content): void {
+    public static function addComment(string $content, int $idPost, int $idUser): void {
         global $bdd;
-        $query = $bdd->prepare("INSERT INTO comments (content, createdDate, idPost) VALUES (:content, NOW(), :idPost)");
-        $query->execute(array('content' => $content, 'idPost' => $idPost));
+        $queryAddComment = $bdd->prepare("INSERT INTO comments (content, createdDate, post, user) VALUES (:content, NOW(), :post, :user)");
+        $queryAddComment->execute(array('content' => $content, 'post' => $idPost, 'user' => $idUser));
 
-        $queryUpdate = $bdd->prepare("UPDATE posts SET dateLastInteraction=NOW() WHERE id=:idPost");
-        $queryUpdate->execute(array('idPost' => $idPost));
+        $queryUpdatePost = $bdd->prepare("UPDATE posts SET dateLastInteraction=NOW() WHERE id=:idPost");
+        $queryUpdatePost->execute(array('idPost' => $idPost));
+    }
+
+    public static function deleteComment(int $idComment, int $idPost): void {
+        global $bdd;
+        $queryDeleteComment = $bdd->prepare("DELETE FROM comments WHERE id=:idComment");
+        $queryDeleteComment->execute(array('idComment' => $idComment));
     }
 
 
