@@ -207,7 +207,7 @@ if ($userPoints >= 0 && $userPoints <= 300) {
                      <a href="/ressources/views/fiche.php?fiche=<?= $card->getId(); ?>" class="">
                         <h2 class="text-lg font-semibold text-gray-800 mb-4 h-20"><?= $card->getTitle(); ?></h2>
                      </a>
-                     <a class="flex items-center border-b-2 border-[#2CE6C1] pb-2" href="ressources/views/profil.php">
+                     <a class="flex items-center border-b-2 border-[#2CE6C1] pb-2" href="profil.php?user=<?= $card->getUser()->getId(); ?>">
                         <img class="h-10 w-10 rounded-full bg-gray-50 mr-3" src="<?= $card->getUser()->getProfilPicture(); ?>" alt="">
                         <p class="text-xl"><?= $card->getUser()->getNickname(); ?></p>
                      </a>
@@ -243,7 +243,7 @@ if ($userPoints >= 0 && $userPoints <= 300) {
                      <a href="/ressources/views/fiche.php?fiche=<?= $card->getId(); ?>" class="">
                         <h2 class="text-lg font-semibold text-gray-800 mb-4 h-20"><?= $card->getTitle(); ?></h2>
                      </a>
-                     <a class="flex items-center border-b-2 border-[#2CE6C1] pb-2" href="ressources/views/profil.php">
+                     <a class="flex items-center border-b-2 border-[#2CE6C1] pb-2" href="profil.php?user=<?= $card->getUser()->getId(); ?>">
                         <img class="h-10 w-10 rounded-full bg-gray-50 mr-3" src="<?= $card->getUser()->getProfilPicture(); ?>" alt="">
                         <p class="text-xl"><?= $card->getUser()->getNickname(); ?></p>
                      </a>
