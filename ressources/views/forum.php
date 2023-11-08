@@ -13,6 +13,7 @@ $forumController = new ForumController();
     <title>Efficiency - Forum</title>
     <style>
         .forum-body {
+            font-family: "Poppins", sans-serif;
             background-color: #ecf0f1;
             margin: 0;
             padding: 15px 250px;
@@ -20,6 +21,7 @@ $forumController = new ForumController();
             flex-direction: column;
             align-items: center;
             height: fit-content;
+            min-height: 100%;
         }
 
         header {
@@ -111,7 +113,6 @@ $forumController = new ForumController();
         .like-button {
             width: 30px;
             height: 30px;
-            background-image: url("/ressources/images/like.png");
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
@@ -164,6 +165,7 @@ $forumController = new ForumController();
         #like-icon {
             width: 75%;
             height: 75%;
+            margin: auto;
         }
 
         form {
@@ -182,6 +184,25 @@ $forumController = new ForumController();
             font-size: 16px;
             border: 1px solid #abeede;
             cursor: pointer;
+        }
+
+        #add-post {
+            position: fixed;
+            bottom: 45px;
+            right: 45px;
+        }
+
+        #add-post button {
+            border-radius: 15px;
+            padding: 10px 10px 10px 10px;
+            border: 1px solid #2ce6c1;
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+        }
+
+        #add-post button h1 {
+            font-size: 25px;
         }
 
 
@@ -222,6 +243,15 @@ $forumController = new ForumController();
             echo "</div>";
         }
         ?>
+
+        <?php
+        if (getSessionUser($bdd)){
+            echo '<a id="add-post" href="create-post.php">';
+            echo '<button type="button">Créer un post</button>';
+            echo '</a>';
+        }
+        ?>
+
     </div>
 
 </body>

@@ -2,8 +2,7 @@
 
 // Create post forum php file
 
-
-// Require the class PostForum
+require ($_SERVER['DOCUMENT_ROOT'] . '/layout.php');
 require ($_SERVER['DOCUMENT_ROOT'] . '/ressources/Controller/forumController.php');
 $forumController = new ForumController();
 
@@ -15,3 +14,26 @@ $forumController = new ForumController();
 <head>
     <meta charset="UTF-8">
     <title>Forum - Créer un post</title>
+    <style>
+
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+<?php include 'sidebar.php'; ?>
+
+<div class="forum-body">
+    <header>
+        <h1>Créer un post</h1>
+    </header>
+    <div id="post-form">
+        <?php
+        $forumController->showPostForm();
+        ?>
+    </div>
+</div>

@@ -189,4 +189,28 @@ class Post
 
         return $posts;
     }
+
+    public static function searchPosts($searchTerm): array
+    {
+        global $bdd;
+        $query = $bdd->prepare("SELECT * FROM posts WHERE title LIKE :searchTerm");
+        $query->execute(array('searchTerm' => '%' . $searchTerm . '%'));
+
+        $result = [];
+
+        while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+            $post = new Post(
+                $row['id'],
+                $row['title'],
+                $row['content'],
+                User::getUserById($row['user']),
+                $row['createdDate'],
+                $row['dateLastInteraction'],
+                $row['status'],
+            );
+            $result[] = $post;
+        }
+
+        return $result;
+    }
 }

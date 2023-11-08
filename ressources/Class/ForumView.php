@@ -25,16 +25,32 @@ class ForumView
         echo "</a>";
         echo "</div>";
 
+
+
         echo "<div class='description-post flex column'>";
         echo "<h2 class='title-post'>" . htmlspecialchars($post->getTitle()) . "</h2>";
         echo "<p class='author-post'>" . htmlspecialchars($post->getAuthor()->getNickname()) . "</p>";
         echo "</div>";
         echo "<div class='date-post flex column'>";
-        echo "<p class='created-date'>Last Interaction: " . htmlspecialchars($post->getDateLastInteraction()) . "</p>";
-        echo "<p class='created-date'>Created Date: " . htmlspecialchars($post->getCreatedDate()) . "</p>";
+        echo "<p class='created-date'>Last Update: " . htmlspecialchars($post->getDateLastInteraction()) . "</p>";
         echo "</div>";
 
         echo "</div>";
+    }
+
+    //show results of search
+
+    public static function showSearchResults($searchResults)
+    {
+
+        if (count($searchResults) == 0) {
+            echo "<p>Aucun résultat trouvé.</p>";
+        }
+        else {
+            for ($i = 0; $i < count($searchResults); $i++) {
+                ForumView::showPost($searchResults[$i]);
+            }
+        }
     }
 
     public static function showPostForm()

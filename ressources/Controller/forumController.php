@@ -45,6 +45,14 @@ class ForumController
         ForumView::showPost($post);
     }
 
+    //displayResult
+
+    public function displaySearchResults($searchQuery)
+    {
+        $searchResults = Post::searchPosts($searchQuery);
+
+        ForumView::showSearchResults($searchResults);
+    }
 
 
     public function showPostForm()
