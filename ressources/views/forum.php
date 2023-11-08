@@ -1,4 +1,5 @@
 <?php
+global $bdd;
 require($_SERVER['DOCUMENT_ROOT'] . '/layout.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/ressources/Controller/forumController.php');
 $forumController = new ForumController();
@@ -12,14 +13,13 @@ $forumController = new ForumController();
     <title>Efficiency - Forum</title>
     <style>
         .forum-body {
-            font-family: 'Arial', sans-serif;
             background-color: #ecf0f1;
             margin: 0;
             padding: 15px 250px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            height: 100vh;
+            height: fit-content;
         }
 
         header {
@@ -37,8 +37,27 @@ $forumController = new ForumController();
             display: flex;
             flex-direction: column;
             justify-content: space-around;
-            max-width: 800px;
+            max-width: 700px;
             margin-top: 20px;
+            width : 700px;
+        }
+
+        #my-posts {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            max-width: 700px;
+            margin-top: 20px;
+            width : 700px;
+        }
+
+        #recent-posts {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            max-width: 700px;
+            margin-top: 20px;
+            width : 700px;
         }
 
 
@@ -50,19 +69,10 @@ $forumController = new ForumController();
             padding: 10px;
             font-size: 16px;
             border: 1px solid #bdc3c7;
-            border-radius: 5px;
+            border-radius: 15px 0px 0px 15px;
             width: 300px;
         }
 
-        input[type="submit"] {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #2ecc71;
-            color: #ffffff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
 
         .section-title {
             font-family: "Poppins", sans-serif;
@@ -71,33 +81,148 @@ $forumController = new ForumController();
             margin-bottom: 20px;
         }
 
+        .post-forum {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-like-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-right: 20px;
+            border-right: 2px solid #abeede;
+        }
+
+        .like-count {
+            font-family: "Poppins", sans-serif;
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .like-button {
+            width: 30px;
+            height: 30px;
+            background-image: url("/ressources/images/like.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            cursor: pointer;
+        }
+
+        .description-post {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            width: 70%;
+            padding-left: 20px;
+        }
+
+        .title-post {
+            font-family: "Poppins", sans-serif;
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .author-post {
+            font-family: "Poppins", sans-serif;
+            font-size: 15px;
+            margin: 0;
+        }
+
+        .date-post {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: center;
+            width: 30%;
+        }
+
+        .created-date {
+            font-family: "Poppins", sans-serif;
+            font-size: 15px;
+            margin: 0;
+        }
+
+        .post-forum:hover {
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .post-forum:active {
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #like-icon {
+            width: 75%;
+            height: 75%;
+        }
+
+        form {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            width: 700px;
+            margin-top: 40px;
+        }
+
+        form button{
+            border-radius: 0px 15px 15px 0px;
+            padding: 10px 20px;
+            background-color: #2ce6c1!important;
+            font-size: 16px;
+            border: 1px solid #abeede;
+            cursor: pointer;
+        }
+
 
     </style>
 </head>
 <body>
 <?php include 'sidebar.php'; ?>
 
-<div class="forum-body">
-    <header>
-        <h1>Forum</h1>
-    </header>
+    <div class="forum-body">
+        <header>
+            <h1>FORUM</h1>
+        </header>
 
-    <h1 class="section-title"> À la Une </h1>
-    <div id="featured-posts">
-        <?php
-            $forumController->displayPosts(3, true);
+
+        <form method="post" action="forum-search.php">
+            <input type="text" name="searchQuery">
+            <button type="submit">Recherche</button>
+        </form>
+
+        <h1 class="section-title"> À la Une </h1>
+        <div id="featured-posts">
+            <?php
+                $forumController->displayPosts(3, true);
+            ?>
+        </div>
+
+        <h1 class="section-title"> Les + Récents </h1>
+        <div id="recent-posts">
+            <?php
+                $forumController->displayPosts(3, false);
+            ?>
+        </div>
+
+        <?php if (User::getSessionUser($bdd)){
+            echo"<div id='my-posts'>";
+            echo"<h1 class='section-title'> Mes posts </h1>";
+            $forumController->displayUserPosts();
+            echo "</div>";
+        }
         ?>
     </div>
-
-    <div class="search-bar">
-        <form action="/rechercher" method="get">
-            <label>
-                <input type="text" name="q" placeholder="Rechercher...">
-            </label>
-            <input type="submit" value="Rechercher">
-        </form>
-    </div>
-</div>
 
 </body>
 </html>

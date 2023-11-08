@@ -25,6 +25,19 @@ class ForumController
         }
     }
 
+    public function displayUserPosts()
+    {
+        $posts = Post::getAllPostsByUserId(getSessionUser()->getId());
+        if (count($posts) == 0) {
+            echo "<p>Vous n'avez pas encore posté de message.</p>";
+        }
+        else {
+            for ($i = 0; $i < count($posts); $i++) {
+                ForumView::showPost($posts[$i]);
+            }
+        }
+    }
+
 
     public function displayPost($postId)
     {
@@ -43,4 +56,6 @@ class ForumController
     {
         return Post::getPostById($postId);
     }
+
+
 }

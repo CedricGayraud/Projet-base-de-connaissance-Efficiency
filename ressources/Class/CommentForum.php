@@ -84,10 +84,6 @@ class CommentForum {
         return $comments;
     }
 
-
-
-    //addComment and update the post dateLastInteraction
-
     public static function addComment(string $content, int $idPost, int $idUser): void {
         global $bdd;
         $queryAddComment = $bdd->prepare("INSERT INTO comments (content, createdDate, post, user) VALUES (:content, NOW(), :post, :user)");
