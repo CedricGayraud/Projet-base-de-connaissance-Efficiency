@@ -1,25 +1,196 @@
+
 <?php
-
-// Create post forum php file
-
-require ($_SERVER['DOCUMENT_ROOT'] . '/layout.php');
-require ($_SERVER['DOCUMENT_ROOT'] . '/ressources/Controller/forumController.php');
+global $bdd;
+require($_SERVER['DOCUMENT_ROOT'] . '/layout.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/ressources/Controller/forumController.php');
 $forumController = new ForumController();
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Forum - Créer un post</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Efficiency - Forum</title>
+    <script>
+        function redirectToPost(url) {
+            window.location.href = url;
+        }
+    </script>
     <style>
+        .forum-body {
+            background-color: #ecf0f1;
+            margin: 0;
+            padding: 15px 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: fit-content;
+            min-height: 100%;
+        }
+
+        header {
+            background-color: #3498db;
+            color: #ffffff;
+            padding: 10px;
+            text-align: center;
+            font-size: 40px;
+            width: 100%;
+            font-family: "Poppins", sans-serif;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #featured-posts {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            max-width: 700px;
+            margin-top: 20px;
+            width : 700px;
+        }
+
+        #my-posts {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            max-width: 700px;
+            margin-top: 20px;
+            width : 700px;
+        }
+
+        #recent-posts {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            max-width: 700px;
+            margin-top: 20px;
+            width : 700px;
+        }
 
 
+        .search-bar {
+            margin-top: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #bdc3c7;
+            border-radius: 15px 0px 0px 15px;
+            width: 300px;
+        }
 
 
+        .section-title {
+            font-family: "Poppins", sans-serif;
+            font-size: 25px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
 
+        .post-forum {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-like-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-right: 20px;
+            border-right: 2px solid #abeede;
+        }
+
+        .like-count {
+            font-family: "Poppins", sans-serif;
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .like-button {
+            width: 30px;
+            height: 30px;
+            background-image: url("/ressources/images/like.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            cursor: pointer;
+        }
+
+        .description-post {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            width: 70%;
+            padding-left: 20px;
+        }
+
+        .title-post {
+            font-family: "Poppins", sans-serif;
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .author-post {
+            font-family: "Poppins", sans-serif;
+            font-size: 15px;
+            margin: 0;
+        }
+
+        .date-post {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: center;
+            width: 30%;
+        }
+
+        .created-date {
+            font-family: "Poppins", sans-serif;
+            font-size: 15px;
+            margin: 0;
+        }
+
+        .post-forum:hover {
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .post-forum:active {
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #like-icon {
+            width: 75%;
+            height: 75%;
+            margin: auto;
+        }
+
+        form {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            width: 700px;
+            margin-top: 40px;
+        }
+
+        form button{
+            border-radius: 0px 15px 15px 0px;
+            padding: 10px 20px;
+            background-color: #2ce6c1!important;
+            font-size: 16px;
+            border: 1px solid #abeede;
+            cursor: pointer;
+        }
 
 
     </style>
@@ -29,11 +200,22 @@ $forumController = new ForumController();
 
 <div class="forum-body">
     <header>
-        <h1>Créer un post</h1>
+        <h1>Forum - Efficiency</h1>
     </header>
-    <div id="post-form">
-        <?php
+
+
+    <?php
+    if (User::getSessionUser($bdd)) {
         $forumController->showPostForm();
-        ?>
-    </div>
+    }else {
+        echo "<p>Vous devez être connecté pour pouvoir poster un message.</p>";
+    }
+    ?>
+
+
+
+
 </div>
+
+</body>
+</html>

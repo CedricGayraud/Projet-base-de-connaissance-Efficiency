@@ -3,6 +3,7 @@
 include($_SERVER['DOCUMENT_ROOT'] . '/ressources/Class/Post.php');
 include($_SERVER['DOCUMENT_ROOT'] . '/ressources/Class/ForumView.php');
 include($_SERVER['DOCUMENT_ROOT'] . '/ressources/Class/PostLike.php');
+require($_SERVER['DOCUMENT_ROOT'] . '/layout.php');
 
 
 
@@ -27,7 +28,8 @@ class ForumController
 
     public function displayUserPosts()
     {
-        $posts = Post::getAllPostsByUserId(getSessionUser()->getId());
+        global $bdd;
+        $posts = Post::getAllPostsByUserId(User::getSessionUser($bdd)->getId());
         if (count($posts) == 0) {
             echo "<p>Vous n'avez pas encore posté de message.</p>";
         }
@@ -57,6 +59,12 @@ class ForumController
 
     public function showPostForm()
     {
+        global $bdd;
+        if (User::getSessionUser($bdd)) {
+            ForumView::showPostForm();
+        } else {
+            echo "<p>Vous devez être connecté pour pouvoir poster un message.</p>";
+        }
         ForumView::showPostForm();
     }
 
@@ -64,6 +72,16 @@ class ForumController
     {
         return Post::getPostById($postId);
     }
+
+    //displayPostdetails
+
+    public function showPostDetails($postId)
+    {
+        $post = Post::getPostById($postId);
+        ForumView::showPostDetails($post);
+    }
+
+
 
 
 }

@@ -11,6 +11,11 @@ $forumController = new ForumController();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Efficiency - Forum</title>
+    <script>
+        function redirectToPost(url) {
+            window.location.href = url;
+        }
+    </script>
     <style>
         .forum-body {
             font-family: "Poppins", sans-serif;
@@ -245,7 +250,7 @@ $forumController = new ForumController();
         ?>
 
         <?php
-        if (getSessionUser($bdd)){
+        if (User::getSessionUser($bdd)){
             echo '<a id="add-post" href="create-post.php">';
             echo '<button type="button">Créer un post</button>';
             echo '</a>';
