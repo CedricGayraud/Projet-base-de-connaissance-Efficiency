@@ -138,7 +138,7 @@ $countComments = Comment::countCommentsByCardId($id_card);
                         <div class="text-center py-3 px-8">
                             <textarea id="editableCode" class="text-white bg-black w-full h-48"><?php echo html_entity_decode($card->getGitHub()); ?></textarea>
                         </div>
-                        <button type="submit" name="edit_code" class="m-4 text-white bg-[#2CE6C1] hover:bg-[#BAE1FE] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm lg:w-full px-5 py-2.5 text-center mt-4">Enregistrer</button>
+                        <button type="submit" name="edit_code" class="m-4 text-white bg-[#2CE6C1] hover:bg-[#BAE1FE] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm lg:w-fit px-5 py-2.5 text-center mt-4">Enregistrer</button>
                     <?php } else { ?>
                         <div class="text-center py-3 px-8">
                             <textarea readonly id="editableCode" class="text-white bg-black w-full h-48"><?php echo html_entity_decode($card->getGitHub()); ?></textarea>
