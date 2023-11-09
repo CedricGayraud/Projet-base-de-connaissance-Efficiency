@@ -74,13 +74,18 @@ class ForumView
 
         // Affiche le formulaire HTML
         ?>
-        <form method="POST" action="">
-            <!-- Assure-toi d'ajuster les noms des champs en fonction de ton formulaire -->
+        <form class="form-create" method="POST" action="">
+            <div class="title-label">
             <label for="title">Titre :</label>
             <input type="text" name="title" required>
+            </div>
+            <div class="content-label">
             <label for="content">Contenu :</label>
             <textarea name="content" required></textarea>
+            </div>
+            <div class="submit">
             <input type="submit" name="submit" value="Créer le post">
+            </div>
         </form>
         <?php
     }

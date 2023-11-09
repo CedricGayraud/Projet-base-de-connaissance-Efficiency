@@ -199,10 +199,11 @@ $forumController = new ForumController();
         #add-post button {
             border-radius: 15px;
             padding: 10px 10px 10px 10px;
-            border: 1px solid #2ce6c1;
+            border: 2.5px solid #2ce6c1;
             display: flex;
             flex-direction: column;
-            align-content: center;
+            align-items: center;
+            background-color: #ffffff;
         }
 
         #add-post button h1 {
@@ -241,8 +242,8 @@ $forumController = new ForumController();
         </div>
 
         <?php if (isset($_SESSION['user'])){
+            echo "<p class='w-fit mx-auto mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 mt-4 border-b-4 border-[#2CE6C1]'>Mes posts</p>";
             echo"<div id='my-posts'>";
-            echo "<p class='w-fit mx-auto mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 border-b-4 border-[#2CE6C1]'>";
             $forumController->displayUserPosts();
             echo "</div>";
         }

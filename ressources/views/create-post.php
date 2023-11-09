@@ -19,9 +19,9 @@ $forumController = new ForumController();
     </script>
     <style>
         .forum-body {
+            font-family: "Poppins", sans-serif;
             background-color: #ecf0f1;
-            margin: 0;
-            padding: 15px 250px;
+            padding-bottom: 100px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -30,12 +30,12 @@ $forumController = new ForumController();
         }
 
         header {
-            background-color: #3498db;
-            color: #ffffff;
-            padding: 10px;
+            background-color: #2ce6c1;
+            color: #ffffff!important;
+            padding-top: 25px;
             text-align: center;
             font-size: 40px;
-            width: 100%;
+            width: 100vw;
             font-family: "Poppins", sans-serif;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
@@ -72,11 +72,12 @@ $forumController = new ForumController();
             margin-top: 20px;
         }
 
-        input[type="text"] {
+        input[type="text"],
+        textarea{
             padding: 10px;
             font-size: 16px;
             border: 1px solid #bdc3c7;
-            border-radius: 15px 0px 0px 15px;
+            border-radius: 15px;
             width: 300px;
         }
 
@@ -109,63 +110,6 @@ $forumController = new ForumController();
             border-right: 2px solid #abeede;
         }
 
-        .like-count {
-            font-family: "Poppins", sans-serif;
-            font-size: 20px;
-            margin: 0;
-        }
-
-        .like-button {
-            width: 30px;
-            height: 30px;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            cursor: pointer;
-        }
-
-        .description-post {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: center;
-            width: 70%;
-            padding-left: 20px;
-        }
-
-        .title-post {
-            font-family: "Poppins", sans-serif;
-            font-size: 20px;
-            margin: 0;
-        }
-
-        .author-post {
-            font-family: "Poppins", sans-serif;
-            font-size: 15px;
-            margin: 0;
-        }
-
-        .date-post {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            justify-content: center;
-            width: 30%;
-        }
-
-        .created-date {
-            font-family: "Poppins", sans-serif;
-            font-size: 15px;
-            margin: 0;
-        }
-
-        .post-forum:hover {
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        }
-
-        .post-forum:active {
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
 
         #like-icon {
             width: 75%;
@@ -173,22 +117,52 @@ $forumController = new ForumController();
             margin: auto;
         }
 
-        form {
+        .form-create {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: fit-content;
+            margin-top: 40px;
+        }
+
+        .form-create div {
             display: flex;
             flex-direction: row;
+            justify-content: center;
+            width: fit-content;
+            margin: 20px;
+        }
+
+        .form-create div label {
+            width: 80px;
+            margin: 20px;
+        }
+
+
+        .form-create div input,
+        .form-create div textarea {
+            justify-content: center;
+            width: 600px;
+            margin: 20px;
+        }
+
+        .form-create .submit input {
+            background-color: #2ce6c1;
+            color: #ffffff;
+            width: fit-content;
+            border-radius: 15px;
+            padding: 20px;
+
+        }
+
+        .form-body{
+            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             width: 700px;
             margin-top: 40px;
-        }
-
-        form button{
-            border-radius: 0px 15px 15px 0px;
-            padding: 10px 20px;
-            background-color: #2ce6c1!important;
-            font-size: 16px;
-            border: 1px solid #abeede;
-            cursor: pointer;
         }
 
 
@@ -199,15 +173,21 @@ $forumController = new ForumController();
 
 <div class="forum-body">
     <header>
-        <h1>Forum - Efficiency</h1>
+        <p class='w-fit mx-auto mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl pb-4 mt-4'>FORUM</p>
     </header>
 
 
+    <p class="w-fit mx-auto mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 mt-8 border-b-4 border-[#2CE6C1]">Créer un Post</p>
+
     <?php
     if (User::getSessionUser($bdd)) {
+        echo "<div class='form-body'>";
         $forumController->showPostForm();
+        echo "</div>";
     }else {
+        echo "<div class='form-body'>";
         echo "<p>Vous devez être connecté pour pouvoir poster un message.</p>";
+        echo "</div>";
     }
     ?>
 
