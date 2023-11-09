@@ -9,12 +9,14 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $post = $forumController->getPostById($postId);
 
     if ($post) {
-        ?>
+?>
         <!DOCTYPE html>
-        <html lang="en">
+        <html lang="fr">
+
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="icon" type="image/x-icon" href="https://image.noelshack.com/fichiers/2023/39/3/1695821591-logo-efficiency.png" />
             <title><?php echo $post->getTitle(); ?></title>
             <script>
                 function redirectToPost(url) {
@@ -22,8 +24,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                 }
             </script>
             <style>
-
-                #body-postdetails{
+                #body-postdetails {
                     background-color: #ecf0f1;
                     margin: 0;
                     padding: 15px 250px;
@@ -36,7 +37,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
                 .post-forum {
                     border: 1px solid #ccc;
-                    margin: 10px auto; /* Centrage horizontal */
+                    margin: 10px auto;
+                    /* Centrage horizontal */
                     padding: 10px;
                 }
 
@@ -76,7 +78,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                 .comment-list,
                 .comment-forum {
                     border: 1px solid #eee;
-                    margin: 10px auto; /* Centrage horizontal */
+                    margin: 10px auto;
+                    /* Centrage horizontal */
                     padding: 10px;
                 }
 
@@ -92,19 +95,20 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                 .row {
                     flex-direction: row;
                 }
-
             </style>
         </head>
+
         <body>
-        <?php include 'sidebar.php'; ?>
-        <div id="body-postdetails">
-        <?php
-        $forumController->showPostDetails($post);
-        ?>
-        </div>
+            <?php include 'sidebar.php'; ?>
+            <div id="body-postdetails">
+                <?php
+                $forumController->showPostDetails($post);
+                ?>
+            </div>
         </body>
+
         </html>
-        <?php
+<?php
     } else {
         echo "Post non trouvé.";
     }

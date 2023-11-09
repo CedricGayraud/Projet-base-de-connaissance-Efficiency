@@ -6,10 +6,12 @@ $forumController = new ForumController();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="https://image.noelshack.com/fichiers/2023/39/3/1695821591-logo-efficiency.png" />
     <title>Efficiency - Forum</title>
     <script>
         function redirectToPost(url) {
@@ -30,7 +32,7 @@ $forumController = new ForumController();
 
         header {
             background-color: #2ce6c1;
-            color: #ffffff!important;
+            color: #ffffff !important;
             padding-top: 25px;
             text-align: center;
             font-size: 40px;
@@ -45,7 +47,7 @@ $forumController = new ForumController();
             justify-content: space-around;
             max-width: 700px;
             margin-top: 20px;
-            width : 700px;
+            width: 700px;
         }
 
         #my-posts {
@@ -54,7 +56,7 @@ $forumController = new ForumController();
             justify-content: space-around;
             max-width: 700px;
             margin-top: 20px;
-            width : 700px;
+            width: 700px;
         }
 
         #recent-posts {
@@ -63,7 +65,7 @@ $forumController = new ForumController();
             justify-content: space-around;
             max-width: 700px;
             margin-top: 20px;
-            width : 700px;
+            width: 700px;
         }
 
 
@@ -181,10 +183,10 @@ $forumController = new ForumController();
             margin-top: 40px;
         }
 
-        form button{
+        form button {
             border-radius: 0px 15px 15px 0px;
             padding: 10px 20px;
-            background-color: #2ce6c1!important;
+            background-color: #2ce6c1 !important;
             font-size: 16px;
             border: 1px solid #abeede;
             cursor: pointer;
@@ -208,12 +210,11 @@ $forumController = new ForumController();
         #add-post button h1 {
             font-size: 25px;
         }
-
-
     </style>
 </head>
+
 <body>
-<?php include 'sidebar.php'; ?>
+    <?php include 'sidebar.php'; ?>
 
     <div class="forum-body">
         <header>
@@ -229,19 +230,19 @@ $forumController = new ForumController();
         <p class="w-fit mx-auto mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 mt-4 border-b-4 border-[#2CE6C1]">À la une</p>
         <div id="featured-posts">
             <?php
-                $forumController->displayPosts(3, true);
+            $forumController->displayPosts(3, true);
             ?>
         </div>
 
         <p class="w-fit mx-auto mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 mt-4 border-b-4 border-[#2CE6C1]">Les + Récents</p>
         <div id="recent-posts">
             <?php
-                $forumController->displayPosts(3, false);
+            $forumController->displayPosts(3, false);
             ?>
         </div>
 
-        <?php if (isset($_SESSION['user'])){
-            echo"<div id='my-posts'>";
+        <?php if (isset($_SESSION['user'])) {
+            echo "<div id='my-posts'>";
             echo "<p class='w-fit mx-auto mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 border-b-4 border-[#2CE6C1]'>";
             $forumController->displayUserPosts();
             echo "</div>";
@@ -249,7 +250,7 @@ $forumController = new ForumController();
         ?>
 
         <?php
-        if (isset($_SESSION['user'])){
+        if (isset($_SESSION['user'])) {
             echo '<a id="add-post" href="create-post.php">';
             echo '<button type="button">';
             echo '<h1>+</h1>';
@@ -264,4 +265,5 @@ $forumController = new ForumController();
     <?php include 'footer.php'; ?>
 
 </body>
+
 </html>

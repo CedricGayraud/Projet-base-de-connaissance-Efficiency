@@ -1,4 +1,3 @@
-
 <?php
 global $bdd;
 require './session_config.php';
@@ -7,10 +6,12 @@ $forumController = new ForumController();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="https://image.noelshack.com/fichiers/2023/39/3/1695821591-logo-efficiency.png" />
     <title>Efficiency - Forum</title>
     <script>
         function redirectToPost(url) {
@@ -46,7 +47,7 @@ $forumController = new ForumController();
             justify-content: space-around;
             max-width: 700px;
             margin-top: 20px;
-            width : 700px;
+            width: 700px;
         }
 
         #my-posts {
@@ -55,7 +56,7 @@ $forumController = new ForumController();
             justify-content: space-around;
             max-width: 700px;
             margin-top: 20px;
-            width : 700px;
+            width: 700px;
         }
 
         #recent-posts {
@@ -64,7 +65,7 @@ $forumController = new ForumController();
             justify-content: space-around;
             max-width: 700px;
             margin-top: 20px;
-            width : 700px;
+            width: 700px;
         }
 
 
@@ -182,38 +183,38 @@ $forumController = new ForumController();
             margin-top: 40px;
         }
 
-        form button{
+        form button {
             border-radius: 0px 15px 15px 0px;
             padding: 10px 20px;
-            background-color: #2ce6c1!important;
+            background-color: #2ce6c1 !important;
             font-size: 16px;
             border: 1px solid #abeede;
             cursor: pointer;
         }
-
-
     </style>
 </head>
+
 <body>
-<?php include 'sidebar.php'; ?>
+    <?php include 'sidebar.php'; ?>
 
-<div class="forum-body">
-    <header>
-        <h1>Forum - Efficiency</h1>
-    </header>
-
-
-    <?php
-    if (User::getSessionUser($bdd)) {
-        $forumController->showPostForm();
-    }else {
-        echo "<p>Vous devez être connecté pour pouvoir poster un message.</p>";
-    }
-    ?>
+    <div class="forum-body">
+        <header>
+            <h1>Forum - Efficiency</h1>
+        </header>
 
 
+        <?php
+        if (User::getSessionUser($bdd)) {
+            $forumController->showPostForm();
+        } else {
+            echo "<p>Vous devez être connecté pour pouvoir poster un message.</p>";
+        }
+        ?>
 
-</div>
+
+
+    </div>
 
 </body>
+
 </html>
