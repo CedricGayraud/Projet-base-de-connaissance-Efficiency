@@ -61,7 +61,7 @@ $platforms = Platform::getAllPlatforms($bdd);
             </div>
             <div class="m-4">
                 <label for="cardGitHub" class="block mb-2 lg:text-sm font-medium text-gray-900 dark:text-white text-3xl">Script</label>
-                <input type="text" name="cardGitHub" class="bg-gray-50 border-2 border-[#2CE6C1] text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none focus:ring focus:ring-[#BAE1FE] lg:h-fit h-16" required>
+                <input type="text" name="cardGitHub" class="bg-gray-50 border-2 border-[#2CE6C1] text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none focus:ring focus:ring-[#BAE1FE] lg:h-fit h-16">
                 </input>
             </div>
 
