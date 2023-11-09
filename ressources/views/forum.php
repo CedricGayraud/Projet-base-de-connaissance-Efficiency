@@ -73,7 +73,7 @@ $forumController = new ForumController();
             margin-top: 20px;
         }
 
-        input[type="text"] {
+        #input-search{
             padding: 10px;
             font-size: 16px;
             border: 1px solid #bdc3c7;
@@ -174,7 +174,7 @@ $forumController = new ForumController();
             margin: auto;
         }
 
-        form {
+        .form {
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -183,7 +183,7 @@ $forumController = new ForumController();
             margin-top: 40px;
         }
 
-        form button {
+        .form button{
             border-radius: 0px 15px 15px 0px;
             padding: 10px 20px;
             background-color: #2ce6c1 !important;
@@ -201,10 +201,11 @@ $forumController = new ForumController();
         #add-post button {
             border-radius: 15px;
             padding: 10px 10px 10px 10px;
-            border: 1px solid #2ce6c1;
+            border: 2.5px solid #2ce6c1;
             display: flex;
             flex-direction: column;
-            align-content: center;
+            align-items: center;
+            background-color: #ffffff;
         }
 
         #add-post button h1 {
@@ -222,8 +223,8 @@ $forumController = new ForumController();
         </header>
 
 
-        <form method="post" action="forum-search.php">
-            <input type="text" name="searchQuery">
+        <form class="form" method="post" action="forum-search.php">
+            <input id="input-search" type="text" name="searchQuery">
             <button type="submit">Recherche</button>
         </form>
 
@@ -241,9 +242,11 @@ $forumController = new ForumController();
             ?>
         </div>
 
-        <?php if (isset($_SESSION['user'])) {
-            echo "<div id='my-posts'>";
-            echo "<p class='w-fit mx-auto mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 border-b-4 border-[#2CE6C1]'>";
+
+        <?php if (isset($_SESSION['user'])){
+            echo "<p class='w-fit mx-auto mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 mt-4 border-b-4 border-[#2CE6C1]'>Mes posts</p>";
+            echo"<div id='my-posts'>";
+
             $forumController->displayUserPosts();
             echo "</div>";
         }

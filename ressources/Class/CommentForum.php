@@ -1,5 +1,4 @@
 <?php
-require ($_SERVER['DOCUMENT_ROOT'] . '/ressources/Class/CommentForum.php');
 
 class CommentForum {
 
@@ -71,8 +70,9 @@ class CommentForum {
 
     public static function getCommentsByPostId(int $idPost): array {
         global $bdd;
-        $queryComments = $bdd->prepare("SELECT * FROM comments WHERE idPost=:idPost");
-        $queryComments->execute(array('idPost' => $idPost));
+        $queryComments = $bdd->prepare("SELECT * FROM commentsforum WHERE post=:idPost");
+        $queryComments->bindParam(':idPost', $idPost, PDO::PARAM_INT);
+        $queryComments->execute();
 
         $comments = [];
 
@@ -86,17 +86,17 @@ class CommentForum {
 
     public static function addComment(string $content, int $idPost, int $idUser): void {
         global $bdd;
-        $queryAddComment = $bdd->prepare("INSERT INTO comments (content, createdDate, post, user) VALUES (:content, NOW(), :post, :user)");
+        $queryAddComment = $bdd->prepare("INSERT INTO commentsforum (content, createdDate, post, user) VALUES (:content, NOW(), :post, :user)");
         $queryAddComment->execute(array('content' => $content, 'post' => $idPost, 'user' => $idUser));
 
         $queryUpdatePost = $bdd->prepare("UPDATE posts SET dateLastInteraction=NOW() WHERE id=:idPost");
-        $queryUpdatePost->execute(array('idPost' => $idPost));
+        $queryUpdatePost->execute(array('post' => $idPost));
     }
 
     public static function deleteComment(int $idComment, int $idPost): void {
         global $bdd;
-        $queryDeleteComment = $bdd->prepare("DELETE FROM comments WHERE id=:idComment");
-        $queryDeleteComment->execute(array('idComment' => $idComment));
+        $queryDeleteComment = $bdd->prepare("DELETE FROM commentsforum WHERE id=:idComment");
+        $queryDeleteComment->execute(array('id' => $idComment));
     }
 
 

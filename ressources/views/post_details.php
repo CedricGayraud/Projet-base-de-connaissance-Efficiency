@@ -24,6 +24,20 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                 }
             </script>
             <style>
+
+                header {
+                    background-color: #2ce6c1;
+                    color: #ffffff!important;
+                    padding-top: 25px;
+                    text-align: center;
+                    font-size: 40px;
+                    width: 100vw;
+                    font-family: "Poppins", sans-serif;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                }
+
+
+
                 #body-postdetails {
                     background-color: #ecf0f1;
                     margin: 0;
@@ -99,12 +113,18 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         </head>
 
         <body>
-            <?php include 'sidebar.php'; ?>
-            <div id="body-postdetails">
-                <?php
-                $forumController->showPostDetails($post);
-                ?>
-            </div>
+
+        <?php include 'sidebar.php'; ?>
+        <header>
+            <p class='w-fit mx-auto mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl pb-4 mt-4'>FORUM</p>
+        </header>
+        <div id="body-postdetails">
+            <?php
+            $forumController->showPostDetails($post);
+            $forumController->showComments($post);
+            ?>
+        </div>
+
         </body>
 
         </html>

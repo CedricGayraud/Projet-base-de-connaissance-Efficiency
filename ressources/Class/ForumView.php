@@ -74,25 +74,31 @@ class ForumView
 
         // Affiche le formulaire HTML
         ?>
-        <form method="POST" action="">
-            <!-- Assure-toi d'ajuster les noms des champs en fonction de ton formulaire -->
+        <form class="form-create" method="POST" action="">
+            <div class="title-label">
             <label for="title">Titre :</label>
             <input type="text" name="title" required>
+            </div>
+            <div class="content-label">
             <label for="content">Contenu :</label>
             <textarea name="content" required></textarea>
+            </div>
+            <div class="submit">
             <input type="submit" name="submit" value="Créer le post">
+            </div>
         </form>
         <?php
     }
 
     public static function showCommentForm($postId)
     {
+        global $bdd;
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['commentSubmit'])) {
                 $commentContent = $_POST['commentContent'];
 
                 if (!empty($commentContent)) {
-                    $userId = getSessionUser()->getId();
+                    $userId = User::getSessionUser($bdd)->getId();
                     CommentForum::addComment($userId, $postId, $commentContent);
 
                     echo "Commentaire ajouté avec succès !";
@@ -129,7 +135,7 @@ class ForumView
         echo "</div>";
         if (User::getSessionUser($bdd)){
             echo "<div class='comment-form'>";
-            ForumView::showCommentForm($post->getId());
+            ForumView::showCommentForm();
             echo "</div>";
             echo "</div>";
         }
