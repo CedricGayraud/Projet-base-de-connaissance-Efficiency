@@ -18,7 +18,6 @@ $forumController = new ForumController();
     </script>
     <style>
         .forum-body {
-            font-family: "Poppins", sans-serif;
             background-color: #ecf0f1;
             margin: 0;
             padding: 15px 250px;
@@ -118,6 +117,7 @@ $forumController = new ForumController();
         .like-button {
             width: 30px;
             height: 30px;
+            background-image: url("/ressources/images/like.png");
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
@@ -199,15 +199,7 @@ $forumController = new ForumController();
 
         #add-post button {
             border-radius: 15px;
-            padding: 10px 10px 10px 10px;
             border: 1px solid #2ce6c1;
-            display: flex;
-            flex-direction: column;
-            align-content: center;
-        }
-
-        #add-post button h1 {
-            font-size: 25px;
         }
 
 
@@ -216,48 +208,37 @@ $forumController = new ForumController();
 <body>
 <?php include 'sidebar.php'; ?>
 
-    <div class="forum-body">
-        <header>
-            <h1>FORUM</h1>
-        </header>
+<div class="forum-body">
+    <header>
+        <h1>FORUM</h1>
+    </header>
 
 
-        <form method="post" action="forum-search.php">
-            <input type="text" name="searchQuery">
-            <button type="submit">Recherche</button>
-        </form>
+    <form method="post" action="forum-search.php">
+        <input type="text" name="searchQuery">
+        <button type="submit">Recherche</button>
+    </form>
 
-        <h1 class="section-title"> À la Une </h1>
-        <div id="featured-posts">
-            <?php
-                $forumController->displayPosts(3, true);
-            ?>
-        </div>
+    <h1 class="section-title"> Résultats de la recherche </h1>
+    <div id="featured-posts">
+        <?php
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $searchQuery = $_POST["searchQuery"];
 
-        <h1 class="section-title"> Les + Récents </h1>
-        <div id="recent-posts">
-            <?php
-                $forumController->displayPosts(3, false);
-            ?>
-        </div>
-
-        <?php if (isset($_SESSION['user'])){
-            echo"<div id='my-posts'>";
-            echo"<h1 class='section-title'> Mes posts </h1>";
-            $forumController->displayUserPosts();
-            echo "</div>";
+            $forumController->displaySearchResults($searchQuery);
         }
         ?>
+    </div>
 
-        <?php
+    <?php
         if (isset($_SESSION['user'])){
             echo '<a id="add-post" href="create-post.php">';
             echo '<button type="button">Créer un post</button>';
             echo '</a>';
         }
-        ?>
+    ?>
 
-    </div>
+</div>
 
 </body>
 </html>
