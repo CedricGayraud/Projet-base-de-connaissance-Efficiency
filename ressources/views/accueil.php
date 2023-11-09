@@ -161,7 +161,7 @@ $mostLiked = Card::getCardByLike($bdd);
     </div>
 
     <div class="lg:my-20 my-8">
-        <p class="w-fit mx-auto mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 border-b-4 border-[#2CE6C1]">À la une</p>
+        <p class="w-fit mx-auto mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 border-b-4 border-[#2CE6C1] mb-8">À la une</p>
 
 
 
