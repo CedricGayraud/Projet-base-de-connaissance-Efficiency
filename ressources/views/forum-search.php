@@ -6,10 +6,12 @@ $forumController = new ForumController();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="https://image.noelshack.com/fichiers/2023/39/3/1695821591-logo-efficiency.png" />
     <title>Efficiency - Forum</title>
     <script>
         function redirectToPost(url) {
@@ -45,7 +47,7 @@ $forumController = new ForumController();
             justify-content: space-around;
             max-width: 700px;
             margin-top: 20px;
-            width : 700px;
+            width: 700px;
         }
 
         #my-posts {
@@ -54,7 +56,7 @@ $forumController = new ForumController();
             justify-content: space-around;
             max-width: 700px;
             margin-top: 20px;
-            width : 700px;
+            width: 700px;
         }
 
         #recent-posts {
@@ -63,7 +65,7 @@ $forumController = new ForumController();
             justify-content: space-around;
             max-width: 700px;
             margin-top: 20px;
-            width : 700px;
+            width: 700px;
         }
 
 
@@ -182,10 +184,10 @@ $forumController = new ForumController();
             margin-top: 40px;
         }
 
-        form button{
+        form button {
             border-radius: 0px 15px 15px 0px;
             padding: 10px 20px;
-            background-color: #2ce6c1!important;
+            background-color: #2ce6c1 !important;
             font-size: 16px;
             border: 1px solid #abeede;
             cursor: pointer;
@@ -201,37 +203,36 @@ $forumController = new ForumController();
             border-radius: 15px;
             border: 1px solid #2ce6c1;
         }
-
-
     </style>
 </head>
+
 <body>
-<?php include 'sidebar.php'; ?>
+    <?php include 'sidebar.php'; ?>
 
-<div class="forum-body">
-    <header>
-        <h1>FORUM</h1>
-    </header>
+    <div class="forum-body">
+        <header>
+            <h1>FORUM</h1>
+        </header>
 
 
-    <form method="post" action="forum-search.php">
-        <input type="text" name="searchQuery">
-        <button type="submit">Recherche</button>
-    </form>
+        <form method="post" action="forum-search.php">
+            <input type="text" name="searchQuery">
+            <button type="submit">Recherche</button>
+        </form>
 
-    <h1 class="section-title"> Résultats de la recherche </h1>
-    <div id="featured-posts">
+        <h1 class="section-title"> Résultats de la recherche </h1>
+        <div id="featured-posts">
+            <?php
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $searchQuery = $_POST["searchQuery"];
+
+                $forumController->displaySearchResults($searchQuery);
+            }
+            ?>
+        </div>
+
         <?php
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $searchQuery = $_POST["searchQuery"];
-
-            $forumController->displaySearchResults($searchQuery);
-        }
-        ?>
-    </div>
-
-    <?php
-        if (isset($_SESSION['user'])){
+        if (isset($_SESSION['user'])) {
             echo '<a id="add-post" href="create-post.php">';
             echo '<button type="button">';
             echo '<h1>+</h1>';
@@ -239,9 +240,10 @@ $forumController = new ForumController();
             echo '</button>';
             echo '</a>';
         }
-    ?>
+        ?>
 
-</div>
+    </div>
 
 </body>
+
 </html>

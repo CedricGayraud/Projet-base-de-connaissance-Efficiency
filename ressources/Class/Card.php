@@ -509,7 +509,7 @@ class Card
             cards.thematic AS card_thematic,
             cards.platform AS card_platform,
             cards.img AS card_img,
-            users.id AS user_id,
+            cards.user AS card_user_id,
             users.nickname AS user_nickname,
             users.lastName AS user_lastName,
             users.firstName AS user_firstName,
@@ -521,7 +521,7 @@ class Card
             users.createdDate AS user_createdDate
             FROM cards
             INNER JOIN cardlikes ON cardlikes.card = cards.id
-            INNER JOIN users ON cardlikes.user = users.id
+            INNER JOIN users ON cards.user = users.id
             WHERE cardlikes.user = :idUser");
 
         $queryCards->execute(array('idUser' => $idUser));
@@ -530,7 +530,7 @@ class Card
 
         while ($row = $queryCards->fetch(PDO::FETCH_ASSOC)) {
             $user = new User(
-                $row['user_id'],
+                $row['card_user_id'],
                 $row['user_nickname'],
                 $row['user_lastName'],
                 $row['user_firstName'],
