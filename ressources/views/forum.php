@@ -71,7 +71,7 @@ $forumController = new ForumController();
             margin-top: 20px;
         }
 
-        input[type="text"] {
+        #input-search{
             padding: 10px;
             font-size: 16px;
             border: 1px solid #bdc3c7;
@@ -172,7 +172,7 @@ $forumController = new ForumController();
             margin: auto;
         }
 
-        form {
+        .form {
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -181,7 +181,7 @@ $forumController = new ForumController();
             margin-top: 40px;
         }
 
-        form button{
+        .form button{
             border-radius: 0px 15px 15px 0px;
             padding: 10px 20px;
             background-color: #2ce6c1!important;
@@ -222,8 +222,8 @@ $forumController = new ForumController();
         </header>
 
 
-        <form method="post" action="forum-search.php">
-            <input type="text" name="searchQuery">
+        <form class="form" method="post" action="forum-search.php">
+            <input id="input-search" type="text" name="searchQuery">
             <button type="submit">Recherche</button>
         </form>
 

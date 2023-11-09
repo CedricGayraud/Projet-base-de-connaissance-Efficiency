@@ -92,12 +92,13 @@ class ForumView
 
     public static function showCommentForm($postId)
     {
+        global $bdd;
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['commentSubmit'])) {
                 $commentContent = $_POST['commentContent'];
 
                 if (!empty($commentContent)) {
-                    $userId = getSessionUser()->getId();
+                    $userId = User::getSessionUser($bdd)->getId();
                     CommentForum::addComment($userId, $postId, $commentContent);
 
                     echo "Commentaire ajouté avec succès !";
@@ -134,7 +135,7 @@ class ForumView
         echo "</div>";
         if (User::getSessionUser($bdd)){
             echo "<div class='comment-form'>";
-            ForumView::showCommentForm($post->getId());
+            ForumView::showCommentForm();
             echo "</div>";
             echo "</div>";
         }

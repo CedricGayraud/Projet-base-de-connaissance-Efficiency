@@ -3,6 +3,7 @@
 include($_SERVER['DOCUMENT_ROOT'] . '/ressources/Class/Post.php');
 include($_SERVER['DOCUMENT_ROOT'] . '/ressources/Class/ForumView.php');
 include($_SERVER['DOCUMENT_ROOT'] . '/ressources/Class/PostLike.php');
+require($_SERVER['DOCUMENT_ROOT'] . '/ressources/Class/CommentForum.php');
 require($_SERVER['DOCUMENT_ROOT'] . '/layout.php');
 
 
@@ -93,9 +94,9 @@ class ForumController
     }
 
     //display comments of a post
-    public function showComments($postId)
+    public function showComments($post)
     {
-        $comments = Comment::getCommentsByPostId($postId);
+        $comments = CommentForum::getCommentsByPostId($post->getId());
         ForumView::showComments($comments);
     }
 
