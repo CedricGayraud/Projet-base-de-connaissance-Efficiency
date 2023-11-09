@@ -1,7 +1,7 @@
 
 <?php
 global $bdd;
-require($_SERVER['DOCUMENT_ROOT'] . '/layout.php');
+require './session_config.php';
 require_once($_SERVER['DOCUMENT_ROOT'] . '/ressources/Controller/forumController.php');
 $forumController = new ForumController();
 ?>
@@ -118,7 +118,6 @@ $forumController = new ForumController();
         .like-button {
             width: 30px;
             height: 30px;
-            background-image: url("/ressources/images/like.png");
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
@@ -211,7 +210,6 @@ $forumController = new ForumController();
         echo "<p>Vous devez être connecté pour pouvoir poster un message.</p>";
     }
     ?>
-
 
 
 

@@ -52,8 +52,8 @@ $countComments = Comment::countCommentsByCardId($id_card);
 <body class="bg-gray-100">
     <?php include 'sidebar.php' ?>
     <div class="bg-opacity-50 bg-[#2CE6C1] py-8 mx-auto m-auto mt-5 mb-5 rounded-lg w-4/5 flex items-center justify-center">
-        <div class="md:w-1/2 pr-4 flex items-center">
-            <div class="text-center">
+        <div class="pr-4 flex items-center">
+            <div class="text-center" x-data="{'isModalConnect' : false}">
                 <p class="text-3xl font-bold"><?php echo $card->getTitle() ?></p>
                 <a class="flex mt-4 justify-center" href="../views/profil.php?user=<?= $card->getUser()->getId(); ?>">
                     <img class="h-10 w-10 rounded-full bg-gray-50 mr-3 ml-1" src="<?= $card->getUser()->getProfilPicture(); ?>" alt="">
@@ -70,15 +70,29 @@ $countComments = Comment::countCommentsByCardId($id_card);
                             </svg>
                             <span><?php echo $likes ?></span>
                         </button>
+
                     <?php } else { ?>
-                        <button disabled name="likeCard" class="inline-flex items-center h-10 px-5 text-indigo-100 transition-colors duration-150 bg-red-500 text-white hover:bg-red-300 text-gray-300'; ?> rounded-lg focus:shadow-outline">
-                            <svg class="w-4 h-4 mr-3 fill-current" viewBox="0 0 20 20">
-                                <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" fill-rule="evenodd"></path>
-                            </svg>
-                            <span><?php echo $likes ?></span>
-                        </button>
-                    <?php } ?>
                 </form>
+                <button class="inline-flex items-center h-10 px-5 text-indigo-100 transition-colors duration-150 bg-red-500 text-white hover:bg-red-300 text-gray-300'; ?> rounded-lg focus:shadow-outline" x-on:click="isModalConnect = true">
+                    <svg class="w-4 h-4 mr-3 fill-current" viewBox="0 0 20 20">
+                        <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" fill-rule="evenodd"></path>
+                    </svg>
+                    <span><?php echo $likes ?></span>
+                </button>
+            <?php } ?>
+
+            <div class="absolute left-1/3 p-5 w-fit h-fit bg-neutral-50 rounded-lg shadow" role="dialog" tabindex="-1" x-show="isModalConnect">
+                <div class="ml-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 cursor-pointer" x-on:click="isModalConnect=false">
+                    <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </div>
+                <div class="text-center text-black text-2xl font-normal font-['Poppins']">
+                    <h3 class="mt-4">Vous devez être connecté pour aimer une fiche</h3>
+                    <a href="/ressources/views/login.php" class="flex justify-center mt-4 text-white bg-[#2CE6C1] hover:bg-[#BAE1FE] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Se connecter</a>
+                </div>
+            </div>
+
             </div>
         </div>
     </div>
@@ -154,7 +168,7 @@ $countComments = Comment::countCommentsByCardId($id_card);
             <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Discussion (<?php echo $countComments ?>)</h2>
         </div>
         <?php foreach ($comments as $comment) : ?>
-            <div class="max-w-2xl mx-auto px-4 mt-4">
+            <div class="max-w-2xl mx-auto px-4 my-4">
                 <article class="p-6 text-base bg-white rounded-lg shadow-lg dark:bg-gray-900">
                     <footer class="flex justify-between items-center mb-2">
                         <div class="flex items-center">
@@ -216,6 +230,10 @@ $countComments = Comment::countCommentsByCardId($id_card);
             setTimeout(() => {
                 this.copied = false;
             }, 2000);
+        }
+
+        function alertLike() {
+            alert('Vous devez être connecté');
         }
     </script>
 

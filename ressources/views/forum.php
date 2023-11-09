@@ -1,6 +1,6 @@
 <?php
 global $bdd;
-require($_SERVER['DOCUMENT_ROOT'] . '/layout.php');
+require './session_config.php';
 require_once($_SERVER['DOCUMENT_ROOT'] . '/ressources/Controller/forumController.php');
 $forumController = new ForumController();
 ?>
@@ -20,8 +20,7 @@ $forumController = new ForumController();
         .forum-body {
             font-family: "Poppins", sans-serif;
             background-color: #ecf0f1;
-            margin: 0;
-            padding: 15px 250px;
+            padding-bottom: 100px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -30,12 +29,12 @@ $forumController = new ForumController();
         }
 
         header {
-            background-color: #3498db;
-            color: #ffffff;
-            padding: 10px;
+            background-color: #2ce6c1;
+            color: #ffffff!important;
+            padding-top: 25px;
             text-align: center;
             font-size: 40px;
-            width: 100%;
+            width: 100vw;
             font-family: "Poppins", sans-serif;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
@@ -218,7 +217,7 @@ $forumController = new ForumController();
 
     <div class="forum-body">
         <header>
-            <h1>FORUM</h1>
+            <p class='w-fit mx-auto mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl pb-4 mt-4'>FORUM</p>
         </header>
 
 
@@ -227,14 +226,14 @@ $forumController = new ForumController();
             <button type="submit">Recherche</button>
         </form>
 
-        <h1 class="section-title"> À la Une </h1>
+        <p class="w-fit mx-auto mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 mt-4 border-b-4 border-[#2CE6C1]">À la une</p>
         <div id="featured-posts">
             <?php
                 $forumController->displayPosts(3, true);
             ?>
         </div>
 
-        <h1 class="section-title"> Les + Récents </h1>
+        <p class="w-fit mx-auto mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 mt-4 border-b-4 border-[#2CE6C1]">Les + Récents</p>
         <div id="recent-posts">
             <?php
                 $forumController->displayPosts(3, false);
@@ -243,7 +242,7 @@ $forumController = new ForumController();
 
         <?php if (isset($_SESSION['user'])){
             echo"<div id='my-posts'>";
-            echo"<h1 class='section-title'> Mes posts </h1>";
+            echo "<p class='w-fit mx-auto mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 border-b-4 border-[#2CE6C1]'>";
             $forumController->displayUserPosts();
             echo "</div>";
         }
@@ -252,12 +251,17 @@ $forumController = new ForumController();
         <?php
         if (isset($_SESSION['user'])){
             echo '<a id="add-post" href="create-post.php">';
-            echo '<button type="button">Créer un post</button>';
+            echo '<button type="button">';
+            echo '<h1>+</h1>';
+            echo 'Créer un post';
+            echo '</button>';
             echo '</a>';
         }
         ?>
 
+
     </div>
+    <?php include 'footer.php'; ?>
 
 </body>
 </html>
