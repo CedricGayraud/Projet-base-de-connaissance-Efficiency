@@ -133,7 +133,7 @@ class ForumView
         echo "<div class='comment-section'>";
         echo "<h2 class='title-comment'>Commentaires</h2>";
         echo "<div class='comment-list'>";
-        ForumView::showComments($post->getComments());
+        self::showComments($post->getComments());
         echo "</div>";
     }
 
@@ -143,11 +143,11 @@ class ForumView
     public static function showComments($comments)
     {
         if (count($comments) == 0) {
-            echo "<p>Aucun commentaire trouvé.</p>";
+            echo "<p>Pas encore de commentaire</p>";
         }
         else {
             for ($i = 0; $i < count($comments); $i++) {
-                ForumView::showComment($comments[$i]);
+                self::showComment($comments[$i]);
             }
         }
     }

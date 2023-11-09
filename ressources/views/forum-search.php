@@ -231,7 +231,7 @@ $forumController = new ForumController();
     </div>
 
     <?php
-        if (User::getSessionUser($bdd)){
+        if (isset($_SESSION['user'])){
             echo '<a id="add-post" href="create-post.php">';
             echo '<button type="button">Créer un post</button>';
             echo '</a>';

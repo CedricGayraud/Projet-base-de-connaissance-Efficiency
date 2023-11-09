@@ -241,7 +241,7 @@ $forumController = new ForumController();
             ?>
         </div>
 
-        <?php if (User::getSessionUser($bdd)){
+        <?php if (isset($_SESSION['user'])){
             echo"<div id='my-posts'>";
             echo"<h1 class='section-title'> Mes posts </h1>";
             $forumController->displayUserPosts();
@@ -250,7 +250,7 @@ $forumController = new ForumController();
         ?>
 
         <?php
-        if (User::getSessionUser($bdd)){
+        if (isset($_SESSION['user'])){
             echo '<a id="add-post" href="create-post.php">';
             echo '<button type="button">Créer un post</button>';
             echo '</a>';
