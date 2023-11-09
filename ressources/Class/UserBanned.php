@@ -1,5 +1,4 @@
 <?php
-
 class UserBanned extends User
 {
     private int $id;
@@ -100,5 +99,12 @@ class UserBanned extends User
         global $bdd;
         $queryUnBanned = $bdd->prepare("DELETE FROM bans WHERE id = :id");
         $queryUnBanned->execute(array('id' => $id));
+    }
+
+    public static function ban($idUser, $message)
+    {
+        global $bdd;
+        $queryUnBanned = $bdd->prepare("INSERT INTO bans (user, msg) VALUES (:user, :msg)");
+        $queryUnBanned->execute(array('user' => $idUser, 'msg' => $message));
     }
 }

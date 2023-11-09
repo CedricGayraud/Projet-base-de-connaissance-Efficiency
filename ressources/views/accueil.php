@@ -41,12 +41,22 @@ $mostLiked = Card::getCardByLike($bdd);
         @media (max-width: 760px) {
             .swiper-button-next {
                 right: 20px;
-                transform: rotate(90deg);
+                top: 100px;
             }
 
             .swiper-button-prev {
                 left: 20px;
-                transform: rotate(90deg);
+                top: 100px;
+            }
+
+            .swiper-wrapper {
+                flex-direction: row !important;
+                height: 140px;
+                width: 375px;
+            }
+
+            .swiper-slide {
+                margin: 0px 15px;
             }
         }
 
@@ -91,23 +101,23 @@ $mostLiked = Card::getCardByLike($bdd);
 </head>
 
 
-<div class="h-screen w-full bg-contain bg-top py-8" style="background-image: url(https://cdn.discordapp.com/attachments/889843132949213214/1169284109877653675/rocket-volant-dans-espace.jpg?ex=6554d7b0&is=654262b0&hm=3c8ecb2144e2e30d96ff1b92da2f6ed0582328cb35cf3bac4cef52410bbe67c3&)">
-    <div class="ml-32 mr-12">
-        <div class="w-7/12 flex flex-wrap my-12">
-            <h1 class="text-[#2CE6C1] text-7xl font-semibold">Votre hub communautaire</h1>
-            <h1 class="text-slate-50 text-7xl font-semibold">pour l'automatisation de la connaissance.</h1>
+<div class="h-screen lg:w-full lg:bg-contain lg:bg-top lg:py-8 bg-cover bg-center" style="background-image: url(https://cdn.discordapp.com/attachments/889843132949213214/1170995988190732298/rocket-volant-dans-espace.webp?ex=655b11ff&is=65489cff&hm=ddc9fc10a8a5b4538613d6d00bded4b68726f61aae9005d08dbffea3f66846ae&)">
+    <div class="lg:ml-32 lg:mr-12">
+        <div class="lg:w-7/12 flex flex-wrap my-12 lg:mx-0 mx-auto w-9/12">
+            <h1 class="text-[#2CE6C1] lg:text-7xl font-semibold lg:text-start text-center text-3xl">Votre hub communautaire</h1>
+            <h1 class="text-slate-50 lg:text-7xl font-semibold lg:text-start text-center text-3xl">pour l'automatisation de la connaissance.</h1>
         </div>
 
-        <p class="text-slate-50 text-2xl w-7/12 my-12">How to mate est une plateforme communautaire qui simplifie les tâches informatiques en permettant aux utilisateurs de créer et de consulter des fiches de scripts pour divers logiciels. Rejoignez notre communauté pour faciliter vos opérations informatiques.</p>
+        <p class="text-slate-50 lg:text-2xl lg:w-7/12 my-12 w-full text-lg p-2">Efficiency est une plateforme communautaire qui simplifie les tâches informatiques en permettant aux utilisateurs de créer et de consulter des fiches de scripts pour divers logiciels. Rejoignez notre communauté pour faciliter vos opérations informatiques.</p>
 
         <div class="flex my-6">
-            <a href="/ressources/views/decouvrir.php" class="w-fit p-3 h-16 bg-[#2CE6C1] border-[3px] border-[#2CE6C1] text-white text-lg text-center flex justify-center items-center mr-6 rounded-full font-semibold hover:bg-white hover:text-[#2CE6C1] duration-500">
+            <a href="/ressources/views/decouvrir.php" class="w-fit lg:p-3 lg:h-16 bg-[#2CE6C1] border-[3px] border-[#2CE6C1] text-white lg:text-lg text-center flex justify-center items-center mr-6 rounded-full font-semibold hover:bg-white hover:text-[#2CE6C1] duration-500 text-md p-1 h-14">
                 <button class=""> Découvrir les thématiques</button>
             </a>
-            <a href="" class="w-fit p-3 h-16 text-[#2CE6C1] border-[3px] border-white bg-white text-lg text-center flex justify-center items-center mx-6 rounded-full font-semibold hover:bg-[#2CE6C1] hover:text-white duration-500">
+            <a href="" class="w-fit lg:p-3 lg:h-16 text-[#2CE6C1] border-[3px] border-white bg-white lg:text-lg text-center flex justify-center items-center mx-6 rounded-full font-semibold hover:bg-[#2CE6C1] hover:text-white duration-500 text-md p-1 h-14">
                 Découvrir les plateformes
             </a>
-            <div class="flex ml-auto mr-12">
+            <div class="flex ml-auto mr-12 lg:block hidden">
                 <a href="/ressources/views/creation_fiche.php">
                     <button class="fixed rounded-full border-2 border-white w-20 h-20 bg-[#2CE6C1] text-white hover:text-[#2CE6C1] border-[3px] border-[#2CE6C1] hover:bg-white duration-500">
                         <span class="material-symbols-outlined" style="font-size: 48px;">add</span>
@@ -121,9 +131,9 @@ $mostLiked = Card::getCardByLike($bdd);
     </div>
 </div>
 
-<div class="mx-40">
+<div class="lg:mx-40 mx-8">
 
-    <p class="w-fit mx-auto mb-6 mt-10 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 border-b-4 border-[#2CE6C1]">Rechercher une fiche</p>
+    <p class="w-fit mx-auto lg:mb-6 lg:mt-10 lg:text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 border-b-4 border-[#2CE6C1] mb-4 mt-4 text-xl">Rechercher une fiche</p>
 
     <div class="relative z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -150,19 +160,19 @@ $mostLiked = Card::getCardByLike($bdd);
         </div>
     </div>
 
-    <div class="my-20">
+    <div class="lg:my-20 my-8">
         <p class="w-fit mx-auto mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 border-b-4 border-[#2CE6C1]">À la une</p>
 
 
 
-        <div class="flex justify-center">
+        <div class="flex justify-center flex-wrap">
 
             <?php foreach ($mostLiked as $card) : ?>
-                <div class="card relative w-[190px] h-[254] bg-white justify-between flex flex-col p-3 cursor-pointer rounded-md mx-6">
+                <div class="card relative w-[190px] h-[254] bg-white justify-between flex flex-col p-3 cursor-pointer rounded-md mx-6 lg:my-0 my-6">
                     <a href="/ressources/views/fiche.php?fiche=<?= $card->getId(); ?>" class="">
                         <h2 class="text-lg font-semibold text-gray-800 mb-4 h-20"><?= $card->getTitle(); ?></h2>
                     </a>
-                    <a class="flex items-center border-b-2 border-[#2CE6C1] pb-2" href="ressources/views/profil.php">
+                    <a class="flex items-center border-b-2 border-[#2CE6C1] pb-2" href="ressources/views/profil.php?user=<?= $card->getUser()->getId(); ?>">
                         <img class="h-10 w-10 rounded-full bg-gray-50 mr-3" src="<?= $card->getUser()->getProfilPicture(); ?>" alt="">
                         <p class="text-xl"><?= $card->getUser()->getNickname(); ?></p>
                     </a>
@@ -195,7 +205,6 @@ $mostLiked = Card::getCardByLike($bdd);
     <div class="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
         <div class="mx-auto max-w-3xl text-center">
             <h2 class="w-fit m-auto text-3xl  font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 border-b-4 border-white">Thématiques</h2>
-            <p class="mt-4 text-gray-900 text-lg">As a digital creative, your laptop or tablet is at the center of your work. Keep your device safe with a fabric sleeve that matches in quality and looks.</p>
         </div>
 
         <div class="mt-16 space-y-16">
@@ -227,13 +236,13 @@ $mostLiked = Card::getCardByLike($bdd);
 
     </div>
 
-    <div class="bg-white">
+    <div class="bg-gray-100">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
             <path fill="#2ce6c1" fill-opacity="1" d="M0,32L48,42.7C96,53,192,75,288,112C384,149,480,203,576,197.3C672,192,768,128,864,138.7C960,149,1056,235,1152,229.3C1248,224,1344,128,1392,80L1440,32L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
         </svg>
 
         <div class="mx-auto max-w-3xl text-center">
-            <h2 class="w-fit m-auto text-3xl  font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 border-b-4 border-[#2CE6C1]">Partagez Vos Idées d'Automatisation </h2>
+            <h2 class="w-fit m-auto text-3xl  font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 lg:border-b-4 lg:border-[#2CE6C1] border-none">Partagez Vos Idées d'Automatisation </h2>
             <p class="mt-4 text-gray-900 text-lg">Découvrez, partagez et innovez sur notre forum. Vos idées peuvent façonner le futur de l'automatisation informatique.</p>
             <button class="custom-button">
                 Accéder au Forum
@@ -243,35 +252,30 @@ $mostLiked = Card::getCardByLike($bdd);
         </div>
     </div>
 
-    <div class="bg-white">
+    <div class="bg-gray-100">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
             <path fill="#2CE6C1" fill-opacity="1" d="M0,192L60,208C120,224,240,256,360,234.7C480,213,600,139,720,138.7C840,139,960,213,1080,218.7C1200,224,1320,160,1380,128L1440,96L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
         </svg>
         <div class="bg-[#2CE6C1]">
 
-            <div class="mx-auto max-w-2xl py-24 px-4 sm:px-6 sm:py-12 lg:max-w-7xl lg:px-8">
-
+            <div class="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
                 <div class="mx-auto max-w-3xl text-center">
                     <h2 class="w-fit m-auto text-3xl  font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 border-b-4 border-white">Plateformes</h2>
-                    <p class="mt-4 text-gray-900 text-lg">As a digital creative, your laptop or tablet is at the center of your work. Keep your device safe with a fabric sleeve that matches in quality and looks.</p>
                 </div>
 
-                <div class="flex justify-center mt-16">
+                <div class="mt-16 space-y-16">
+                    <div class="block m-auto">
 
-                    <div class="flex lg:row-start-1 lg:col-span-7 xl:col-span-8 lg:col-start-6 xl:col-start-5">
-                        <div class="aspect-w-5 aspect-h-2 overflow-hidden rounded-lg bg-gray-100 max-w-3xl">
+                        <div class="aspect-h-2 overflow-hidden rounded-lg bg-gray-100 max-w-3xl block m-auto">
 
                             <div class="swiper">
                                 <div class="swiper-wrapper rounded-md">
 
                                     <?php foreach ($platforms as $platform) : ?>
                                         <div class="swiper-slide px-5 py-2.5 relative rounded group font-medium text-white inline-block swiper-slide-active" style="width: 384px;" role="group" aria-label="1 / 6">
-                                            <span class="absolute top-0 left-0 w-full h-full rounded opacity-50 filter blur-sm bg-gradient-to-br from-[#31ABFF] to-[#364BFF]"></span>
-                                            <span class="absolute inset-0 w-full h-full transition-all duration-200 ease-out rounded shadow-xl bg-gradient-to-br filter group-active:opacity-0 group-hover:blur-sm from-[#31ABFF] to-[#364BFF]"></span>
-                                            <span class="absolute inset-0 w-full h-full transition duration-200 ease-out rounded bg-gradient-to-br from-[#31ABFF] to-[#364BFF]"></span>
                                             <div class="flex flex-col items-center">
-                                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Adobe_Photoshop_CC_icon.svg/langfr-220px-Adobe_Photoshop_CC_icon.svg.png" alt="Photoshop" class="relative w-16 h-16 mb-2">
-                                                <h2 class="relative text-lg font-semibold text-gray-800">Photoshop</h2>
+                                                <img src="<?= $platform->getImg(); ?>" alt="Photoshop" class="relative w-16 h-16 mb-2">
+                                                <h2 class="relative text-lg font-semibold text-gray-800"><?= $platform->getName(); ?></h2>
                                             </div>
                                         </div>
 
@@ -281,10 +285,8 @@ $mostLiked = Card::getCardByLike($bdd);
                                 <div class="swiper-button-next"></div>
                                 <div class="swiper-button-prev"></div>
                             </div>
-
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

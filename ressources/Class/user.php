@@ -163,13 +163,12 @@ class User
         $queryRank->execute(array('pointToAdd' => $pointToAdd, 'id' => $idUser));
     }
 
-    public static function getUserById($userId): ?User
+    public static function getUserById($userId)
     {
         global $bdd;
 
         $query = $bdd->prepare("SELECT * FROM users WHERE id = :userId");
-        $query->bindParam(':userId', $userId, PDO::PARAM_INT);
-        $query->execute();
+        $query->execute(array('userId' => $userId));
 
         $row = $query->fetch(PDO::FETCH_ASSOC);
 
@@ -190,6 +189,4 @@ class User
 
         return null;
     }
-
-
 }
