@@ -1,4 +1,5 @@
 <?php
+require './session_config.php';
 require_once($_SERVER['DOCUMENT_ROOT'] . '/ressources/Controller/ForumController.php');
 $forumController = new ForumController();
 

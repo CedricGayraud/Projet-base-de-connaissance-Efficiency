@@ -1,6 +1,6 @@
 <?php
 global $bdd;
-require($_SERVER['DOCUMENT_ROOT'] . '/layout.php');
+require './session_config.php';
 require_once($_SERVER['DOCUMENT_ROOT'] . '/ressources/Controller/forumController.php');
 $forumController = new ForumController();
 ?>
@@ -233,7 +233,10 @@ $forumController = new ForumController();
     <?php
         if (isset($_SESSION['user'])){
             echo '<a id="add-post" href="create-post.php">';
-            echo '<button type="button">Créer un post</button>';
+            echo '<button type="button">';
+            echo '<h1>+</h1>';
+            echo 'Créer un post';
+            echo '</button>';
             echo '</a>';
         }
     ?>

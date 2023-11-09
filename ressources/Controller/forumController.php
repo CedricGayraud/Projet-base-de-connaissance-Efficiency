@@ -26,6 +26,20 @@ class ForumController
         }
     }
 
+    //displayRecentPosts($numberOfPostsToShow)
+
+    public function displayRecentPosts($numberOfPostsToShow)
+    {
+        $posts = Post::getPosts();
+        usort($posts, function($a, $b) {
+            return strtotime($b->getCreatedDate()) - strtotime($a->getCreatedDate());
+        });
+
+        for ($i = 0; $i < min($numberOfPostsToShow, count($posts)); $i++) {
+            ForumView::showPost($posts[$i]);
+        }
+    }
+
     public function displayUserPosts()
     {
         global $bdd;
@@ -47,8 +61,6 @@ class ForumController
         ForumView::showPost($post);
     }
 
-    //displayResult
-
     public function displaySearchResults($searchQuery)
     {
         $searchResults = Post::searchPosts($searchQuery);
@@ -65,7 +77,6 @@ class ForumController
         } else {
             echo "<p>Vous devez être connecté pour pouvoir poster un message.</p>";
         }
-        ForumView::showPostForm();
     }
 
     public function getPostById($postId): ?Post
@@ -81,6 +92,12 @@ class ForumController
         ForumView::showPostDetails($post);
     }
 
+    //display comments of a post
+    public function showComments($postId)
+    {
+        $comments = Comment::getCommentsByPostId($postId);
+        ForumView::showComments($comments);
+    }
 
 
 
