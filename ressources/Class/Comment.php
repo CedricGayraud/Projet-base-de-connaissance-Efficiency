@@ -82,8 +82,10 @@ class Comment
     public static function getAllCommentsByCardId($id)
     {
         global $bdd;
-        $queryComment = $bdd->prepare("SELECT DISTINCT cards.*, c.*, u1.nickname as user_nickname, u1.id as user_id, u1.lastName as user_lastName, u1.firstName as user_firstName, u1.email as user_email, u1.role as user_role, u1.rank as user_rank, u1.profilPicture as user_profilPicture, u1.isBanned as user_isBanned, u1.createdDate as user_createdDate FROM comments c JOIN users u1 ON c.user = u1.id JOIN cards ON cards.user = u1.id
-        WHERE cards.id = :id");
+        $queryComment = $bdd->prepare("SELECT cards.*, c.*, u1.nickname as user_nickname, u1.id as user_id, u1.lastName as user_lastName, u1.firstName as user_firstName, u1.email as user_email, u1.role as user_role, u1.rank as user_rank, u1.profilPicture as user_profilPicture, u1.isBanned as user_isBanned, u1.createdDate as user_createdDate FROM comments c 
+        JOIN users u1 ON c.user = u1.id 
+        LEFT JOIN cards ON c.card = cards.id
+        WHERE c.card = :id");
 
         $queryComment->execute(array('id' => $id));
 
@@ -104,18 +106,18 @@ class Comment
             );
 
             $card = new Card(
-                $row['id'],
-                $row['title'],
-                $row['contentText'],
-                $row['gitHub'],
-                $row['status'],
-                $row['createdDate'],
-                $row['updatedDate'],
-                $row['summary'],
+                $row['id'] ?? null,
+                $row['title'] ?? '',
+                $row['contentText'] ?? '',
+                $row['gitHub'] ?? '',
+                $row['status'] ?? '',
+                $row['createdDate'] ?? '',
+                $row['updatedDate'] ?? '',
+                $row['summary'] ?? '',
                 $user,
-                $row['thematic'],
-                $row['platform'],
-                $row['img']
+                $row['thematic'] ?? '',
+                $row['platform'] ?? '',
+                $row['img'] ?? ''
             );
 
             $comments[] = new Comment(
@@ -135,14 +137,13 @@ class Comment
         return $comments;
     }
 
+
     public static function countCommentsByCardId($id)
     {
         global $bdd;
 
         $queryCommentCount = $bdd->prepare("SELECT COUNT(*) as comment_count FROM comments c 
-            JOIN users u1 ON c.user = u1.id 
-            JOIN cards ON cards.user = u1.id 
-            WHERE cards.id = :id");
+            WHERE c.card = :id");
         $queryCommentCount->execute(array('id' => $id));
 
         $result = $queryCommentCount->fetch(PDO::FETCH_ASSOC);
