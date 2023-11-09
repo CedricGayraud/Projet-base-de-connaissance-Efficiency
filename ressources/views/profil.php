@@ -316,4 +316,6 @@ if ($userPoints >= 0 && $userPoints <= 300) {
 
 </body>
 
+<?php include('../views/footer.php'); ?>
+
 </html>

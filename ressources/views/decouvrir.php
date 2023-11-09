@@ -70,4 +70,6 @@ require('../Class/Card.php');
     </div>
 </body>
 
+<?php include('../views/footer.php'); ?>
+
 </html>

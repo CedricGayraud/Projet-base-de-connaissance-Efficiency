@@ -1,4 +1,4 @@
-<footer class="bg-gray-900 h-fit" aria-labelledby="footer-heading">
+<footer class="bg-gray-900 h-fit mt-8" aria-labelledby="footer-heading">
     <h2 id="footer-heading" class="sr-only">Footer</h2>
     <div class="mx-auto w-full px-6 pb-2 pt-2">
         <div class="xl:grid xl:grid-cols-3 xl:gap-8">
