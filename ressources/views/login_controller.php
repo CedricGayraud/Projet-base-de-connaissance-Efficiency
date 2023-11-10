@@ -37,7 +37,7 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
                 }
 
                 $_SESSION['user'] = $verif_user['id'];
-                header('Location:../../index.php');
+                header('Location: ' . $_SESSION['current_page']);
                 die();
             } else {
                 echo 'Votre mot de passe ne correspond pas';
