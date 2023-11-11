@@ -70,7 +70,7 @@ class CommentForum {
 
     public static function getCommentsByPostId(int $idPost): array {
         global $bdd;
-        $queryComments = $bdd->prepare("SELECT * FROM commentsforum WHERE post=:idPost");
+        $queryComments = $bdd->prepare("SELECT * FROM commentsforums WHERE post=:idPost");
         $queryComments->bindParam(':idPost', $idPost, PDO::PARAM_INT);
         $queryComments->execute();
 

@@ -137,17 +137,17 @@ class Post
         $query->execute();
 
         $row = $query->fetch(PDO::FETCH_ASSOC);
+        var_dump($row);
 
         if ($row) {
             return new Post(
-                $row['id'],
+                intval($row['id']),
                 $row['title'],
                 $row['content'],
                 User::getUserById($row['user']),
                 $row['createdDate'],
                 $row['dateLastInteraction'],
                 $row['status']
-
             );
         }
 

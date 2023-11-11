@@ -135,13 +135,16 @@ class ForumView
         echo "</div>";
         if (User::getSessionUser($bdd)){
             echo "<div class='comment-form'>";
-            ForumView::showCommentForm();
+            ForumView::showCommentForm($post->getId());
             echo "</div>";
             echo "</div>";
+        }else{
+            echo "<p>Vous devez être connecté pour pouvoir commenter.</p>";
         }
         echo "<div class='comment-section'>";
         echo "<h2 class='title-comment'>Commentaires</h2>";
         echo "<div class='comment-list'>";
+        echo "</div>";
         echo "</div>";
     }
 
