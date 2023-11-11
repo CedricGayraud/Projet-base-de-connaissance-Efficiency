@@ -60,6 +60,14 @@ $countComments = Comment::countCommentsByCardId($id_card);
                     <p class="text-xl"><?= $card->getUser()->getNickname(); ?></p>
                 </a>
                 <p class="text-lg mt-2"><?= formatDate($card->getCreatedDate()); ?></p>
+                <?php if (($_SESSION['user']) && $sessionUser->getRole() == 1) { ?>
+                    <form action="dashboard_controller.php" method="post">
+                        <input type="hidden" name="card_id" value="<?php echo $card->getId(); ?>">
+                        <button type="submit" name="delete_card" class="mt-4 text-white bg-red-500 hover:bg-red-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                            X
+                        </button>
+                    </form>
+                <?php } ?>
                 <form class="mt-4" action="../Controller/commentController.php" method="post">
                     <input type="hidden" name="card_id" value="<?php echo $card->getId(); ?>">
                     <?php if (isset($_SESSION['user'])) { ?>
@@ -124,31 +132,33 @@ $countComments = Comment::countCommentsByCardId($id_card);
         </script>
 
         <!-- Affichage code -->
-        <div x-data="{ copied: false }" class="w-3/5 block m-auto">
-            <div class="bg-black rounded-lg">
-                <div class="flex rounded-t-lg bg-slate-600">
-                    <button class="flex ml-auto items-center px-2 text-white font-bold text-lg" @click="copyToClipboard()">
-                        <span class="text-white block ml-auto p-2 material-symbols-outlined">
-                            content_copy
-                        </span>Copier
-                    </button>
+        <?php if (!empty($card->getGitHub())) { ?>
+            <div x-data="{ copied: false }" class="w-3/5 block m-auto">
+                <div class="bg-black rounded-lg">
+                    <div class="flex rounded-t-lg bg-slate-600">
+                        <button class="flex ml-auto items-center px-2 text-white font-bold text-lg" @click="copyToClipboard()">
+                            <span class="text-white block ml-auto p-2 material-symbols-outlined">
+                                content_copy
+                            </span>Copier
+                        </button>
+                    </div>
+                    <form action="../Controller/commentController.php" method="post">
+                        <input type="hidden" name="card_id" value="<?php echo $card->getId(); ?>">
+                        <input type="hidden" name="new_code_text" id="new_code_text" value="<?php echo html_entity_decode($card->getGitHub()); ?>">
+                        <?php if (isset($_SESSION['user']) && $sessionUser->getRole() == 1) { ?>
+                            <div class="text-center py-3 px-8">
+                                <textarea id="editableCode" class="text-white bg-black w-full h-48"><?php echo html_entity_decode($card->getGitHub()); ?></textarea>
+                            </div>
+                            <button type="submit" name="edit_code" class="m-4 text-white bg-[#2CE6C1] hover:bg-[#BAE1FE] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm lg:w-fit px-5 py-2.5 text-center mt-4">Enregistrer</button>
+                        <?php } else { ?>
+                            <div class="text-center py-3 px-8">
+                                <textarea readonly id="editableCode" class="text-white bg-black w-full h-48"><?php echo html_entity_decode($card->getGitHub()); ?></textarea>
+                            </div>
+                        <?php } ?>
+                    </form>
                 </div>
-                <form action="../Controller/commentController.php" method="post">
-                    <input type="hidden" name="card_id" value="<?php echo $card->getId(); ?>">
-                    <input type="hidden" name="new_code_text" id="new_code_text" value="<?php echo html_entity_decode($card->getGitHub()); ?>">
-                    <?php if (isset($_SESSION['user']) && $sessionUser->getRole() == 1) { ?>
-                        <div class="text-center py-3 px-8">
-                            <textarea id="editableCode" class="text-white bg-black w-full h-48"><?php echo html_entity_decode($card->getGitHub()); ?></textarea>
-                        </div>
-                        <button type="submit" name="edit_code" class="m-4 text-white bg-[#2CE6C1] hover:bg-[#BAE1FE] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm lg:w-fit px-5 py-2.5 text-center mt-4">Enregistrer</button>
-                    <?php } else { ?>
-                        <div class="text-center py-3 px-8">
-                            <textarea readonly id="editableCode" class="text-white bg-black w-full h-48"><?php echo html_entity_decode($card->getGitHub()); ?></textarea>
-                        </div>
-                    <?php } ?>
-                </form>
             </div>
-        </div>
+        <?php } ?>
 
         <script>
             var editableCode = document.getElementById("editableCode");
@@ -174,7 +184,7 @@ $countComments = Comment::countCommentsByCardId($id_card);
                 <article class="p-6 text-base bg-white rounded-lg shadow-lg dark:bg-gray-900">
                     <footer class="flex justify-between items-center mb-2">
                         <div class="flex items-center">
-                            <a href="profil.php?user=<?= $card->getUser()->getId(); ?>" class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
+                            <a href="profil.php?user=<?= $comment->getUser()->getId(); ?>" class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
                                 <img class="mr-2 w-6 h-6 rounded-full" src="<?= $comment->getUser()->getProfilPicture(); ?>" alt="Michael Gough">
                                 <?= $comment->getUser()->getNickname(); ?>
                             </a>
