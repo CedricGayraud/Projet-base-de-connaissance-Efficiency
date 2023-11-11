@@ -6,7 +6,7 @@ require('ressources/Class/CardLike.php');
 
 $thematics = Thematic::getAllThematics($bdd);
 $platforms = Platform::getAllPlatforms($bdd);
-$cards = Card::getAllCards($bdd);
+$cards = Card::getAllCardsVerify($bdd);
 $mostLiked = Card::getCardByLike($bdd);
 ?>
 
@@ -161,7 +161,7 @@ $mostLiked = Card::getCardByLike($bdd);
     </div>
 
     <div class="lg:my-20 my-8">
-        <p class="w-fit mx-auto mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 border-b-4 border-[#2CE6C1]">À la une</p>
+        <p class="w-fit mx-auto mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 border-b-4 border-[#2CE6C1] mb-8">À la une</p>
 
 
 
@@ -183,7 +183,7 @@ $mostLiked = Card::getCardByLike($bdd);
                             </svg>
                             <p class="text-lg"><?php echo CardLike::getAllLikesByCardId($card->getId()); ?></p>
                         </div>
-                        <p class="text-end font-semibold"><?= formatDate($card->getCreatedDate()); ?></p>
+                        <p class="text-end font-semibold"><?= Card::formatDate($card->getCreatedDate()); ?></p>
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -243,10 +243,10 @@ $mostLiked = Card::getCardByLike($bdd);
 
         <div class="mx-auto max-w-3xl text-center">
             <h2 class="w-fit m-auto text-3xl  font-bold tracking-tight text-gray-900 sm:text-4xl pb-4 lg:border-b-4 lg:border-[#2CE6C1] border-none">Partagez Vos Idées d'Automatisation </h2>
-            <p class="mt-4 text-gray-900 text-lg">Découvrez, partagez et innovez sur notre forum. Vos idées peuvent façonner le futur de l'automatisation informatique.</p>
-            <button class="custom-button">
+            <p class="my-4 text-gray-900 text-lg">Découvrez, partagez et innovez sur notre forum. Vos idées peuvent façonner le futur de l'automatisation informatique.</p>
+            <a href="/ressources/views/forum.php" class="custom-button">
                 Accéder au Forum
-            </button>
+            </a>
 
 
         </div>

@@ -6,7 +6,7 @@ require('../Class/Card.php');
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -69,5 +69,7 @@ require('../Class/Card.php');
 
     </div>
 </body>
+
+<?php include('../views/footer.php'); ?>
 
 </html>

@@ -103,10 +103,10 @@ $countComments = Comment::countCommentsByCardId($id_card);
         <div class="p-6 text-base bg-white rounded-lg shadow-lg dark:bg-gray-900 w-4/5 m-auto mb-6">
             <form action="../Controller/commentController.php" method="post">
                 <input type="hidden" name="card_id" value="<?php echo $card->getId(); ?>">
-                <input type="hidden" name="new_content_text" id="new_content_text" value="<?php echo html_entity_decode($card->getContentText()); ?>">
+                <input type="hidden" name="new_content_text" id="new_content_text" value="<?php $card->getContentText(); ?>">
 
                 <?php if (isset($_SESSION['user']) && $sessionUser->getRole() == 1) { ?>
-                    <div class="text-lg" contentEditable="true" id="editableContent" oninput="updateHiddenField()"><?php echo html_entity_decode($card->getContentText()); ?></div>
+                    <div class="text-lg" contentEditable="true" id="editableContent" oninput="updateHiddenField()"><?php echo $card->getContentText(); ?></div>
                     <button type="submit" name="edit_contentText" class="text-white bg-[#2CE6C1] hover:bg-[#BAE1FE] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center mt-4">Enregistrer</button>
                 <?php } else { ?>
                     <div class="text-lg" id="editableContent"><?php echo html_entity_decode($card->getContentText()); ?></div>
@@ -118,6 +118,8 @@ $countComments = Comment::countCommentsByCardId($id_card);
                 var newContent = document.getElementById("editableContent").textContent;
                 document.getElementById("new_content_text").value = newContent;
                 console.log(newContent);
+
+
             }
         </script>
 
@@ -138,7 +140,7 @@ $countComments = Comment::countCommentsByCardId($id_card);
                         <div class="text-center py-3 px-8">
                             <textarea id="editableCode" class="text-white bg-black w-full h-48"><?php echo html_entity_decode($card->getGitHub()); ?></textarea>
                         </div>
-                        <button type="submit" name="edit_code" class="m-4 text-white bg-[#2CE6C1] hover:bg-[#BAE1FE] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm lg:w-full px-5 py-2.5 text-center mt-4">Enregistrer</button>
+                        <button type="submit" name="edit_code" class="m-4 text-white bg-[#2CE6C1] hover:bg-[#BAE1FE] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm lg:w-fit px-5 py-2.5 text-center mt-4">Enregistrer</button>
                     <?php } else { ?>
                         <div class="text-center py-3 px-8">
                             <textarea readonly id="editableCode" class="text-white bg-black w-full h-48"><?php echo html_entity_decode($card->getGitHub()); ?></textarea>
