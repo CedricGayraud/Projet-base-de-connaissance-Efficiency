@@ -26,7 +26,7 @@ class CommentForum {
         return $this->createdDate;
     }
 
-    public function getIdPost(): int {
+    public function getPost(): int {
         return $this->post;
     }
 
@@ -68,11 +68,15 @@ class CommentForum {
 
     //static methods
 
-    public static function getCommentsByPostId(int $idPost): array {
+    public static function getCommentsByPostId(int $post): array {
         global $bdd;
-        $queryComments = $bdd->prepare("SELECT * FROM commentsforums WHERE post=:idPost");
-        $queryComments->bindParam(':idPost', $idPost, PDO::PARAM_INT);
-        $queryComments->execute();
+        $queryComments = $bdd->prepare("SELECT * FROM commentsforums WHERE post=:post ORDER BY createdDate DESC");
+        $queryComments->bindParam(':post', $post, PDO::PARAM_INT);
+        try {
+            $queryComments->execute();
+        } catch (PDOException $e) {
+            echo 'Erreur d\'exécution de la requête : ' . $e->getMessage();
+        }
 
         $comments = [];
 
@@ -84,18 +88,18 @@ class CommentForum {
         return $comments;
     }
 
-    public static function addComment(string $content, int $idPost, int $idUser): void {
+    public static function addComment(string $content, int $post, int $idUser): void {
         global $bdd;
-        $queryAddComment = $bdd->prepare("INSERT INTO commentsforum (content, createdDate, post, user) VALUES (:content, NOW(), :post, :user)");
-        $queryAddComment->execute(array('content' => $content, 'post' => $idPost, 'user' => $idUser));
+        $queryAddComment = $bdd->prepare("INSERT INTO commentsforums (content, createdDate, post, user) VALUES (:content, NOW(), :post, :user)");
+        $queryAddComment->execute(array('content' => $content, 'post' => $post, 'user' => $idUser));
 
-        $queryUpdatePost = $bdd->prepare("UPDATE posts SET dateLastInteraction=NOW() WHERE id=:idPost");
-        $queryUpdatePost->execute(array('post' => $idPost));
+        $queryUpdatePost = $bdd->prepare("UPDATE posts SET dateLastInteraction=NOW() WHERE id=:post");
+        $queryUpdatePost->execute(array('post' => $post));
     }
 
-    public static function deleteComment(int $idComment, int $idPost): void {
+    public static function deleteComment(int $idComment): void {
         global $bdd;
-        $queryDeleteComment = $bdd->prepare("DELETE FROM commentsforum WHERE id=:idComment");
+        $queryDeleteComment = $bdd->prepare("DELETE FROM commentsforums WHERE id=:idComment");
         $queryDeleteComment->execute(array('id' => $idComment));
     }
 

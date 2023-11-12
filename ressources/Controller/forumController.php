@@ -87,9 +87,8 @@ class ForumController
 
     //displayPostdetails
 
-    public function showPostDetails($postId)
+    public function showPostDetails($post)
     {
-        $post = Post::getPostById($postId);
         ForumView::showPostDetails($post);
     }
 
@@ -97,7 +96,7 @@ class ForumController
     public function showComments($post)
     {
         $comments = CommentForum::getCommentsByPostId($post->getId());
-        ForumView::showComments($comments);
+        ForumView::showComments($post,$comments);
     }
 
 

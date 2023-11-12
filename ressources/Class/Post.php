@@ -137,8 +137,6 @@ class Post
         $query->execute();
 
         $row = $query->fetch(PDO::FETCH_ASSOC);
-        var_dump($row);
-
         if ($row) {
             return new Post(
                 intval($row['id']),

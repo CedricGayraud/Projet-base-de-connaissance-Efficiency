@@ -74,7 +74,7 @@ class ForumView
 
         // Affiche le formulaire HTML
         ?>
-        <form class="form-create" method="POST" action="">
+        <form id="commentForm" class="form-create" method="POST" action="">
             <div class="title-label">
             <label for="title">Titre :</label>
             <input type="text" name="title" required>
@@ -93,16 +93,19 @@ class ForumView
     public static function showCommentForm($postId)
     {
         global $bdd;
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['commentSubmit'])) {
                 $commentContent = $_POST['commentContent'];
 
                 if (!empty($commentContent)) {
                     $userId = User::getSessionUser($bdd)->getId();
-                    CommentForum::addComment($userId, $postId, $commentContent);
+
+                    CommentForum::addComment($commentContent, $postId, $userId);
 
                     echo "Commentaire ajouté avec succès !";
-
+                    header("Location: " . $_SERVER['REQUEST_URI']);
+                    exit();
                 } else {
                     echo "Veuillez saisir un commentaire.";
                 }
@@ -111,9 +114,9 @@ class ForumView
 
         ?>
         <form method="POST" action="">
-            <label for="commentContent">Commentaire :</label>
-            <textarea name="commentContent" required></textarea>
-            <input type="submit" name="commentSubmit" value="Ajouter un commentaire">
+            <label for="commentContent" class="block text-gray-700 text-sm font-bold mb-2">Commentaire :</label>
+            <textarea name="commentContent" class="w-full border rounded-md py-2 px-3 placeholder-gray-400 focus:outline-none focus:ring focus:border-blue-300" required></textarea>
+            <input class="bg-[#2CE6C1] text-white px-4 py-2 rounded-md hover:bg-[#1C9E88] focus:outline-none focus:ring focus:border-blue-300 mt-2" type="submit" name="commentSubmit" value="Ajouter un commentaire">
         </form>
         <?php
     }
@@ -123,27 +126,14 @@ class ForumView
     public static function showPostDetails($post)
     {
         global $bdd;
-        echo "<div class='post-forum flex row'>";
-        echo "<div class='description-post flex column'>";
-        echo "<h2 class='title-post'>" . $post->getTitle() . "</h2>";
-        echo "<p class='author-post'>" . $post->getAuthor()->getNickname(). "</p>";
-        echo "<p class='content-post'>" . $post->getContent() . "</p>";
+        echo "<div class='flex flex-row bg-white p-4 rounded-lg'>";
+        echo "<div class='flex flex-col'>";
+        echo "<h2 class='text-2xl font-bold mb-2'>" . $post->getTitle() . "</h2>";
+        echo "<p class='text-gray-500'>" . $post->getAuthor()->getNickname(). "</p>";
+        echo "<p class='mt-2 text-gray-800'>" . $post->getContent() . "</p>";
         echo "</div>";
-        echo "<div class='date-post flex column'>";
-        echo "<p class='created-date'>" . $post->getCreatedDate() . "</p>";
-        echo "</div>";
-        echo "</div>";
-        if (User::getSessionUser($bdd)){
-            echo "<div class='comment-form'>";
-            ForumView::showCommentForm($post->getId());
-            echo "</div>";
-            echo "</div>";
-        }else{
-            echo "<p>Vous devez être connecté pour pouvoir commenter.</p>";
-        }
-        echo "<div class='comment-section'>";
-        echo "<h2 class='title-comment'>Commentaires</h2>";
-        echo "<div class='comment-list'>";
+        echo "<div class='flex flex-col ml-4'>";
+        echo "<p class='text-gray-500'>" . $post->getCreatedDate() . "</p>";
         echo "</div>";
         echo "</div>";
     }
@@ -151,29 +141,48 @@ class ForumView
 
     //show comments of a post
 
-    public static function showComments($comments)
+    public static function showComments($post, $comments)
     {
-        if (count($comments) == 0) {
-            echo "<p>Pas encore de commentaire</p>";
+        global $bdd;
+        echo "<div class='mt-4'>";
+        echo "<h2 class='text-2xl font-bold mb-2'>Commentaires</h2>";
+        echo "</div>";
+        if (User::getSessionUser($bdd)) {
+            echo "<div class='comment-form mt-4'>";
+            self::showCommentForm($post->getId());
+            echo "</div>";
+        } else {
+            echo "<div class='border-1 p-4'>";
+            echo "<p class='text-lg font-semibold mb-4'>Vous devez être connecté pour pouvoir commenter.</p>";
+            echo "</div>";
         }
-        else {
-            for ($i = 0; $i < count($comments); $i++) {
-                self::showComment($comments[$i]);
+
+        echo "<div class='comment-section mt-4'>";
+
+        if (count($comments) == 0) {
+            echo "<p class='text-lg font-semibold'>Pas encore de commentaire</p>";
+        } else {
+            foreach ($comments as $comment) {
+                self::showComment($comment);
             }
         }
+
+        echo "</div>";
     }
 
     //show comment of a post
 
     public static function showComment($comment)
     {
-        echo "<div class='comment-forum flex row'>";
-        echo "<div class='description-comment flex column'>";
-        echo "<p class='author-comment'>" . htmlspecialchars($comment->getAuthor()->getNickname()) . "</p>";
-        echo "<p class='content-comment'>" . htmlspecialchars($comment->getContent()) . "</p>";
+        $user_nickname = User::getUserById($comment->getUser())->getNickname();
+        global $bdd;
+        echo "<div class='flex flex-row bg-white p-4 rounded-lg mt-4 w-[700px]'>";
+        echo "<div class='flex flex-col items-start'>";
+        echo "<p class='text-gray-500'>" . $user_nickname. "</p>";
+        echo "<p class='mt-2 text-gray-800'>" . $comment->getContent() . "</p>";
         echo "</div>";
-        echo "<div class='date-comment flex column'>";
-        echo "<p class='created-date'>" . htmlspecialchars($comment->getCreatedDate()) . "</p>";
+        echo "<div class='flex flex-col ml-4'>";
+        echo "<p class='text-gray-500'>" . $comment->getCreatedDate() . "</p>";
         echo "</div>";
         echo "</div>";
     }
