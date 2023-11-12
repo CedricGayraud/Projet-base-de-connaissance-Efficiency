@@ -260,7 +260,8 @@ class ForumView
             echo '</button>';
             echo '</form>';
         } else {
-            echo '<p>Vous devez être connecté pour aimer un contenu</p>';
+            echo '<p class="text-gray-500 mt-4">Vous devez être connecté pour aimer un contenu</p>';
+
         }
     }
 
