@@ -138,6 +138,21 @@ class ForumView
         echo "</div>";
     }
 
+    public static function showDeletePostButton($post)
+    {
+        if (isset($_POST['deleteComment'])) {
+            $idCommentToDelete = $_POST['idComment'];
+            Post::deletePost($idCommentToDelete);
+            header("Location: /ressources/views/forum.php");
+            exit();
+        }
+        echo "<form method='POST' action=''>";
+        echo "<input type='hidden' name='idComment' value='" . $post->getId() . "'>";
+        echo "<button type='submit' class='bg-red-500 text-white px-3 py-1 mt-2 rounded-md' name='deleteComment'>Supprimer</button>";
+        echo "</form>";
+
+    }
+
 
     //show comments of a post
 
@@ -174,6 +189,12 @@ class ForumView
 
     public static function showComment($comment)
     {
+        if (isset($_POST['deleteComment'])) {
+            $idCommentToDelete = $_POST['idComment'];
+            CommentForum::deleteComment($idCommentToDelete);
+            header("Location: " . $_SERVER['REQUEST_URI']);
+            exit();
+        }
         $user_nickname = User::getUserById($comment->getUser())->getNickname();
         global $bdd;
         echo "<div class='flex flex-row bg-white p-4 rounded-lg mt-4 w-[700px]'>";
@@ -183,6 +204,16 @@ class ForumView
         echo "</div>";
         echo "<div class='flex flex-col ml-4'>";
         echo "<p class='text-gray-500'>" . $comment->getCreatedDate() . "</p>";
+        if (User::getSessionUser($bdd)) {
+            $isAdmin = User::getSessionUser($bdd)->getRole();
+
+            if ($isAdmin) {
+                echo "<form method='POST' action=''>";
+                echo "<input type='hidden' name='idComment' value='" . $comment->getId() . "'>";
+                echo "<button type='submit' class='bg-red-500 text-white px-3 py-1 mt-2 rounded-md' name='deleteComment'>Supprimer</button>";
+                echo "</form>";
+            }
+        }
         echo "</div>";
         echo "</div>";
     }

@@ -1,4 +1,5 @@
 <?php
+ob_start();
 require './session_config.php';
 require_once($_SERVER['DOCUMENT_ROOT'] . '/ressources/Controller/ForumController.php');
 $forumController = new ForumController();
@@ -105,14 +106,16 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         <div id="body-postdetails" class="shadow-inner">
             <?php
             $forumController->showPostDetails($post);
+            $forumController->showDeletePostButton($post);
             $forumController->showComments($post);
             ?>
         </div>
 
         </body>z
 
-        </html>
         <?php include 'footer.php'; ?>
+
+        </html>
         <?php
     } else {
         echo "Post non trouvé.";
@@ -120,4 +123,5 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 } else {
     echo "ID du post non spécifié ou invalide.";
 }
+ob_end_flush();
 ?>

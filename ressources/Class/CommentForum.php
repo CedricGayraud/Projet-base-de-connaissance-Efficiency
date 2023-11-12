@@ -97,10 +97,10 @@ class CommentForum {
         $queryUpdatePost->execute(array('post' => $post));
     }
 
-    public static function deleteComment(int $idComment): void {
+    public static function deleteComment(int $id): void {
         global $bdd;
-        $queryDeleteComment = $bdd->prepare("DELETE FROM commentsforums WHERE id=:idComment");
-        $queryDeleteComment->execute(array('id' => $idComment));
+        $queryDeleteComment = $bdd->prepare("DELETE FROM commentsforums WHERE id=:id");
+        $queryDeleteComment->execute(array('id' => $id));
     }
 
 

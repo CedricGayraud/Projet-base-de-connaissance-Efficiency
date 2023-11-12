@@ -99,6 +99,20 @@ class ForumController
         ForumView::showComments($post,$comments);
     }
 
+    //display delete post button
+
+    public function showDeletePostButton($post)
+    {
+        global $bdd;
+        if (User::getSessionUser($bdd)) {
+            $isAdmin = User::getSessionUser($bdd)->getRole();
+
+            if ($isAdmin) {
+                ForumView::showDeletePostButton($post);
+            }
+        }
+    }
+
 
 
 }
