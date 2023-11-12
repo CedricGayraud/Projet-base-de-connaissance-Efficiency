@@ -198,7 +198,7 @@ class ForumView
         }
         $user_nickname = User::getUserById($comment->getUser())->getNickname();
         global $bdd;
-        echo "<div class='flex flex-row bg-white p-4 rounded-lg mt-4' style='max-width: 700px;'>"; // Ajuste la largeur maximale ici
+        echo "<div class='flex flex-row bg-white p-4 rounded-lg mt-4' style='width: 700px;'>"; // Ajuste la largeur maximale ici
         echo "<div class='flex flex-col items-start'>";
         echo "<p class='text-gray-500'>" . $user_nickname. "</p>";
         echo "<p class='mt-2 text-gray-800'>" . $comment->getContent() . "</p>";
