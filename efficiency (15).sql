@@ -445,8 +445,8 @@ ALTER TABLE `comments`
 -- Contraintes pour la table `commentsforums`
 --
 ALTER TABLE `commentsforums`
-  ADD CONSTRAINT `commentsforums_ibfk_1` FOREIGN KEY (`post`) REFERENCES `posts` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
-  ADD CONSTRAINT `commentsforums_ibfk_2` FOREIGN KEY (`user`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
+  ADD CONSTRAINT `commentsforums_ibfk_1` FOREIGN KEY (`post`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `commentsforums_ibfk_2` FOREIGN KEY (`user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `favorites`
