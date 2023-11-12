@@ -1,15 +1,15 @@
 <?php
+ob_start();
 require './session_config.php';
 require_once($_SERVER['DOCUMENT_ROOT'] . '/ressources/Controller/ForumController.php');
 $forumController = new ForumController();
 
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-    $postId = $_GET['id'];
-
+    $postId = intval($_GET['id']);
     $post = $forumController->getPostById($postId);
 
     if ($post) {
-?>
+        ?>
         <!DOCTYPE html>
         <html lang="fr">
 
@@ -27,7 +27,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
                 header {
                     background-color: #2ce6c1;
-                    color: #ffffff!important;
+                    color: #ffffff !important;
                     padding-top: 25px;
                     text-align: center;
                     font-size: 40px;
@@ -36,12 +36,11 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
                 }
 
-
-
                 #body-postdetails {
+                    font-family: "Poppins", sans-serif;
                     background-color: #ecf0f1;
-                    margin: 0;
-                    padding: 15px 250px;
+                    padding-bottom: 100px;
+                    padding-top: 25px;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
@@ -55,7 +54,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                     /* Centrage horizontal */
                     padding: 10px;
                 }
-
 
                 .title-post {
                     font-size: 20px;
@@ -80,7 +78,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                     margin-top: 10px;
                 }
 
-
                 .comment-section {
                     margin-top: 20px;
                 }
@@ -97,18 +94,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                     padding: 10px;
                 }
 
-                .flex {
-                    display: flex;
-                    justify-content: center;
-                }
-
-                .column {
-                    flex-direction: column;
-                }
-
-                .row {
-                    flex-direction: row;
-                }
             </style>
         </head>
 
@@ -116,23 +101,28 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
         <?php include 'sidebar.php'; ?>
         <header>
-            <p class='w-fit mx-auto mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl pb-4 mt-4'>FORUM</p>
+            <p class='w-fit mx-auto mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl mt-4'>FORUM</p>
         </header>
-        <div id="body-postdetails">
+        <div id="body-postdetails" class="shadow-inner">
             <?php
             $forumController->showPostDetails($post);
+            $forumController->showLikePostButton($post);
+            $forumController->showDeletePostButton($post);
             $forumController->showComments($post);
             ?>
         </div>
 
-        </body>
+        </body>z
+
+        <?php include 'footer.php'; ?>
 
         </html>
-<?php
+        <?php
     } else {
         echo "Post non trouvé.";
     }
 } else {
     echo "ID du post non spécifié ou invalide.";
 }
+ob_end_flush();
 ?>

@@ -87,9 +87,8 @@ class ForumController
 
     //displayPostdetails
 
-    public function showPostDetails($postId)
+    public function showPostDetails($post)
     {
-        $post = Post::getPostById($postId);
         ForumView::showPostDetails($post);
     }
 
@@ -97,7 +96,25 @@ class ForumController
     public function showComments($post)
     {
         $comments = CommentForum::getCommentsByPostId($post->getId());
-        ForumView::showComments($comments);
+        ForumView::showComments($post,$comments);
+    }
+
+    //display delete post button
+
+    public function showDeletePostButton($post)
+    {
+        global $bdd;
+        if (User::getSessionUser($bdd)) {
+            $isAdmin = User::getSessionUser($bdd)->getRole();
+
+            if ($isAdmin) {
+                ForumView::showDeletePostButton($post);
+            }
+        }
+    }
+
+    public function showLikePostButton($post){
+        ForumView::showLikePostButton($post);
     }
 
 

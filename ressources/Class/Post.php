@@ -137,17 +137,15 @@ class Post
         $query->execute();
 
         $row = $query->fetch(PDO::FETCH_ASSOC);
-
         if ($row) {
             return new Post(
-                $row['id'],
+                intval($row['id']),
                 $row['title'],
                 $row['content'],
                 User::getUserById($row['user']),
                 $row['createdDate'],
                 $row['dateLastInteraction'],
                 $row['status']
-
             );
         }
 
@@ -212,5 +210,14 @@ class Post
         }
 
         return $result;
+    }
+    //deletePost function
+
+    public static function deletePost($id)
+    {
+        global $bdd;
+        $query = $bdd->prepare("DELETE FROM posts WHERE id = :id");
+        $query->bindParam(':id', $id, PDO::PARAM_INT);
+        $query->execute();
     }
 }
