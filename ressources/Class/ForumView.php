@@ -126,8 +126,8 @@ class ForumView
     public static function showPostDetails($post)
     {
         global $bdd;
-        echo "<div class='flex flex-row bg-white p-4 rounded-lg'>";
-        echo "<div class='flex flex-col'>";
+        echo "<div class='flex flex-row bg-white p-4 rounded-lg' style='width: 750px;'>";
+        echo "<div class='flex flex-col flex-wrap'>"; // Ajout de flex-wrap pour permettre le passage à la ligne
         echo "<h2 class='text-2xl font-bold mb-2'>" . $post->getTitle() . "</h2>";
         echo "<p class='text-gray-500'>" . $post->getAuthor()->getNickname(). "</p>";
         echo "<p class='mt-2 text-gray-800'>" . $post->getContent() . "</p>";
@@ -137,6 +137,7 @@ class ForumView
         echo "</div>";
         echo "</div>";
     }
+
 
     public static function showDeletePostButton($post)
     {
@@ -197,7 +198,7 @@ class ForumView
         }
         $user_nickname = User::getUserById($comment->getUser())->getNickname();
         global $bdd;
-        echo "<div class='flex flex-row bg-white p-4 rounded-lg mt-4 w-[700px]'>";
+        echo "<div class='flex flex-row bg-white p-4 rounded-lg mt-4' style='max-width: 700px;'>"; // Ajuste la largeur maximale ici
         echo "<div class='flex flex-col items-start'>";
         echo "<p class='text-gray-500'>" . $user_nickname. "</p>";
         echo "<p class='mt-2 text-gray-800'>" . $comment->getContent() . "</p>";
@@ -217,6 +218,7 @@ class ForumView
         echo "</div>";
         echo "</div>";
     }
+
 
 
 
