@@ -106,6 +106,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         <div id="body-postdetails" class="shadow-inner">
             <?php
             $forumController->showPostDetails($post);
+            $forumController->showLikePostButton($post);
             $forumController->showDeletePostButton($post);
             $forumController->showComments($post);
             ?>

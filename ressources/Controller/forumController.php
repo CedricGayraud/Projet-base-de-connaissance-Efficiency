@@ -113,6 +113,10 @@ class ForumController
         }
     }
 
+    public function showLikePostButton($post){
+        ForumView::showLikePostButton($post);
+    }
+
 
 
 }
